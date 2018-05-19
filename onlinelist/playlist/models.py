@@ -8,6 +8,7 @@ class Comment(models.Model):
     data = models.ForeignKey('Data', models.DO_NOTHING)
     user = models.ForeignKey('User', models.DO_NOTHING)
     content = models.TextField()
+    creation_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'comment'
@@ -16,9 +17,11 @@ class Comment(models.Model):
 class Data(models.Model):
     id = models.AutoField(primary_key=True)
     playlist = models.ForeignKey('Playlist', models.DO_NOTHING)
+    user = models.ForeignKey('User', models.DO_NOTHING)
     link = models.CharField(max_length=200)
     picture = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    creation_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'data'
@@ -27,10 +30,11 @@ class Data(models.Model):
 
 class Playlist(models.Model):
     id = models.AutoField(primary_key=True)
+    user = models.ForeignKey('User', models.DO_NOTHING)
     name = models.CharField(max_length=45)
     description = models.TextField(blank=True, null=True)
     picture = models.CharField(max_length=200, blank=True, null=True)
-    user = models.ForeignKey('User', models.DO_NOTHING)
+    creation_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'playlist'
@@ -40,7 +44,7 @@ class Privilege(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey('User', models.DO_NOTHING)
     playlist = models.ForeignKey(Playlist, models.DO_NOTHING)
-    accessNum = models.IntegerField()
+    access_num = models.IntegerField()
 
     class Meta:
         db_table = 'privilege'
@@ -50,9 +54,12 @@ class Privilege(models.Model):
 class User(models.Model):
     id = models.AutoField(primary_key=True)
     login = models.CharField(max_length=45)
+    name = models.CharField(max_length=45, blank=True, null=True)
+    surname = models.CharField(max_length=45, blank=True, null=True)
     status = models.IntegerField()
     picture = models.CharField(max_length=200)
     email = models.CharField(max_length=45, blank=True, null=True)
+    creation_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'user'
