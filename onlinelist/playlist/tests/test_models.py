@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class PlaylistTest(TestCase):
 
-    """Test module for Playlist model"""
+    """ Test module for Playlist model """
 
     def setUp(self):
 
@@ -29,7 +29,7 @@ class PlaylistTest(TestCase):
 
 class DataTest(TestCase):
 
-    """Test module for Data model"""
+    """ Test module for Data model """
 
     def setUp(self):
         user = User.objects.create_user(
@@ -60,7 +60,7 @@ class DataTest(TestCase):
 
 class CommentTest(TestCase):
 
-    """Test module for Comment model"""
+    """ Test module for Comment model """
 
     def setUp(self):
         user = User.objects.create_user(
@@ -97,7 +97,7 @@ class CommentTest(TestCase):
 
 class PrivilegeTest(TestCase):
 
-    """Test module for Privilege model"""
+    """ Test module for Privilege model """
 
     def setUp(self):
         user = User.objects.create_user(
