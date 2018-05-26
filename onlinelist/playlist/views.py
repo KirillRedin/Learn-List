@@ -1,5 +1,5 @@
-from orders.models import *
-from orders.serializers import *
+from playlist.models import *
+from playlist.serializers import *
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
