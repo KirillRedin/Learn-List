@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 
 
@@ -33,11 +34,13 @@ class Playlist(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, models.DO_NOTHING)
     name = models.CharField(max_length=45)
+    picture = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = 'playlist'
+
 
 class Part(models.Model):
     id = models.AutoField(primary_key=True)
@@ -61,4 +64,3 @@ class Privilege(models.Model):
     class Meta:
         db_table = 'privilege'
         unique_together = (('id', 'user', 'playlist'),)
-
