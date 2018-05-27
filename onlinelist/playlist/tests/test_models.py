@@ -27,6 +27,36 @@ class PlaylistTest(TestCase):
         self.assertEqual(playlist.name, 'New Playlist')
 
 
+class PartTest(TestCase):
+
+    """ Test module for Part model """
+
+    def setUp(self):
+        user = User.objects.create_user(
+            username='Redin',
+            email='email',
+            password=123
+        )
+
+        playlist = Playlist.objects.create(
+            user=user,
+            name='New Playlist',
+            description='playlist description',
+            picture='picture link'
+        )
+
+        self.part = Part.objects.create(
+            playlist=playlist,
+            user=user,
+            name='Part name',
+            number=1,
+            description='data description'
+        )
+
+    def test_part(self):
+        part = Part.objects.get(id=self.part.id)
+        self.assertEqual(part.name, 'Part name')
+
 class DataTest(TestCase):
 
     """ Test module for Data model """
@@ -48,6 +78,7 @@ class DataTest(TestCase):
         part = Part.objects.create(
             playlist=playlist,
             user=user,
+            name='Part name',
             number=1,
             description='data description'
         )

@@ -5,14 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6fd4458-78d9-43a3-8fa2-7ed3b09bf2aa" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/migrations/0002_auto_20180519_1913.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/migrations/0003_auto_20180519_1927.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/migrations/0004_auto_20180519_1949.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/migrations/0005_auto_20180527_0335.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/migrations/0006_auto_20180527_0402.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/playlist/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -79,8 +71,8 @@
       <file leaf-file-name="test_models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="50" column="21" lean-forward="true" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+            <state relative-caret-position="441">
+              <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -610,8 +602,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="50" column="21" lean-forward="true" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+        <state relative-caret-position="441">
+          <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
         </state>
       </provider>
     </entry>
