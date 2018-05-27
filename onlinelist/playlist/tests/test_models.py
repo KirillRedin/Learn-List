@@ -48,7 +48,6 @@ class DataTest(TestCase):
         part = Part.objects.create(
             playlist=playlist,
             user=user,
-            picture='picture link',
             description='data description'
         )
 
@@ -56,7 +55,6 @@ class DataTest(TestCase):
             part=part,
             user=user,
             link='data link',
-            picture='picture link',
             description='data description'
         )
 

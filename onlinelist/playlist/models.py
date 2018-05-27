@@ -21,7 +21,6 @@ class Data(models.Model):
     user = models.ForeignKey(User, models.DO_NOTHING)
     number = models.IntegerField()
     link = models.CharField(max_length=200)
-    picture = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
 
@@ -47,7 +46,6 @@ class Part(models.Model):
     name = models.CharField(max_length=45)
     number = models.IntegerField()
     description = models.TextField(blank=True, null=True)
-    picture = models.CharField(max_length=200, blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:

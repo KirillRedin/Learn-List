@@ -22,7 +22,6 @@ class DataSerializer(serializers.ModelSerializer):
             'part',
             'user',
             'link',
-            'picture',
             'description',
             'creation_date'
         )
@@ -34,7 +33,6 @@ class PartSerializer(serializers.ModelSerializer):
             'id',
             'playlist',
             'user',
-            'picture',
             'description',
             'creation_date'
         )
