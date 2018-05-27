@@ -7,7 +7,7 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = (
             'id',
-            'data',
+            'playlist',
             'user',
             'content',
             'creation_date'
@@ -19,9 +19,21 @@ class DataSerializer(serializers.ModelSerializer):
         model = Data
         fields = (
             'id',
-            'playlist',
+            'part',
             'user',
             'link',
+            'picture',
+            'description',
+            'creation_date'
+        )
+
+class PartSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Data
+        fields = (
+            'id',
+            'playlist',
+            'user',
             'picture',
             'description',
             'creation_date'

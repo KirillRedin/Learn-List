@@ -45,8 +45,15 @@ class DataTest(TestCase):
             picture='picture link'
         )
 
-        self.data = Data.objects.create(
+        part = Part.objects.create(
             playlist=playlist,
+            user=user,
+            picture='picture link',
+            description='data description'
+        )
+
+        self.data = Data.objects.create(
+            part=part,
             user=user,
             link='data link',
             picture='picture link',
@@ -76,16 +83,8 @@ class CommentTest(TestCase):
             picture='picture link'
         )
 
-        data = Data.objects.create(
-            playlist=playlist,
-            user=user,
-            link='data link',
-            picture='picture link',
-            description='data description'
-        )
-
         self.comment = Comment.objects.create(
-            data=data,
+            playlist=playlist,
             user=user,
             content='comment content'
         )

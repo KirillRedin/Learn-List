@@ -5,12 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
-    <title>Main Page</title>
+    <title>Profile</title>
 </head>
 <body>
 <div class="container">
@@ -23,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Профіль</a>
+                        <a class="nav-link active" href="#">Профіль</a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
@@ -33,13 +34,7 @@
             </div>
         </nav>
     </header>
-    <section class="jumbotron text-center">
-        <div class="container">
-            <h1 class="jumbotron-heading">Learn List</h1>
-            <p class="text-muted">Опис сайту</p>
-        </div>
-    </section>
-    <div class="row mb-2">
+    <div class="row">
         <div class="col-md-6 ">
             <div class="card flex-md-row mb-4 shadow-lg">
                 <div class="card-body d-flex flex-column align-items-start">
@@ -58,7 +53,49 @@
                 <img class="card-image-right flex-auto d-none d-lg-block" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg" alt="Зображення відсутнє" style="width: 200px; height: 250px;">
             </div>
         </div>
+
+
+        <div class="col-md-6 ">
+            <div>
+                <div class="list-group">
+
+                    <div class="list-group-item">
+                        <a href="#multiCollapse1" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="multiCollapse1">
+                            1. Part 1
+                        </a>
+                        <div class="collapse multi-collapse" id="multiCollapse1">
+                            <a class="dropdown-item" href="#">1. Action</a>
+                            <a class="dropdown-item" href="#">2. Another action</a>
+                            <a class="dropdown-item" href="#">3. Something else here</a>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <a href="#multiCollapse2" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="multiCollapse2">
+                            2. Part 2
+                        </a>
+                        <div class="collapse multi-collapse" id="multiCollapse2">
+                            <a class="dropdown-item" href="#">1. Action</a>
+                            <a class="dropdown-item" href="#">2. Another action</a>
+                            <a class="dropdown-item" href="#">3. Something else here</a>
+                        </div>
+                    </div>
+                    <div class="list-group-item">
+                        <a href="#multiCollapse3" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="multiCollapse3">
+                            3. Part 3
+                        </a>
+                        <div class="collapse multi-collapse" id="multiCollapse3">
+                            <a class="dropdown-item" href="#">1. Action</a>
+                            <a class="dropdown-item" href="#">2. Another action</a>
+                            <a class="dropdown-item" href="#">3. Something else here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 </body>
 </html>

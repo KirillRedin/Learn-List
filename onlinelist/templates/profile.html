@@ -1,10 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <title>Profile</title>
 </head>
 <body>
+<div class="container">
+    <header class="mb-2">
+        <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm rounded">
+            <a class="navbar-brand" href="#">Learn List</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Профіль</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Пошук" aria-label="Search">
+                    <button class="btn my-2 my-sm-0" type="submit">Пошук</button>
+                </form>
+            </div>
+        </nav>
+    </header>
+    <div class="row mb-2">
+        <div class="col-md-12">
+            <div class="card flex-md-row mb-4">
+                <img class="card-image-left rounded img-responsive d-none d-lg-block" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg" alt="Зображення відсутнє">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <h3 class="mb-2">Логін</h3>
+                    <div class="mb-2">
+                        <span class="text-muted">Ім`я: </span>
+                        <span>Кирило</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">Фамілія: </span>
+                        <span>Редін</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-muted">Email: </span>
+                        <span>redinkirill.ua@gmail.com</span>
+                    </div>
+                    <div class="mb-auto">
+                        <span class="text-muted">Дата реєстрації: </span>
+                        <span>2018-05-26</span>
+                    </div>
+                </div>
 
+                <div class="card-body d-flex justify-content-end align-items-end">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 align-self-center">
+            <div class="d-flex  justify-content-center">
+            <a class="btn btn-primary btn-circle btn-xl" href="#">+</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card flex-md-row mb-4 shadow-lg">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <h3 class="mb-0">
+                        <a class="text-dark" href="#">Назва</a>
+                    </h3>
+                    <div class="mb-1 text-muted">Дата</div>
+                    <p class="card-text mb-auto">
+                        "Тут повинен бути опис поточного плейлісту"
+                    </p>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                </div>
+                <img class="card-image-right flex-auto d-none d-lg-block" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg" alt="Зображення відсутнє" style="width: 200px; height: 250px;">
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
