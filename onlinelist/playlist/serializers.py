@@ -66,16 +66,11 @@ class PrivilegeSerializer(serializers.ModelSerializer):
         )
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserPictureSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = UserPicture
         fields = (
             'id',
-            'login',
-            'name',
-            'surname',
-            'status',
-            'picture',
-            'email',
-            'creation_date'
+            'user',
+            'picture'
         )

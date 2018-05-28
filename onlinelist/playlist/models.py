@@ -1,13 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 
 # Create your models here.
 
 
+class UserPicture(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    picture = models.TextField(max_length=200)
+
+    class Meta:
+        db_table = 'user_picture'
+
 class Comment(models.Model):
     id = models.AutoField(primary_key=True)
-    playlist = models.ForeignKey('Playlist', models.DO_NOTHING)
+    playlist = models.ForeignKey('Playlist', on_delete=models.CASCADE)
     user = models.ForeignKey(User, models.DO_NOTHING)
     content = models.TextField()
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -18,12 +27,12 @@ class Comment(models.Model):
 
 class Data(models.Model):
     id = models.AutoField(primary_key=True)
-    playlist = models.ForeignKey('Playlist', models.DO_NOTHING)
-    part = models.ForeignKey('Part', models.DO_NOTHING)
+    playlist = models.ForeignKey('Playlist', on_delete=models.CASCADE)
+    part = models.ForeignKey('Part', on_delete=models.CASCADE)
     user = models.ForeignKey(User, models.DO_NOTHING)
     name = models.CharField(max_length=45)
     number = models.IntegerField()
-    link = models.CharField(max_length=200)
+    link = models.TextField(max_length=200)
     description = models.TextField(blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
 
@@ -36,7 +45,7 @@ class Playlist(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, models.DO_NOTHING)
     name = models.CharField(max_length=45)
-    picture = models.CharField(max_length=200)
+    picture = models.TextField(max_length=200)
     description = models.TextField(blank=True, null=True)
     creation_date = models.DateField(auto_now_add=True)
 
@@ -46,7 +55,7 @@ class Playlist(models.Model):
 
 class Part(models.Model):
     id = models.AutoField(primary_key=True)
-    playlist = models.ForeignKey('Playlist', models.DO_NOTHING)
+    playlist = models.ForeignKey('Playlist', on_delete=models.CASCADE)
     user = models.ForeignKey(User, models.DO_NOTHING)
     name = models.CharField(max_length=45)
     number = models.IntegerField()
@@ -59,10 +68,11 @@ class Part(models.Model):
 
 class Privilege(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, models.DO_NOTHING)
-    playlist = models.ForeignKey(Playlist, models.DO_NOTHING)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
     access_num = models.IntegerField()
 
     class Meta:
         db_table = 'privilege'
         unique_together = (('id', 'user', 'playlist'),)
+
