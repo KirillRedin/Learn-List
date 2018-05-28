@@ -5,11 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'playlist/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
 
     <title>Profile</title>
 </head>
@@ -24,7 +26,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Профіль</a>
+                        <a class="nav-link" href="#">Профіль</a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
@@ -36,63 +38,303 @@
     </header>
     <div class="row">
         <div class="col-md-6 ">
-            <div class="card flex-md-row mb-4 shadow-lg">
+            <div class="card  mb-5 flex-md-row mb-4 shadow-lg">
                 <div class="card-body d-flex flex-column align-items-start">
                     <h3 class="mb-0">
-                        <a class="text-dark" href="#">Назва</a>
+                        <a class="text-dark" href="#">{{ playlist.name }}</a>
                     </h3>
-                    <div class="mb-1 text-muted">Дата</div>
-                    <p class="card-text mb-auto">
-                        "Тут повинен бути опис поточного плейлісту"
-                    </p>
+                    <div class="mb-1 text-muted">{{ playlist.date }}</div>
+                    <p class="card-text mb-auto">{{ playlist.description }}</p>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editPlaylist" aria-expanded="false" aria-controls="editPlaylist">
+                            <i class="material-icons">edit</i>
+                        </button>
                     </div>
                 </div>
-                <img class="card-image-right flex-auto d-none d-lg-block" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg" alt="Зображення відсутнє" style="width: 200px; height: 250px;">
+
+                <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
+                    <div class="side-crop">
+                        <img class="img side-crop" src="{% static 'playlist/images'%}/{{ playlist.picture }} ">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12  mb-5 collapse multi-collapse" id="editPlaylist">
+                <form class="dropdown-item disabled" method="post" enctype="multipart/form-data">
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="editPlaylistNameAddon">Назва</span>
+                        </div>
+                        <input type="text" name="playlistName" id="editPlaylistName" value="{{ playlist.name }}">
+                    </div>
+
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="editPlaylistPictureAddon">Зображення</span>
+                        </div>
+
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="editPlaylistPictureFile" name="playlistPicture" id="playlistPicture">
+                            <label class="custom-file-label" for="editPlaylistPictureFile">Оберіть файл</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="editPlaylistDescriptionAddon">Опис</span>
+                        </div>
+                        <textarea class="form-control" name="playlistDescription" id="editPlaylistDescription" placeholder="">{{ playlist.description }}</textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-secondary">Зберегти</button>
+                </form>
+            </div>
+            
+            <div class="col-md-12">
+                <div class="mb-3">
+                    <h5>Коментарі</h5>
+                </div>
+
+                <form class="mb-4">
+                    <div class="form-group input-group">
+                        <textarea class="form-control" id="addComment" placeholder="Написати коментар..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-outline-secondary">Відправити</button>
+                </form>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="#">
+                            <img class="comment" src="D:\Git\Learn-List\onlinelist\playlist\images\no-image.png">
+                        </a>
+                    </div>
+                    <div class="col-md-10 card flex-md-row mb-4 shadow">
+                        <div class="card-body flex-column align-items-start">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-2">
+                                    <a class="text-dark" href="#">Логін</a>
+                                </h5>
+                                <small class="text-muted">Дата</small>
+                            </div>
+                            <p class="card-text">Коментар певного користувача, що має доступ до коментування поточного плейлісту</p>
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">
+                                    <i class="material-icons">delete_outline</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-
         <div class="col-md-6 ">
             <div>
+                <div class="col-md-12 dropdown-item disabled col">
+                    <div class="d-flex flex-row justify-content-center">
+                        <button class="btn btn-circle btn-md btn-outline-secondary" type="button" data-toggle="collapse" data-target="#addPart" aria-expanded="false" aria-controls="addData">
+                            <i class="material-icons">add</i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-md-12 collapse multi-collapse" id="addPart">
+                    <form class="dropdown-item disabled">
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addPartNameAddon">Назва</span>
+                            </div>
+                            <input type="text" class="form-control" id="addPartName" placeholder="Назва">
+                        </div>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addPartDescriptionAddon">Опис</span>
+                            </div>
+                            <textarea class="form-control" id="addPartDescription" placeholder="Опис"></textarea>
+                        </div>
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addPartNumberAddon">Номер</span>
+                            </div>
+                            <select class="custom-select" id="addPartsNumberSelect">
+                                <option value="1">1</option>
+                                {% for part_add_num in parts %}
+                                <option value="{{ part_add_num.number|add:'1' }}">{{ part_add_num.number|add:"1" }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-outline-secondary">Додати</button>
+                    </form>
+                </div>
                 <div class="list-group">
+                    {% for part in parts %}
+                    <div class="list-group-item mb-2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="" href="#partCollapse{{ part.id }}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="partCollapse{{ part.id }}">
+                                    1.
+                                    {{ part.name }}
+                                </a>
+                            </div>
 
-                    <div class="list-group-item">
-                        <a class="" href="#multiCollapse1" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="multiCollapse1">
-                            1. Part 1
-                        </a>
-                        <div class="collapse multi-collapse" id="multiCollapse1">
-                            <small class="text-muted">Опис поточної частини, що відображається при її розгорненні</small>
-                            <a class="dropdown-item" href="#">1. Action.<br>
-                                <small class="text-muted">Опис поточних даних</small>
-                            </a>
-                            <a class="dropdown-item" href="#">2. Another action</a>
-                            <a class="dropdown-item" href="#">3. Something else here</a>
+                            <div class="col-md-6">
+                                <div class="d-flex flex-row justify-content-end align-items-end">
+                                    <div class="btn-group">
+                                        <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editPart{{ part.id }}" aria-expanded="false" aria-controls="editPart{{ part.id }}">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" type="button">
+                                            <i class="material-icons">delete_outline</i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="collapse multi-collapse" id="partCollapse{{ part.id }}">
+                            <small class="text-muted">{{ part.description }}</small>
+
+                            <div class="row">
+                                <div class="col-md-12 dropdown-item disabled col">
+                                    <div class="d-flex flex-row justify-content-center">
+                                        <button class="btn btn-circle btn-md btn-outline-secondary" type="button" data-toggle="collapse" data-target="#addData{{ part.id }}" aria-expanded="false" aria-controls="addData{{ part.id }}">
+                                            <i class="material-icons">add</i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 collapse multi-collapse" id="addData{{ part.id }}">
+                                    <form class="dropdown-item disabled">
+                                        <div class="form-group input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addDataNameAddon">Назва</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="addDataName" placeholder="Назва">
+                                        </div>
+                                        <div class="form-group input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addDataLinkAddon">Посилання</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="addDataLink" placeholder="Посилання">
+                                        </div>
+                                        <div class="form-group input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addDataDescriptionAddon">Опис</span>
+                                            </div>
+                                            <textarea class="form-control" id="addDataDescription" placeholder="Опис"></textarea>
+                                        </div>
+                                        <div class="form-group input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="addDataNumberAddon">Номер</span>
+                                            </div>
+                                            <select class="custom-select" id="addDataNumberSelect">
+                                                <option value="1">1</option>
+                                                {% for add_data_part in data %}
+                                                {% if add_data_part.part_id == part.id %}
+                                                <option value="{{ add_data_part.number|add:'1' }}">{{ add_data_part.number|add:"1" }}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-secondary">Додати</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            {% for data_part in data %}
+                            {% if data_part.part_id == part.id %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a class="dropdown-item" href="#">{{ data_part.number }}. {{ data_part.name }}<br>
+                                        <small class="text-muted">{{ data_part.description }}</small>
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex flex-row justify-content-end align-items-start">
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editData{{ data_part.id }}" aria-expanded="false" aria-controls="editData{{ data_part.id }}">
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-secondary" type="button">
+                                                <i class="material-icons">delete_outline</i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 collapse multi-collapse" id="editData{{ data_part.id }}">
+                                    <form class="dropdown-item disabled">
+                                        <div class="form-group input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="editDataNameAddon">Назва</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="editDataName" value="{{ data_part.name }}">
+                                        </div>
+                                        <div class="form-group input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="editDataLinkAddon">Посилання</span>
+                                            </div>
+                                            <input type="text" class="form-control" id="editDataLink" value="{{ data_part.link }}">
+                                        </div>
+                                        <div class="form-group input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="editDataDescriptionAddon">Опис</span>
+                                            </div>
+                                            <textarea class="form-control" id="editDataDescription" >{{ data_part.description }}</textarea>
+                                        </div>
+                                        <div class="form-group input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="editDataNumberAddon">Номер</span>
+                                            </div>
+                                            <select class="custom-select" id="editDataNumberSelect">
+                                                {% for edit_data_part in data %}
+                                                <option
+                                                        {% if edit_data_part.id == data_part.id %}
+                                                        selected
+                                                        {% endif %}
+                                                        value="{{ edit_data_part.number }}">{{ edit_data_part.number }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-secondary">Зберегти</button>
+                                    </form>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
                     </div>
-                    <div class="list-group-item">
-                        <a href="#multiCollapse2" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="multiCollapse2">
-                            2. Part 2
-                        </a>
-                        <div class="collapse multi-collapse" id="multiCollapse2">
-                            <a class="dropdown-item" href="#">1. Action</a>
-                            <a class="dropdown-item" href="#">2. Another action</a>
-                            <a class="dropdown-item" href="#">3. Something else here</a>
-                        </div>
+
+                    <div class="col-md-12 collapse multi-collapse" id="editPart{{ part.id }}">
+                        <form class="dropdown-item disabled">
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="editPartNameAddon">Назва</span>
+                                </div>
+                                <input type="text" class="form-control" id="editPartName" value="{{ part.name }}">
+                            </div>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="editPartDescriptionAddon">Опис</span>
+                                </div>
+                                <textarea class="form-control" id="editPartDescription">{{ part.description }}</textarea>
+                            </div>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="editPartNumberAddon">Номер</span>
+                                </div>
+                                <select class="custom-select" id="editPartsNumberSelect">
+                                    {% for part_num in parts %}
+                                    <option
+                                            {%if part.number == part_num.number %}
+                                            selected
+                                            {% endif %}
+                                            value="{{ part_num.number }}">{{ part_num.number }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-outline-secondary">Зберегти</button>
+                        </form>
                     </div>
-                    <div class="list-group-item">
-                        <a href="#multiCollapse3" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="multiCollapse3">
-                            3. Part 3
-                        </a>
-                        <div class="collapse multi-collapse" id="multiCollapse3">
-                            <a class="dropdown-item" href="#">1. Action</a>
-                            <a class="dropdown-item" href="#">2. Another action</a>
-                            <a class="dropdown-item" href="#">3. Something else here</a>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

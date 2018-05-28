@@ -5,8 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'playlist/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
@@ -51,11 +53,62 @@
                         "Тут повинен бути опис поточного плейлісту"
                     </p>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути</button>
                     </div>
                 </div>
-                <img class="card-image-right flex-auto d-none d-lg-block" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg" alt="Зображення відсутнє" style="width: 200px; height: 250px;">
+
+                <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
+                    <div class="side-crop">
+                        <img class="img side-crop" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-image.png">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-6 ">
+            <div class="card flex-md-row mb-4 shadow-lg">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <h3 class="mb-0">
+                        <a class="text-dark" href="#">Назва</a>
+                    </h3>
+                    <div class="mb-1 text-muted">Дата</div>
+                    <p class="card-text mb-auto">
+                        "Тут повинен бути опис поточного плейлісту"
+                    </p>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути</button>
+                    </div>
+                </div>
+
+                <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
+                    <div class="side-crop">
+                        <img class="img side-crop" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 ">
+            <div class="card flex-md-row mb-4 shadow-lg">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <h3 class="mb-0">
+                        <a class="text-dark" href="#">Назва</a>
+                    </h3>
+                    <div class="mb-1 text-muted">Дата</div>
+                    <p class="card-text mb-auto">
+                        "Тут повинен бути опис поточного плейлісту"
+                    </p>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути</button>
+                    </div>
+                </div>
+
+                <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
+                    <div class="side-crop">
+                        <img class="img side-crop" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

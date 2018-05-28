@@ -5,9 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'playlist/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
@@ -34,10 +35,15 @@
             </div>
         </nav>
     </header>
+
     <div class="row mb-2">
         <div class="col-md-12">
             <div class="card flex-md-row mb-4">
-                <img class="card-image-left rounded img-responsive d-none d-lg-block" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg" alt="Зображення відсутнє">
+                <div class="card-image-left flex-auto d-none d-lg-block img-fluid" >
+                    <div class="side crop">
+                        <img class="img side-crop rounded" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg">
+                    </div>
+                </div>
                 <div class="card-body d-flex flex-column align-items-start">
                     <h3 class="mb-2">Логін</h3>
                     <div class="mb-2">
@@ -57,17 +63,22 @@
                         <span>2018-05-26</span>
                     </div>
                 </div>
-
                 <div class="card-body d-flex justify-content-end align-items-end">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary">
+                        <i class="material-icons">edit</i>
+                    </button>
                 </div>
             </div>
         </div>
+
         <div class="col-md-6 align-self-center">
-            <div class="d-flex  justify-content-center">
-            <a class="btn btn-primary btn-circle btn-xl" href="#">+</a>
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-outline-secondary btn-circle btn-xl" href="#">
+                    <i class="material-icons md-48">playlist_add</i>
+                </a>
             </div>
         </div>
+
         <div class="col-md-6">
             <div class="card flex-md-row mb-4 shadow-lg">
                 <div class="card-body d-flex flex-column align-items-start">
@@ -79,11 +90,14 @@
                         "Тут повинен бути опис поточного плейлісту"
                     </p>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути</button>
                     </div>
                 </div>
-                <img class="card-image-right flex-auto d-none d-lg-block" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg" alt="Зображення відсутнє" style="width: 200px; height: 250px;">
+                <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
+                    <div class="side-crop">
+                        <img class="img side-crop" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -19,8 +19,10 @@ class DataSerializer(serializers.ModelSerializer):
         model = Data
         fields = (
             'id',
+            'playlist',
             'part',
             'user',
+            'name',
             'link',
             'description',
             'creation_date'
@@ -28,14 +30,16 @@ class DataSerializer(serializers.ModelSerializer):
 
 class PartSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Data
+        model = Part
         fields = (
             'id',
             'playlist',
             'user',
+            'number',
             'description',
             'creation_date'
         )
+        ordering = ('number',)
 
 
 class PlaylistSerializer(serializers.ModelSerializer):

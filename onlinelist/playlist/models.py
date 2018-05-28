@@ -18,8 +18,10 @@ class Comment(models.Model):
 
 class Data(models.Model):
     id = models.AutoField(primary_key=True)
+    playlist = models.ForeignKey('Playlist', models.DO_NOTHING)
     part = models.ForeignKey('Part', models.DO_NOTHING)
     user = models.ForeignKey(User, models.DO_NOTHING)
+    name = models.CharField(max_length=45)
     number = models.IntegerField()
     link = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
@@ -36,7 +38,7 @@ class Playlist(models.Model):
     name = models.CharField(max_length=45)
     picture = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
-    creation_date = models.DateTimeField(auto_now_add=True)
+    creation_date = models.DateField(auto_now_add=True)
 
     class Meta:
         db_table = 'playlist'

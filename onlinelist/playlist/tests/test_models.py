@@ -84,8 +84,10 @@ class DataTest(TestCase):
         )
 
         self.data = Data.objects.create(
+            playlist=playlist,
             part=part,
             user=user,
+            name='name',
             number=1,
             link='data link',
             description='data description'
