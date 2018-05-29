@@ -18,7 +18,7 @@
 <div class="container">
     <header class="mb-3">
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm rounded">
-            <a class="navbar-brand" href="#">Learn List</a>
+            <a class="navbar-brand" href="/LearnList/">Learn List</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -30,7 +30,7 @@
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Профіль</a>
+                    <a class="nav-link" href="/LearnList/user/{{ request.user.id }}">Профіль</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/login/">Вихід</a>
@@ -46,7 +46,7 @@
                         <a class="text-dark" href="#">{{ playlist.name }}</a>
                     </h3>
                     <div class="mb-1 text-muted">{{ playlist.date }}</div>
-                    <p class="card-text mb-auto">{{ playlist.description }}</p>
+                    <p class="text-muted card-text mb-auto" >{{ playlist.description }}</p>
                     <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editPlaylist" aria-expanded="false" aria-controls="editPlaylist">
                             <i class="material-icons">edit</i>
@@ -67,7 +67,20 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="editPlaylistNameAddon">Назва</span>
                         </div>
-                        <input class="form-control" type="text" name="playlistName" id="editPlaylistName" value="{{ playlist.name }}">
+                        <input class="form-control" type="text" name="editPlaylistName" id="editPlaylistName" value="{{ playlist.name }}">
+                    </div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="editPlaylistTypeAddon">Тип</span>
+                        </div>
+                        <select class="custom-select" id="editPlaylistType" name="editPlaylistType">
+                            <option value="0" selected>Приватний</option>
+                            <option value="1"
+                                    {% if playlist.type == 1 %}
+                                    selected
+                                    {% endif%}
+                            >Публічний</option>
+                        </select>
                     </div>
 
                     <div class="form-group input-group">
@@ -76,8 +89,8 @@
                         </div>
 
                         <div class="custom-file">
-                            <input type="file" class="form-control custom-file-input" id="editPlaylistPictureFile" name="playlistPicture" id="playlistPicture">
-                            <label class="custom-file-label" for="editPlaylistPictureFile">Оберіть файл</label>
+                            <input type="file" class="form-control custom-file-input" id="editPlaylistPicture" name="editPlaylistPicture" id="playlistPicture">
+                            <label class="custom-file-label" for="editPlaylistPicture">Оберіть файл</label>
                         </div>
                     </div>
 
@@ -85,7 +98,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="editPlaylistDescriptionAddon">Опис</span>
                         </div>
-                        <textarea class="form-control" name="playlistDescription" id="editPlaylistDescription" placeholder="">{{ playlist.description }}</textarea>
+                        <textarea class="form-control" name="editPlaylistDescription" id="editPlaylistDescription" placeholder="">{{ playlist.description }}</textarea>
                     </div>
 
                     <button type="submit" name="edit_playlist" class="btn btn-outline-secondary">Зберегти</button>

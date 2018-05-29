@@ -18,7 +18,7 @@
 <div class="container">
     <header class="mb-3">
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm rounded">
-            <a class="navbar-brand" href="#">Learn List</a>
+            <a class="navbar-brand" href="/LearnList/">Learn List</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -30,7 +30,7 @@
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Профіль</a>
+                    <a class="nav-link" href="/LearnList/user/{{ request.user.id }}">Профіль</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/login/">Вихід</a>
@@ -45,75 +45,28 @@
         </div>
     </section>
     <div class="row mb-2">
+        {% for playlist in playlists %}
         <div class="col-md-6 ">
             <div class="card flex-md-row mb-4 shadow-lg">
-                <div class="card-body d-flex flex-column align-items-start">
+                <div class="card-body d-flex flex-column align-items-start" style="overflow: hidden">
                     <h3 class="mb-0">
-                        <a class="text-dark" href="#">Назва</a>
+                        <a class="text-dark" href="playlist/{{ playlist.id }}">{{ playlist.name }}</a>
                     </h3>
-                    <div class="mb-1 text-muted">Дата</div>
-                    <p class="card-text mb-auto">
-                        "Тут повинен бути опис поточного плейлісту"
-                    </p>
+                    <div class="mb-1 text-muted">{{ playlist.date }}</div>
+                    <p class="text-muted card-text mb-auto">{{ playlist.description }}</p>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути</button>
+                        <a class="btn btn-sm btn-outline-secondary" href="playlist/{{ playlist.id }}">Переглянути</a>
                     </div>
                 </div>
 
                 <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
                     <div class="side-crop">
-                        <img class="img side-crop" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-image.png">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="col-md-6 ">
-            <div class="card flex-md-row mb-4 shadow-lg">
-                <div class="card-body d-flex flex-column align-items-start">
-                    <h3 class="mb-0">
-                        <a class="text-dark" href="#">Назва</a>
-                    </h3>
-                    <div class="mb-1 text-muted">Дата</div>
-                    <p class="card-text mb-auto">
-                        "Тут повинен бути опис поточного плейлісту"
-                    </p>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути</button>
-                    </div>
-                </div>
-
-                <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
-                    <div class="side-crop">
-                        <img class="img side-crop" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg">
+                        <img class="img side-crop" src="{% static 'playlist/images'%}/{{ playlist.picture }}">
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-6 ">
-            <div class="card flex-md-row mb-4 shadow-lg">
-                <div class="card-body d-flex flex-column align-items-start">
-                    <h3 class="mb-0">
-                        <a class="text-dark" href="#">Назва</a>
-                    </h3>
-                    <div class="mb-1 text-muted">Дата</div>
-                    <p class="card-text mb-auto">
-                        "Тут повинен бути опис поточного плейлісту"
-                    </p>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути</button>
-                    </div>
-                </div>
-
-                <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
-                    <div class="side-crop">
-                        <img class="img side-crop" src="file:///D:/Git/Learn-List/onlinelist/playlist/images/no-photo.jpg">
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 </body>

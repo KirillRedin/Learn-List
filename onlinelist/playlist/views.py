@@ -81,42 +81,32 @@ class UserDetail(APIView):
 
     def get_object(self, id):
         try:
-            return Playlist.objects.get(id=id)
+            return User.objects.get(id=id)
         except Playlist.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, id, format=None):
         user = self.get_object(id)
         playlists = Playlist.objects.filter(user=user)
-        serializer = PlaylistSerializer(playlists, many=True)
-        return Response(serializer.data)
+        return Response({'playlists': playlists}, template_name='profile.html')
 
     def post(self, request, format=None):
-        serializer = PlaylistSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'playlists': playlists}, template_name='profile.html')
 
 
 class PlaylistList(APIView):
 
     """ List of Playlists, or create a new playlist """
 
-    # renderer_classes = (TemplateHTMLRenderer,)
+    renderer_classes = (TemplateHTMLRenderer,)
 
     def get(self, request, format=None):
         playlists = Playlist.objects.all()
-        serializer = PlaylistSerializer(playlists, many=True)
-        return Response(serializer.data)
+        return Response({'playlists': playlists}, template_name='mainpage.html')
 
     def post(self, request, format=None):
-        serializer = PlaylistSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+        playlists = Playlist.objects.all()
+        return Response({'playlists': playlists}, template_name='mainpage.html')
 
 @method_decorator(login_required, name='dispatch')
 class PlaylistDetail(APIView):
@@ -155,21 +145,24 @@ class PlaylistDetail(APIView):
 
         if request.POST.get('edit_playlist') != None:
             print("Editing playlist")
-            name = request.POST['playlistName']
-            description = request.POST['playlistDescription']
+            name = request.POST['editPlaylistName']
+            type = request.POST['editPlaylistType']
+            description = request.POST['editPlaylistDescription']
             picturename = playlist.picture
 
             if request.FILES.get('playlistPicture') != None:
                 print("Changing picture")
-                picture = request.FILES['playlistPicture']
+                picture = request.FILES['editPlaylistPicture']
                 img_fs = FileSystemStorage(base_url='/playlist/static/playlist/images', location="playlist/static/playlist/images")
                 picturename = img_fs.save(picture.name, picture)
                 print(picturename)
 
             playlist.name = name
+            playlist.type = type
             playlist.description = description
             playlist.picture = picturename
             playlist.save()
+            playlist = self.get_object(id)
             return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'users': users}, template_name='playlist.html')
 
         elif request.POST.get('add_part') != None:

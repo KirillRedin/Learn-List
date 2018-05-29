@@ -18,7 +18,7 @@ class Comment(models.Model):
     id = models.AutoField(primary_key=True)
     playlist = models.ForeignKey('Playlist', on_delete=models.CASCADE)
     user = models.ForeignKey(User, models.DO_NOTHING)
-    content = models.TextField()
+    content = models.TextField(max_length=500)
     creation_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
