@@ -55,6 +55,7 @@ class Playlist(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, models.DO_NOTHING)
     name = models.CharField(max_length=45)
+    type = models.IntegerField()
     picture = models.TextField(max_length=200)
     description = models.TextField(blank=True, null=True)
     creation_date = models.DateField(auto_now_add=True)

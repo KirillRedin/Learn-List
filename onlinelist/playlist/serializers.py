@@ -50,6 +50,7 @@ class PlaylistSerializer(serializers.ModelSerializer):
             'id',
             'user',
             'name',
+            'type',
             'description',
             'picture',
             'creation_date'

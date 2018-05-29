@@ -18,6 +18,7 @@ class PlaylistTest(TestCase):
         self.playlist = Playlist.objects.create(
             user=user,
             name='New Playlist',
+            type='1',
             description='playlist description',
             picture='picture link'
         )
@@ -41,6 +42,7 @@ class PartTest(TestCase):
         playlist = Playlist.objects.create(
             user=user,
             name='New Playlist',
+            type='1',
             description='playlist description',
             picture='picture link'
         )
@@ -71,6 +73,7 @@ class DataTest(TestCase):
         playlist = Playlist.objects.create(
             user=user,
             name='New Playlist',
+            type='1',
             description='playlist description',
             picture='picture link'
         )
@@ -112,6 +115,7 @@ class CommentTest(TestCase):
         playlist = Playlist.objects.create(
             user=user,
             name='New Playlist',
+            type='1',
             description='playlist description',
             picture='picture link'
         )
@@ -141,6 +145,7 @@ class PrivilegeTest(TestCase):
         playlist = Playlist.objects.create(
             user=user,
             name='New Playlist',
+            type='1',
             description='playlist description',
             picture='picture link'
         )

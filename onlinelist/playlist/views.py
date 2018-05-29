@@ -63,13 +63,40 @@ class LogIn(APIView):
 
 
 class LogOut(APIView):
-    """ Login in page"""
+    """ Logout page"""
 
     renderer_classes = (TemplateHTMLRenderer,)
 
     def get(self, request, format=None):
         logout(request)
         return Response(template_name='login.html')
+
+
+
+
+class UserDetail(APIView):
+    """ User Detailpage"""
+
+    renderer_classes = (TemplateHTMLRenderer,)
+
+    def get_object(self, id):
+        try:
+            return Playlist.objects.get(id=id)
+        except Playlist.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, id, format=None):
+        user = self.get_object(id)
+        playlists = Playlist.objects.filter(user=user)
+        serializer = PlaylistSerializer(playlists, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = PlaylistSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PlaylistList(APIView):
@@ -90,8 +117,8 @@ class PlaylistList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @method_decorator(login_required, name='dispatch')
-@method_decorator(csrf_exempt, name='dispatch')
 class PlaylistDetail(APIView):
 
     """ Retrieve, update or delete a playlist instance """
