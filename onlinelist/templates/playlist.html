@@ -94,7 +94,7 @@
                     <h5>Коментарі</h5>
                 </div>
 
-                <form class="mb-4">
+                <form class="mb-4"> {% csrf_token %}
                     <div class="form-group input-group">
                         <textarea class="form-control" id="addComment" placeholder="Написати коментар..."></textarea>
                     </div>
@@ -138,12 +138,12 @@
                 </div>
 
                 <div class="col-md-12 collapse multi-collapse" id="addPart">
-                    <form class="dropdown-item disabled" method="post">
+                    <form class="dropdown-item disabled" method="post"> {% csrf_token %}
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="addPartNameAddon">Назва</span>
                             </div>
-                            <input type="text" class="form-control" id="addPartName" name="addPartName" placeholder="Назва">
+                            <input type="text" class="form-control" id="addPartName" name="addPartName" placeholder="Назва" required="">
                         </div>
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
@@ -169,28 +169,40 @@
                     {% for part in parts %}
                     <div class="list-group-item mb-2">
                         <div class="row">
-                            <div class="col-md-6">
-                                <a class="" href="#partCollapse{{ part.id }}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="partCollapse{{ part.id }}">
-                                    {{ part.number }}.
-                                    {{ part.name }}
-                                </a>
-                            </div>
+                            <a class="col-md-9" href="#partCollapse{{ part.id }}, #partButtons{{ part.id }}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="partCollapse{{ part.id }}">
+                                {{ part.number }}.
+                                {{ part.name }}
+                            </a>
 
-                            <div class="col-md-6">
+                            <script language='javascript' type="text/javascript">
+                                function show(input) {
+                                    var x = document.getElementById(input);
+                                    if (x.style.display === "none") {
+                                        x.style.display = "block";
+                                    } else {
+                                        x.style.display = "none";
+                                    }
+                                }
+                            </script>
+
+                            <div class="col-md-3 collapse multi-collapse" id="partButtons{{ part.id }}">
                                 <div class="d-flex flex-row justify-content-end align-items-end">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editPart{{ part.id }}" aria-expanded="false" aria-controls="editPart{{ part.id }}">
-                                            <i class="material-icons">edit</i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-secondary" type="button">
-                                            <i class="material-icons">delete_outline</i>
-                                        </button>
-                                    </div>
+                                    <form method="post" id="{{ part.id }}" > {% csrf_token %}
+                                        <div class="btn-group">
+                                            <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editPart{{ part.id }}" aria-expanded="false" aria-controls="editPart{{ part.id }}">
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                            <button class="btn btn-sm small-btn btn-outline-secondary" type="submit" name="delete_part">
+                                                <i class="material-icons">delete_outline</i>
+                                            </button>
+                                        </div>
+                                        <input hidden="" name="deletePartId" value="{{ part.id }}">
+                                    </form>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="collapse multi-collapse" id="partCollapse{{ part.id }}">
+                        <div class="collapse multi-collapse" id="partCollapse{{ part.id }}" >
                             <small class="text-muted">{{ part.description }}</small>
 
                             <div class="row">
@@ -202,30 +214,30 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 collapse multi-collapse" id="addData{{ part.id }}">
-                                    <form class="dropdown-item disabled">
+                                    <form class="dropdown-item disabled" method="post"> {% csrf_token %}
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="addDataNameAddon">Назва</span>
                                             </div>
-                                            <input type="text" class="form-control" id="addDataName" placeholder="Назва">
+                                            <input type="text" class="form-control" id="addDataName" name="addDataName" placeholder="Назва" required="">
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="addDataLinkAddon">Посилання</span>
                                             </div>
-                                            <input type="text" class="form-control" id="addDataLink" placeholder="Посилання">
+                                            <input type="text" class="form-control" id="addDataLink" name="addDataLink" placeholder="Посилання" required="">
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="addDataDescriptionAddon">Опис</span>
                                             </div>
-                                            <textarea class="form-control" id="addDataDescription" placeholder="Опис"></textarea>
+                                            <textarea class="form-control" id="addDataDescription" name="addDataDescription" placeholder="Опис"></textarea>
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="addDataNumberAddon">Номер</span>
                                             </div>
-                                            <select class="custom-select" id="addDataNumberSelect">
+                                            <select class="custom-select" id="addDataNumberSelect" name="addDataNumber">
                                                 <option value="1">1</option>
                                                 {% for add_data_part in data %}
                                                 {% if add_data_part.part_id == part.id %}
@@ -234,66 +246,71 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
-                                        <button type="submit" class="btn btn-outline-secondary">Додати</button>
+                                        <input hidden="" name="addDataPartId" value="{{ part.id }}">
+                                        <button type="submit" class="btn btn-outline-secondary" name="add_data">Додати</button>
                                     </form>
                                 </div>
                             </div>
 
                             {% for data_part in data %}
                             {% if data_part.part_id == part.id %}
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <a class="dropdown-item" href="#">{{ data_part.number }}. {{ data_part.name }}<br>
-                                        <small class="text-muted">{{ data_part.description }}</small>
-                                    </a>
-                                </div>
-                                <div class="col-md-6">
+                            <div class="row mb-2">
+                                <a class="dropdown-item col-md-9" target="_blank" href="{{ data_part.link }}">{{ data_part.number }}. {{ data_part.name }}<br>
+                                    <small class="text-muted">{{ data_part.description }}</small>
+                                </a>
+                                <div class="col-md-3">
                                     <div class="d-flex flex-row justify-content-end align-items-start">
-                                        <div class="btn-group">
-                                            <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editData{{ data_part.id }}" aria-expanded="false" aria-controls="editData{{ data_part.id }}">
-                                                <i class="material-icons">edit</i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-secondary" type="button">
-                                                <i class="material-icons">delete_outline</i>
-                                            </button>
-                                        </div>
+                                        <form method="post">{% csrf_token %}
+                                            <div class="btn-group">
+                                                <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editData{{ data_part.id }}" aria-expanded="false" aria-controls="editData{{ data_part.id }}">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary" type="submit" name="delete_data"> {% csrf_token %}
+                                                    <i class="material-icons">delete_outline</i>
+                                                </button>
+                                            </div>
+                                            <input hidden="" name="deleteDataId" value="{{ data_part.id }}">
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="col-md-12 collapse multi-collapse" id="editData{{ data_part.id }}">
-                                    <form class="dropdown-item disabled">
+                                    <form class="dropdown-item disabled" method="post"> {% csrf_token %}
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="editDataNameAddon">Назва</span>
                                             </div>
-                                            <input type="text" class="form-control" id="editDataName" value="{{ data_part.name }}">
+                                            <input type="text" class="form-control" id="editDataName" name="editDataName" value="{{ data_part.name }}">
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="editDataLinkAddon">Посилання</span>
                                             </div>
-                                            <input type="text" class="form-control" id="editDataLink" value="{{ data_part.link }}">
+                                            <input type="text" class="form-control" id="editDataLink" name="editDataLink" value="{{ data_part.link }}">
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="editDataDescriptionAddon">Опис</span>
                                             </div>
-                                            <textarea class="form-control" id="editDataDescription" >{{ data_part.description }}</textarea>
+                                            <textarea class="form-control" id="editDataDescription" name="editDataDescription">{{ data_part.description }}</textarea>
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="editDataNumberAddon">Номер</span>
                                             </div>
-                                            <select class="custom-select" id="editDataNumberSelect">
+                                            <select class="custom-select" id="editDataNumberSelect" name="editDataNumber">
                                                 {% for edit_data_part in data %}
+                                                {% if edit_data_part.part == data_part.part %}
                                                 <option
                                                         {% if edit_data_part.id == data_part.id %}
                                                         selected
                                                         {% endif %}
                                                         value="{{ edit_data_part.number }}">{{ edit_data_part.number }}</option>
+                                                {% endif %}
                                                 {% endfor %}
                                             </select>
                                         </div>
-                                        <button type="submit" class="btn btn-outline-secondary">Зберегти</button>
+                                        <input hidden="" name="editDataId" value="{{ data_part.id }}">
+                                        <button type="submit" class="btn btn-outline-secondary" name="edit_data">Зберегти</button>
                                     </form>
                                 </div>
                             </div>
@@ -303,24 +320,24 @@
                     </div>
 
                     <div class="col-md-12 collapse multi-collapse" id="editPart{{ part.id }}">
-                        <form class="dropdown-item disabled">
+                        <form class="dropdown-item disabled" method="post"> {% csrf_token %}
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="editPartNameAddon">Назва</span>
                                 </div>
-                                <input type="text" class="form-control" id="editPartName" value="{{ part.name }}">
+                                <input type="text" class="form-control" id="editPartName" name="editPartName" value="{{ part.name }}">
                             </div>
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="editPartDescriptionAddon">Опис</span>
                                 </div>
-                                <textarea class="form-control" id="editPartDescription">{{ part.description }}</textarea>
+                                <textarea class="form-control" id="editPartDescription" name="editPartDescription">{{ part.description }}</textarea>
                             </div>
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="editPartNumberAddon">Номер</span>
                                 </div>
-                                <select class="custom-select" id="editPartsNumberSelect">
+                                <select class="custom-select" id="editPartNumberSelect" name="editPartNumber">
                                     {% for part_num in parts %}
                                     <option
                                             {%if part.number == part_num.number %}
@@ -330,7 +347,8 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-outline-secondary">Зберегти</button>
+                            <input hidden="" name="editPartId" value="{{ part.id }}">
+                            <button type="submit" class="btn btn-outline-secondary" name="edit_part">Зберегти</button>
                         </form>
                     </div>
                     {% endfor %}

@@ -105,6 +105,7 @@ class PlaylistDetail(APIView):
     def post(self, request, id, format=None):
         playlist = self.get_object(id)
         user_picture = UserPicture.objects.get(user = request.user)
+
         if request.POST.get('edit_playlist') != None:
             print("Editing playlist")
             name = request.POST['playlistName']
@@ -132,63 +133,115 @@ class PlaylistDetail(APIView):
             description = request.POST['addPartDescription']
             number = request.POST['addPartNumber']
             try:
-                greaterParts = Part.objects.filter(playlist=playlist.id, number__gte=number)
+                greaterParts = Part.objects.filter(playlist=playlist, number__gte=number)
                 Part.increase_number(self, greaterParts)
             except Part.DoesNotExist:
-                print('Part does not exitst')
-            data = {
-                'user': 1,
-                'playlist': playlist.id,
-                'name': name,
-                'description': description,
-                'number': number,
-            }
-            partSerializer = PartSerializer(data=data)
+                print('Greater parts does not exitst')
 
-            if partSerializer.is_valid():
-                partSerializer.save()
-                parts = Part.objects.filter(playlist=playlist).order_by('number')
-                data = Data.objects.filter(playlist=playlist).order_by('number')
-                return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+            Part.objects.create(user=request.user, playlist=playlist, name=name, description=description, number=number)
+            parts = Part.objects.filter(playlist=playlist).order_by('number')
+            data = Data.objects.filter(playlist=playlist).order_by('number')
+            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
 
-            print("Add part error ")
-            return Response(template_name='playlist.html')
+        elif request.POST.get('add_data') != None:
+            print("Add data")
+            name = request.POST['addDataName']
+            link = request.POST['addDataLink']
+            description = request.POST['addDataDescription']
+            number = request.POST['addDataNumber']
+            part = Part.objects.get(id=request.POST['addDataPartId'])
+            try:
+                greaterData = Data.objects.filter(part=part, number__gte=number)
+                Data.increase_number(self, greaterData)
+            except Data.DoesNotExist:
+                print('Greater data does not exitst')
+
+            Data.objects.create(user=request.user, playlist=playlist, part=part, name=name, link=link, description=description, number=number)
+            parts = Part.objects.filter(playlist=playlist).order_by('number')
+            data = Data.objects.filter(playlist=playlist).order_by('number')
+            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+
+        elif request.POST.get('delete_part') != None:
+            print("Delete part")
+            part = Part.objects.get(id=request.POST['deletePartId'])
+            try:
+                greaterParts = Part.objects.filter(playlist=playlist, number__gte=part.number)
+                Part.decrease_number(self, greaterParts)
+            except Part.DoesNotExist:
+                print('Greater parts does not exitst')
+            part.delete()
+            parts = Part.objects.filter(playlist=playlist).order_by('number')
+            data = Data.objects.filter(playlist=playlist).order_by('number')
+            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+
+        elif request.POST.get('delete_data') != None:
+            print("Delete data")
+            data = Data.objects.get(id=request.POST['deleteDataId'])
+            try:
+                greaterData = Data.objects.filter(playlist=playlist, part=data.part, number__gte=data.number)
+                Data.decrease_number(self, greaterData)
+            except Data.DoesNotExist:
+                print('Greater data does not exitst')
+            data.delete()
+            parts = Part.objects.filter(playlist=playlist).order_by('number')
+            data = Data.objects.filter(playlist=playlist).order_by('number')
+            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+
+        elif request.POST.get('edit_part') != None:
+            print('Edit part')
+            name = request.POST['editPartName']
+            description = request.POST['editPartDescription']
+            number = request.POST['editPartNumber']
+            part = Part.objects.get(id=request.POST['editPartId'])
+            try:
+                greaterPart = Part.objects.filter(playlist=playlist, number__gte=part.number + 1)
+                Part.decrease_number(self, greaterPart)
+            except Part.DoesNotExist:
+                print('Greater part does not exitst')
+
+            try:
+                greaterPart = Part.objects.filter(playlist=playlist, number__gte=number)
+                Part.increase_number(self, greaterPart)
+            except Part.DoesNotExist:
+                print('Greater part does not exitst')
+
+            part.name = name
+            part.description = description
+            part.number = number
+            part.save()
+            parts = Part.objects.filter(playlist=playlist).order_by('number')
+            data = Data.objects.filter(playlist=playlist).order_by('number')
+            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+
+
+        elif request.POST.get('edit_data') != None:
+            print('Edit data')
+            name = request.POST['editDataName']
+            description = request.POST['editDataDescription']
+            link = request.POST['editDataLink']
+            number = request.POST['editDataNumber']
+            data = Data.objects.get(id=request.POST['editDataId'])
+            part = data.part
+            try:
+                greaterData = Data.objects.filter(part=part, number__gte=data.number + 1)
+                Data.decrease_number(self, greaterData)
+            except Data.DoesNotExist:
+                print('Greater data does not exitst')
+
+            try:
+                greaterData = Data.objects.filter(part=part, number__gte=number)
+                Data.increase_number(self, greaterData)
+            except Data.DoesNotExist:
+                print('Greater data does not exitst')
+
+            data.name = name
+            data.description = description
+            data.number = number
+            data.link = link
+            data.save()
+            parts = Part.objects.filter(playlist=playlist).order_by('number')
+            data = Data.objects.filter(playlist=playlist).order_by('number')
+            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
 
         print("Operation selection error")
         return Response(template_name='playlist.html')
-
-    # def put(self, request, id, format=None):
-    #     playlist = self.get_object(id)
-    #     playlistSerializer = PlaylistSerializer(playlist, data=request.data)
-    #     parts = Part.objects.filter(playlist=playlist).order_by('number')
-    #     data = Data.objects.filter(playlist=playlist).order_by('number')
-    #     if playlistSerializer.is_valid():
-    #         playlistSerializer.save()
-    #         return Response({'playlist': playlistSerializer.data, 'parts': parts, 'data':data}, status=status.HTTP_204_NO_CONTENT)
-    #     return Response(playlistSerializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    #
-    # def delete(self, request, id, format=None):
-    #     playlist = self.get_object(id)
-    #     playlist.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
-    #
-
-# class PlaylistPartsList(APIView):
-#
-#
-#     """ List of Parts, or create a new part """
-#
-#     # renderer_classes = (TemplateHTMLRenderer,)
-#
-#     def get(self, request, playlist_id, format=None):
-#         playlist = Plalylist.objects.get(id=playlist_id)
-#         parts = Part.objects.get(playlist=playlist)
-#         serializer = PartSerializer(parts, many=True)
-#         return Response(serializer.data)
-#
-#     def post(self, request, format=None):
-#         serializer = PartSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

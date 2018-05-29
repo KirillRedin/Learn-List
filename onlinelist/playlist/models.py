@@ -36,6 +36,16 @@ class Data(models.Model):
     description = models.TextField(blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
 
+    def increase_number(self, greaterData):
+        for data in greaterData:
+            data.number += 1
+            data.save()
+
+    def decrease_number(self, greaterParts):
+        for part in greaterParts:
+            part.number -= 1
+            part.save()
+
     class Meta:
         db_table = 'data'
         unique_together = (('id', 'part'),)
@@ -65,6 +75,11 @@ class Part(models.Model):
     def increase_number(self, greaterParts):
         for part in greaterParts:
             part.number += 1
+            part.save()
+
+    def decrease_number(self, greaterParts):
+        for part in greaterParts:
+            part.number -= 1
             part.save()
 
     # def add_part(self, user_):
