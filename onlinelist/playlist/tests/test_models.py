@@ -154,3 +154,24 @@ class PrivilegeTest(TestCase):
     def test_privilege(self):
         privilege = Privilege.objects.get(id=self.privilege.id)
         self.assertEqual(privilege.access_num, 1)
+
+
+class UserPictureTest(TestCase):
+
+    """ Test module for UserPictureTest model """
+
+    def setUp(self):
+        user = User.objects.create_user(
+            username='Redin',
+            email='email',
+            password=123
+        )
+
+        self.user_picture = UserPicture.objects.create(
+            user=user,
+            picture='picture link'
+        )
+
+    def test_user_picture(self):
+        user_picture = UserPicture.objects.get(id=self.user_picture.id)
+        self.assertEqual(user_picture.picture, 'picture link')

@@ -35,7 +35,14 @@
     1px 1px 0 #000;
 }
 
+html {
+  height: 100%;
+}
 
+body {
+  min-height: 100%;
+  background-color: #FFCC00;
+}
 
 .side-crop {
     width: 200px;

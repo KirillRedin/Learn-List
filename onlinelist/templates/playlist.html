@@ -12,7 +12,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
-
     <title>Profile</title>
 </head>
 <body>
@@ -60,12 +59,12 @@
             </div>
 
             <div class="col-md-12  mb-5 collapse multi-collapse" id="editPlaylist">
-                <form class="dropdown-item disabled" method="post" enctype="multipart/form-data">
+                <form class="dropdown-item disabled" method="post" enctype="multipart/form-data">{% csrf_token %}
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="editPlaylistNameAddon">Назва</span>
                         </div>
-                        <input type="text" name="playlistName" id="editPlaylistName" value="{{ playlist.name }}">
+                        <input class="form-control" type="text" name="playlistName" id="editPlaylistName" value="{{ playlist.name }}">
                     </div>
 
                     <div class="form-group input-group">
@@ -74,7 +73,7 @@
                         </div>
 
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="editPlaylistPictureFile" name="playlistPicture" id="playlistPicture">
+                            <input type="file" class="form-control custom-file-input" id="editPlaylistPictureFile" name="playlistPicture" id="playlistPicture">
                             <label class="custom-file-label" for="editPlaylistPictureFile">Оберіть файл</label>
                         </div>
                     </div>
@@ -86,7 +85,7 @@
                         <textarea class="form-control" name="playlistDescription" id="editPlaylistDescription" placeholder="">{{ playlist.description }}</textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-outline-secondary">Зберегти</button>
+                    <button type="submit" name="edit_playlist" class="btn btn-outline-secondary">Зберегти</button>
                 </form>
             </div>
             
@@ -105,7 +104,7 @@
                 <div class="row">
                     <div class="col-md-2">
                         <a href="#">
-                            <img class="comment" src="D:\Git\Learn-List\onlinelist\playlist\images\no-image.png">
+                            <img class="comment" src="{% static 'playlist/images'%}/{{ user_picture.picture }}">
                         </a>
                     </div>
                     <div class="col-md-10 card flex-md-row mb-4 shadow">
@@ -139,31 +138,31 @@
                 </div>
 
                 <div class="col-md-12 collapse multi-collapse" id="addPart">
-                    <form class="dropdown-item disabled">
+                    <form class="dropdown-item disabled" method="post">
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="addPartNameAddon">Назва</span>
                             </div>
-                            <input type="text" class="form-control" id="addPartName" placeholder="Назва">
+                            <input type="text" class="form-control" id="addPartName" name="addPartName" placeholder="Назва">
                         </div>
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="addPartDescriptionAddon">Опис</span>
                             </div>
-                            <textarea class="form-control" id="addPartDescription" placeholder="Опис"></textarea>
+                            <textarea class="form-control" id="addPartDescription" name="addPartDescription" placeholder="Опис"></textarea>
                         </div>
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="addPartNumberAddon">Номер</span>
                             </div>
-                            <select class="custom-select" id="addPartsNumberSelect">
+                            <select class="custom-select" id="addPartsNumberSelect" name="addPartNumber">
                                 <option value="1">1</option>
                                 {% for part_add_num in parts %}
                                 <option value="{{ part_add_num.number|add:'1' }}">{{ part_add_num.number|add:"1" }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-outline-secondary">Додати</button>
+                        <button type="submit" name="add_part" class="btn btn-outline-secondary">Додати</button>
                     </form>
                 </div>
                 <div class="list-group">
@@ -172,7 +171,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <a class="" href="#partCollapse{{ part.id }}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="partCollapse{{ part.id }}">
-                                    1.
+                                    {{ part.number }}.
                                     {{ part.name }}
                                 </a>
                             </div>

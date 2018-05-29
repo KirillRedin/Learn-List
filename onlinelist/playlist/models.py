@@ -62,6 +62,15 @@ class Part(models.Model):
     description = models.TextField(blank=True, null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
 
+    def increase_number(self, greaterParts):
+        for part in greaterParts:
+            part.number += 1
+            part.save()
+
+    # def add_part(self, user_):
+    #
+    # def update_part(self):
+
     class Meta:
         db_table = 'part'
 

@@ -34,6 +34,7 @@ class PartSerializer(serializers.ModelSerializer):
         fields = (
             'id',
             'playlist',
+            'name',
             'user',
             'number',
             'description',
