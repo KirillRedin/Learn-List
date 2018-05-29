@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.renderers import TemplateHTMLRenderer
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -14,13 +14,13 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 
-class SignIn(APIView):
-    """ Sing in page"""
+class LogIn(APIView):
+    """ Login in page"""
 
     renderer_classes = (TemplateHTMLRenderer,)
 
     def get(self, request, format=None):
-        return Response(template_name='signin.html')
+        return Response(template_name='login.html')
 
     def post(self, request, format=None):
         messaage = messaage = {
@@ -38,7 +38,7 @@ class SignIn(APIView):
                     'text': 'Невірний Логін або Пароль',
                     'color': 'Red'
                 }
-                return Response({'message': messaage}, template_name='signin.html')
+                return Response({'message': messaage}, template_name='login.html')
         else:
             print('Registration')
             user = User.objects.create_user(
@@ -59,7 +59,18 @@ class SignIn(APIView):
                 'text': 'Користувач успішно зареєстрований',
                 'color': 'Green'
             }
-            return Response({'message': messaage}, template_name='signin.html')
+            return Response({'message': messaage}, template_name='login.html')
+
+
+class LogOut(APIView):
+    """ Login in page"""
+
+    renderer_classes = (TemplateHTMLRenderer,)
+
+    def get(self, request, format=None):
+        logout(request)
+        return Response(template_name='login.html')
+
 
 class PlaylistList(APIView):
 
@@ -95,16 +106,25 @@ class PlaylistDetail(APIView):
 
     def get(self, request, id, format=None):
         playlist = self.get_object(id)
-        user_picture = UserPicture.objects.get(user = request.user)
-        playlistSerializer = PlaylistSerializer(playlist)
+        user_pictures = UserPicture.objects.all()
         parts = Part.objects.filter(playlist=playlist).order_by('number')
         data = Data.objects.filter(playlist=playlist).order_by('number')
-        return Response({'playlist': playlistSerializer.data, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+        comments = Comment.objects.filter(playlist=playlist)
+        users = []
+        for comment in comments:
+            users.append(User.objects.get(id=comment.user.id))
+        return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'users': users}, template_name='playlist.html')
 
 
     def post(self, request, id, format=None):
         playlist = self.get_object(id)
-        user_picture = UserPicture.objects.get(user = request.user)
+        user_pictures = UserPicture.objects.all()
+        parts = Part.objects.filter(playlist=playlist).order_by('number')
+        data = Data.objects.filter(playlist=playlist).order_by('number')
+        comments = Comment.objects.filter(playlist=playlist)
+        users = []
+        for comment in comments:
+            users.append(User.objects.get(id=comment.user.id))
 
         if request.POST.get('edit_playlist') != None:
             print("Editing playlist")
@@ -123,9 +143,7 @@ class PlaylistDetail(APIView):
             playlist.description = description
             playlist.picture = picturename
             playlist.save()
-            parts = Part.objects.filter(playlist=playlist).order_by('number')
-            data = Data.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'users': users}, template_name='playlist.html')
 
         elif request.POST.get('add_part') != None:
             print("Add part")
@@ -140,8 +158,7 @@ class PlaylistDetail(APIView):
 
             Part.objects.create(user=request.user, playlist=playlist, name=name, description=description, number=number)
             parts = Part.objects.filter(playlist=playlist).order_by('number')
-            data = Data.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'users': users}, template_name='playlist.html')
 
         elif request.POST.get('add_data') != None:
             print("Add data")
@@ -157,9 +174,8 @@ class PlaylistDetail(APIView):
                 print('Greater data does not exitst')
 
             Data.objects.create(user=request.user, playlist=playlist, part=part, name=name, link=link, description=description, number=number)
-            parts = Part.objects.filter(playlist=playlist).order_by('number')
             data = Data.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'users': users}, template_name='playlist.html')
 
         elif request.POST.get('delete_part') != None:
             print("Delete part")
@@ -172,7 +188,7 @@ class PlaylistDetail(APIView):
             part.delete()
             parts = Part.objects.filter(playlist=playlist).order_by('number')
             data = Data.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'users': users}, template_name='playlist.html')
 
         elif request.POST.get('delete_data') != None:
             print("Delete data")
@@ -183,9 +199,8 @@ class PlaylistDetail(APIView):
             except Data.DoesNotExist:
                 print('Greater data does not exitst')
             data.delete()
-            parts = Part.objects.filter(playlist=playlist).order_by('number')
             data = Data.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'users': users}, template_name='playlist.html')
 
         elif request.POST.get('edit_part') != None:
             print('Edit part')
@@ -210,8 +225,7 @@ class PlaylistDetail(APIView):
             part.number = number
             part.save()
             parts = Part.objects.filter(playlist=playlist).order_by('number')
-            data = Data.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'users': users}, template_name='playlist.html')
 
 
         elif request.POST.get('edit_data') != None:
@@ -239,9 +253,24 @@ class PlaylistDetail(APIView):
             data.number = number
             data.link = link
             data.save()
+            data = Data.objects.filter(playlist=playlist).order_by('number')
+            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'users': users}, template_name='playlist.html')
+
+        elif request.POST.get('add_comment') != None:
+            print('Add comment')
+            content = request.POST['addCommentContent']
+            Comment.objects.create(content=content, playlist=playlist, user=request.user)
             parts = Part.objects.filter(playlist=playlist).order_by('number')
             data = Data.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'user_picture': user_picture, 'parts': parts, 'data':data}, template_name='playlist.html')
+            comments = Comment.objects.filter(playlist=playlist)
+            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'users': users}, template_name='playlist.html')
+
+        elif request.POST.get('delete_comment') != None:
+            print('Delete comment')
+            comment = Comment.objects.get(id=request.POST['deleteCommentId'])
+            comment.delete()
+            comments = Comment.objects.filter(playlist=playlist)
+            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'users': users}, template_name='playlist.html')
 
         print("Operation selection error")
         return Response(template_name='playlist.html')

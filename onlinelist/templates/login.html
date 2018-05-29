@@ -16,7 +16,7 @@
 <body class="d-flex align-items-center" style="text-align: center; height: 80%; width: 100%;">
 <div class="col-md-12 d-flex justify-content-center">
     <div class="col-md-3">
-        <form class="mb-5" method="post">
+        <form class="mb-5" method="post"> {% csrf_token %}
             <h1 class="h3 mb-3 font-weight-normal">Ласкаво просимо</h1>
             <p style="color: {{ message.color }}">{{ message.text }}</p>
             <label for="inputLogin" class="sr-only">Логін</label>
@@ -27,7 +27,7 @@
             <button class="btn btn-sm btn-primary btn-block" type="button" data-toggle="collapse" data-target="#register" aria-expanded="false" aria-controls="register">Реєстрація</button>
         </form>
 
-        <form class=" px-0 collapse multi-collapse dropdown-item disabled" id="register" method="post" enctype="multipart/form-data">
+        <form class=" px-0 collapse multi-collapse dropdown-item disabled" id="register" method="post" enctype="multipart/form-data"> {% csrf_token %}
             <input class="mb-2 form-control" name="login" placeholder="Логін" required="">
             <input class="mb-2 form-control" name="first_name" placeholder="Ім'я">
             <input class="mb-2 form-control" name="last_name" placeholder="Фамілія">

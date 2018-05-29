@@ -16,23 +16,26 @@
 </head>
 <body>
 <div class="container">
-    <header class="mb-2">
+    <header class="mb-3">
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm rounded">
             <a class="navbar-brand" href="#">Learn List</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Профіль</a>
-                    </li>
-                </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Пошук" aria-label="Search">
                     <button class="btn my-2 my-sm-0" type="submit">Пошук</button>
                 </form>
             </div>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Профіль</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login/">Вихід</a>
+                </li>
+            </ul>
         </nav>
     </header>
     <div class="row">
@@ -94,36 +97,47 @@
                     <h5>Коментарі</h5>
                 </div>
 
-                <form class="mb-4"> {% csrf_token %}
+                <form class="mb-4" method="post"> {% csrf_token %}
                     <div class="form-group input-group">
-                        <textarea class="form-control" id="addComment" placeholder="Написати коментар..."></textarea>
+                        <textarea class="form-control" id="addComment" placeholder="Написати коментар..." name="addCommentContent"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-outline-secondary">Відправити</button>
+                    <button type="submit" class="btn btn-outline-secondary" name="add_comment">Відправити</button>
                 </form>
 
+                {% for comment in comments %}
                 <div class="row">
                     <div class="col-md-2">
-                        <a href="#">
+                        <a href="/profile/{{ comment.user_id }}">
+                            {% for user_picture in user_pictures %}
+                            {% if user_picture.user_id == comment.user_id %}
                             <img class="comment" src="{% static 'playlist/images'%}/{{ user_picture.picture }}">
+                            {% endif %}
+                            {% endfor %}
                         </a>
                     </div>
                     <div class="col-md-10 card flex-md-row mb-4 shadow">
                         <div class="card-body flex-column align-items-start">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-2">
-                                    <a class="text-dark" href="#">Логін</a>
+                                    <a class="text-dark" href="/profile/{{ comment.user_id }}">{{ comment.user.username }}</a>
                                 </h5>
-                                <small class="text-muted">Дата</small>
+                                <small class="text-muted">{{ comment.creation_date }}</small>
                             </div>
-                            <p class="card-text">Коментар певного користувача, що має доступ до коментування поточного плейлісту</p>
+                            <p class="card-text">{{ comment.content }}</p>
                             <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">
-                                    <i class="material-icons">delete_outline</i>
-                                </button>
+                                {% if request.user.id == comment.user_id %}
+                                <form method="post"> {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary" name="delete_comment">
+                                        <i class="material-icons">delete_outline</i>
+                                    </button>
+                                    <input hidden="" name="deleteCommentId" value="{{ comment.id }}">
+                                </form>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -174,17 +188,6 @@
                                 {{ part.name }}
                             </a>
 
-                            <script language='javascript' type="text/javascript">
-                                function show(input) {
-                                    var x = document.getElementById(input);
-                                    if (x.style.display === "none") {
-                                        x.style.display = "block";
-                                    } else {
-                                        x.style.display = "none";
-                                    }
-                                }
-                            </script>
-
                             <div class="col-md-3 collapse multi-collapse" id="partButtons{{ part.id }}">
                                 <div class="d-flex flex-row justify-content-end align-items-end">
                                     <form method="post" id="{{ part.id }}" > {% csrf_token %}
@@ -192,7 +195,7 @@
                                             <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editPart{{ part.id }}" aria-expanded="false" aria-controls="editPart{{ part.id }}">
                                                 <i class="material-icons">edit</i>
                                             </button>
-                                            <button class="btn btn-sm small-btn btn-outline-secondary" type="submit" name="delete_part">
+                                            <button class="btn btn-sm btn-outline-secondary" type="submit" name="delete_part">
                                                 <i class="material-icons">delete_outline</i>
                                             </button>
                                         </div>
@@ -201,9 +204,41 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="collapse multi-collapse" id="partCollapse{{ part.id }}" >
+                        <div class="collapse multi-collapse" id="partCollapse{{ part.id }}">
                             <small class="text-muted">{{ part.description }}</small>
+
+                            <div class="col-md-12 collapse multi-collapse" id="editPart{{ part.id }}">
+                                <form class="dropdown-item disabled" method="post"> {% csrf_token %}
+                                    <div class="form-group input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="editPartNameAddon">Назва</span>
+                                        </div>
+                                        <input type="text" class="form-control" id="editPartName" name="editPartName" value="{{ part.name }}">
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="editPartDescriptionAddon">Опис</span>
+                                        </div>
+                                        <textarea class="form-control" id="editPartDescription" name="editPartDescription">{{ part.description }}</textarea>
+                                    </div>
+                                    <div class="form-group input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="editPartNumberAddon">Номер</span>
+                                        </div>
+                                        <select class="custom-select" id="editPartNumberSelect" name="editPartNumber">
+                                            {% for part_num in parts %}
+                                            <option
+                                                    {%if part.number == part_num.number %}
+                                                    selected
+                                                    {% endif %}
+                                                    value="{{ part_num.number }}">{{ part_num.number }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <input hidden="" name="editPartId" value="{{ part.id }}">
+                                    <button type="submit" class="btn btn-outline-secondary" name="edit_part">Зберегти</button>
+                                </form>
+                            </div>
 
                             <div class="row">
                                 <div class="col-md-12 dropdown-item disabled col">
@@ -255,8 +290,8 @@
                             {% for data_part in data %}
                             {% if data_part.part_id == part.id %}
                             <div class="row mb-2">
-                                <a class="dropdown-item col-md-9" target="_blank" href="{{ data_part.link }}">{{ data_part.number }}. {{ data_part.name }}<br>
-                                    <small class="text-muted">{{ data_part.description }}</small>
+                                <a class="dropdown-item col-md-9" target="_blank" href="{{ data_part.link }}" style="white-space: initial;">{{ data_part.number }}. {{ data_part.name }}<br>
+                                    <small class="text-muted" style="word-wrap: break-word;">{{ data_part.description }}</small>
                                 </a>
                                 <div class="col-md-3">
                                     <div class="d-flex flex-row justify-content-end align-items-start">
@@ -317,39 +352,6 @@
                             {% endif %}
                             {% endfor %}
                         </div>
-                    </div>
-
-                    <div class="col-md-12 collapse multi-collapse" id="editPart{{ part.id }}">
-                        <form class="dropdown-item disabled" method="post"> {% csrf_token %}
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="editPartNameAddon">Назва</span>
-                                </div>
-                                <input type="text" class="form-control" id="editPartName" name="editPartName" value="{{ part.name }}">
-                            </div>
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="editPartDescriptionAddon">Опис</span>
-                                </div>
-                                <textarea class="form-control" id="editPartDescription" name="editPartDescription">{{ part.description }}</textarea>
-                            </div>
-                            <div class="form-group input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="editPartNumberAddon">Номер</span>
-                                </div>
-                                <select class="custom-select" id="editPartNumberSelect" name="editPartNumber">
-                                    {% for part_num in parts %}
-                                    <option
-                                            {%if part.number == part_num.number %}
-                                            selected
-                                            {% endif %}
-                                            value="{{ part_num.number }}">{{ part_num.number }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <input hidden="" name="editPartId" value="{{ part.id }}">
-                            <button type="submit" class="btn btn-outline-secondary" name="edit_part">Зберегти</button>
-                        </form>
                     </div>
                     {% endfor %}
                 </div>
