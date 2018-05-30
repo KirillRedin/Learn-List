@@ -33,22 +33,83 @@
                     <a class="nav-link" href="/LearnList/user/{{ request.user.id }}">Профіль</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login/">Вихід</a>
+                    <a class="nav-link" href="/logout/">Вихід</a>
                 </li>
             </ul>
         </nav>
     </header>
-    <section class="jumbotron text-center">
+    <section class="mb-0 jumbotron text-center">
         <div class="container">
             <h1 class="jumbotron-heading">Learn List</h1>
             <p class="text-muted">Опис сайту</p>
         </div>
     </section>
     <div class="row mb-2">
+        <div class="col-md-12 mb-4 d-flex justify-content-center align-self-center" style="margin-top: -40px">
+            <button class="align-self-center btn playlist-btn btn-circle btn-lg" data-toggle="collapse" style="box-shadow: none" data-target="#addPlaylist" aria-controls="addPlaylist" aria-expanded="false">
+                <i class="material-icons md-48">playlist_add</i>
+            </button>
+        </div>
+        <div class="col-md-12 mb-4 collapse multi-collapse" id="addPlaylist">
+            <div class="d-flex justify-content-start">
+            <div class="col-md-6">
+                <h3>Створення плейліста</h3>
+                <p class="text-muted">
+                    - Для створення плейліста необхідно обрати для нього та обрати тип.<br>
+                    - Зображення та опис є необов'язковими.<br>
+                    - Публічний плейліст доступний для будь-якого авторизованого користувача.<br>
+                    - Приватний плейліст доступний лише автору та користувачам з відповідними правами.<br>
+                    - Права доступу до плейліста можна встановити на сторінці плейліста.<br>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex flex-row justify-content-end align-items-start">
+                    <form class="dropdown-item disabled" method="post" enctype="multipart/form-data">{% csrf_token %}
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addPlaylistNameAddon">Назва</span>
+                            </div>
+                            <input class="form-control" type="text" name="addPlaylistName" id="addPlaylistName" required="">
+                        </div>
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addPlaylistTypeAddon">Тип</span>
+                            </div>
+                            <select class="custom-select" id="addPlaylistType" name="addPlaylistType" required="">
+                                <option value="0" selected>Приватний</option>
+                                <option value="1">Публічний</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addPlaylistPictureAddon">Зображення</span>
+                            </div>
+
+                            <div class="custom-file">
+                                <input type="file" class="form-control custom-file-input" id="addPlaylistPicture" name="addPlaylistPicture">
+                                <label class="custom-file-label" for="addPlaylistPicture">Оберіть файл</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="addPlaylistDescriptionAddon">Опис</span>
+                            </div>
+                            <textarea class="form-control" name="editPlaylistDescription" id="addPlaylistDescription" placeholder="">{{ playlist.description }}</textarea>
+                        </div>
+
+                        <button type="submit" name="add_playlist" class="btn btn-outline-secondary">Створити плейліст</button>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
         {% for playlist in playlists %}
-        <div class="col-md-6 ">
+        <div class="col-md-6">
             <div class="card flex-md-row mb-4 shadow-lg">
-                <div class="card-body d-flex flex-column align-items-start" style="overflow: hidden">
+                <div class="card-body d-flex flex-column align-items-start">
                     <h3 class="mb-0">
                         <a class="text-dark" href="playlist/{{ playlist.id }}">{{ playlist.name }}</a>
                     </h3>
@@ -69,5 +130,8 @@
         {% endfor %}
     </div>
 </div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 </body>
 </html>

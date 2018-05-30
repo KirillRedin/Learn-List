@@ -6,6 +6,16 @@
     font-size: 84px;
     line-height: 1.33;
 }
+
+.btn-circle.btn-lg {
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    text-align: center;
+    font-size: 55px;
+    line-height: 1;
+}
+
 .btn-circle.btn-md {
     width: 50px;
     height: 50px;
@@ -67,10 +77,23 @@ img.comment {
         height: 25px;
     }
 
+.playlist-btn {
+    background-color: #e9ecef;
+    color: black;
+    border: 2px solid #4CAF50;
+}
+
+.playlist-btn:hover {
+    background-color: #e9ecef;
+    color: white;
+}
+
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
+.material-icons.md-56 { font-size: 56px; }
+.material-icons.md-64 { font-size: 64px; }
 
 .box_textshadow {
      text-shadow: 2px 2px 0px #FF0000; /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */

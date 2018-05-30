@@ -7,6 +7,7 @@ from rest_framework.renderers import TemplateHTMLRenderer
 from django.contrib.auth import authenticate, login, logout
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
@@ -20,6 +21,8 @@ class LogIn(APIView):
     renderer_classes = (TemplateHTMLRenderer,)
 
     def get(self, request, format=None):
+        if request.user.is_authenticated:
+            return redirect('/LearnList/')
         return Response(template_name='login.html')
 
     def post(self, request, format=None):
@@ -32,7 +35,7 @@ class LogIn(APIView):
             user = authenticate(request, username=request.POST['login'], password=request.POST['password'])
             if user is not None:
                 login(request, user)
-                return Response({'message': messaage}, template_name='playlist.html')
+                return redirect('/LearnList/')
             else:
                 messaage = {
                     'text': 'Невірний Логін або Пароль',
@@ -62,6 +65,7 @@ class LogIn(APIView):
             return Response({'message': messaage}, template_name='login.html')
 
 
+@method_decorator(login_required, name='dispatch')
 class LogOut(APIView):
     """ Logout page"""
 
@@ -69,9 +73,7 @@ class LogOut(APIView):
 
     def get(self, request, format=None):
         logout(request)
-        return Response(template_name='login.html')
-
-
+        return redirect('/login/')
 
 
 class UserDetail(APIView):
@@ -94,6 +96,7 @@ class UserDetail(APIView):
         return Response({'playlists': playlists}, template_name='profile.html')
 
 
+@method_decorator(login_required, name='dispatch')
 class PlaylistList(APIView):
 
     """ List of Playlists, or create a new playlist """
@@ -105,8 +108,14 @@ class PlaylistList(APIView):
         return Response({'playlists': playlists}, template_name='mainpage.html')
 
     def post(self, request, format=None):
+        name = request.POST['addPlaylistName']
+        user = request.user
+        type = request.POST['addPlaylistType']
+        description = request.POST['addPlaylistDescription']
+        picture = request.POST['addPlaylistPicture']
+        Playlist.objects.create(name=name, user=user, type=type, description=description, picture=picture)
         playlists = Playlist.objects.all()
-        return Response({'playlists': playlists}, template_name='mainpage.html')
+        return Response({'playlists': playlists}, template_name='')
 
 @method_decorator(login_required, name='dispatch')
 class PlaylistDetail(APIView):

@@ -128,4 +128,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'D:\Git\Learn-List\onlinelist\playlist\static\playlist'
-LOGIN_URL = '/signin/'
+LOGIN_URL = '/login/'

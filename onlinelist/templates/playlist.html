@@ -33,7 +33,7 @@
                     <a class="nav-link" href="/LearnList/user/{{ request.user.id }}">Профіль</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login/">Вихід</a>
+                    <a class="nav-link" href="/logout/">Вихід</a>
                 </li>
             </ul>
         </nav>
@@ -47,11 +47,16 @@
                     </h3>
                     <div class="mb-1 text-muted">{{ playlist.date }}</div>
                     <p class="text-muted card-text mb-auto" >{{ playlist.description }}</p>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editPlaylist" aria-expanded="false" aria-controls="editPlaylist">
-                            <i class="material-icons">edit</i>
-                        </button>
-                    </div>
+                    <form method="post"> {% csrf_token %}
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editPlaylist" aria-expanded="false" aria-controls="editPlaylist">
+                                <i class="material-icons">edit</i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" type="submit" name="deletePlaylist" onclick="return confirm('Видалити плейліст?')">
+                                <i class="material-icons">delete</i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
@@ -67,13 +72,14 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="editPlaylistNameAddon">Назва</span>
                         </div>
-                        <input class="form-control" type="text" name="editPlaylistName" id="editPlaylistName" value="{{ playlist.name }}">
+                        <input class="form-control" type="text" name="editPlaylistName" id="editPlaylistName" value="{{ playlist.name }}"  required="">
                     </div>
+
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="editPlaylistTypeAddon">Тип</span>
                         </div>
-                        <select class="custom-select" id="editPlaylistType" name="editPlaylistType">
+                        <select class="custom-select" id="editPlaylistType" name="editPlaylistType" required="">
                             <option value="0" selected>Приватний</option>
                             <option value="1"
                                     {% if playlist.type == 1 %}
@@ -89,7 +95,7 @@
                         </div>
 
                         <div class="custom-file">
-                            <input type="file" class="form-control custom-file-input" id="editPlaylistPicture" name="editPlaylistPicture" id="playlistPicture">
+                            <input type="file" class="form-control custom-file-input" id="editPlaylistPicture" name="editPlaylistPicture">
                             <label class="custom-file-label" for="editPlaylistPicture">Оберіть файл</label>
                         </div>
                     </div>
@@ -140,8 +146,8 @@
                             <div class="d-flex justify-content-end">
                                 {% if request.user.id == comment.user_id %}
                                 <form method="post"> {% csrf_token %}
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary" name="delete_comment">
-                                        <i class="material-icons">delete_outline</i>
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary" name="delete_comment" onclick="return confirm('Видалити коментар?')">
+                                        <i class="material-icons">delete</i>
                                     </button>
                                     <input hidden="" name="deleteCommentId" value="{{ comment.id }}">
                                 </form>
@@ -208,8 +214,8 @@
                                             <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editPart{{ part.id }}" aria-expanded="false" aria-controls="editPart{{ part.id }}">
                                                 <i class="material-icons">edit</i>
                                             </button>
-                                            <button class="btn btn-sm btn-outline-secondary" type="submit" name="delete_part">
-                                                <i class="material-icons">delete_outline</i>
+                                            <button class="btn btn-sm btn-outline-secondary" type="submit" name="delete_part" onclick="return confirm('Видалити розділ?')">
+                                                <i class="material-icons">delete</i>
                                             </button>
                                         </div>
                                         <input hidden="" name="deletePartId" value="{{ part.id }}">
@@ -226,7 +232,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="editPartNameAddon">Назва</span>
                                         </div>
-                                        <input type="text" class="form-control" id="editPartName" name="editPartName" value="{{ part.name }}">
+                                        <input type="text" class="form-control" id="editPartName" name="editPartName" value="{{ part.name }}" required="">
                                     </div>
                                     <div class="form-group input-group">
                                         <div class="input-group-prepend">
@@ -236,7 +242,7 @@
                                     </div>
                                     <div class="form-group input-group">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="editPartNumberAddon">Номер</span>
+                                            <span class="input-group-text" id="editPartNumberAddon" required="">Номер</span>
                                         </div>
                                         <select class="custom-select" id="editPartNumberSelect" name="editPartNumber">
                                             {% for part_num in parts %}
@@ -313,8 +319,8 @@
                                                 <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editData{{ data_part.id }}" aria-expanded="false" aria-controls="editData{{ data_part.id }}">
                                                     <i class="material-icons">edit</i>
                                                 </button>
-                                                <button class="btn btn-sm btn-outline-secondary" type="submit" name="delete_data"> {% csrf_token %}
-                                                    <i class="material-icons">delete_outline</i>
+                                                <button class="btn btn-sm btn-outline-secondary" type="submit" name="delete_data" onclick="return confirm('Видалити дані?')">
+                                                    <i class="material-icons">delete</i>
                                                 </button>
                                             </div>
                                             <input hidden="" name="deleteDataId" value="{{ data_part.id }}">
@@ -327,13 +333,13 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="editDataNameAddon">Назва</span>
                                             </div>
-                                            <input type="text" class="form-control" id="editDataName" name="editDataName" value="{{ data_part.name }}">
+                                            <input type="text" class="form-control" id="editDataName" name="editDataName" value="{{ data_part.name }}"  required="">
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="editDataLinkAddon">Посилання</span>
                                             </div>
-                                            <input type="text" class="form-control" id="editDataLink" name="editDataLink" value="{{ data_part.link }}">
+                                            <input type="text" class="form-control" id="editDataLink" name="editDataLink" value="{{ data_part.link }}" required="">
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
@@ -345,7 +351,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="editDataNumberAddon">Номер</span>
                                             </div>
-                                            <select class="custom-select" id="editDataNumberSelect" name="editDataNumber">
+                                            <select class="custom-select" id="editDataNumberSelect" name="editDataNumber"  required="">
                                                 {% for edit_data_part in data %}
                                                 {% if edit_data_part.part == data_part.part %}
                                                 <option
