@@ -23,7 +23,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="form-inline my-2 my-lg-0">
+                <form class="form-inline my-2 my-lg-0">{% csrf_token %}
                     <input class="form-control mr-sm-2" type="search" placeholder="Пошук" aria-label="Search">
                     <button class="btn my-2 my-sm-0" type="submit">Пошук</button>
                 </form>
@@ -69,7 +69,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="addPlaylistNameAddon">Назва</span>
                             </div>
-                            <input class="form-control" type="text" name="addPlaylistName" id="addPlaylistName" required="" placeholder="Назва плейліста">
+                            <input class="form-control" type="text" name="addPlaylistName" id="addPlaylistName" required="" placeholder="Назва плейліста" maxlength="40">
                         </div>
 
                         <div class="form-group input-group">
@@ -97,7 +97,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="addPlaylistDescriptionAddon">Опис</span>
                             </div>
-                            <textarea class="form-control" name="editPlaylistDescription" id="addPlaylistDescription" placeholder="Опис плейліста"></textarea>
+                            <textarea class="form-control" name="addPlaylistDescription" id="addPlaylistDescription" placeholder="Опис плейліста" maxlength="250"></textarea>
                         </div>
 
                         <button type="submit" name="add_playlist" class="btn btn-outline-secondary">Створити плейліст</button>
@@ -110,18 +110,17 @@
         <div class="col-md-6">
             <div class="card flex-md-row mb-4 shadow-lg">
                 <div class="card-body d-flex flex-column align-items-start">
-                    <h3 class="mb-0">
-                        <a class="text-dark" href="playlist/{{ playlist.id }}">{{ playlist.name }}</a>
-                    </h3>
+                    <small class="text-muted">{{ playlist.creation_date }}</small>
+                    <h4>{{ playlist.name }}</h4>
                     <div class="mb-1 text-muted">{{ playlist.date }}</div>
                     <p class="text-muted card-text mb-auto">{{ playlist.description }}</p>
-                    <div class="btn-group">
+                    <div class="btn-group mt-2">
                         <a class="btn btn-sm btn-outline-secondary" href="playlist/{{ playlist.id }}">Переглянути</a>
                     </div>
                 </div>
 
                 <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
-                    <div class="side-crop">
+                    <div class="side-crop rounded">
                         <img class="img side-crop" src="{% static 'playlist/images'%}/{{ playlist.picture }}">
                     </div>
                 </div>

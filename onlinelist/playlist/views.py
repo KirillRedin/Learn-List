@@ -114,10 +114,7 @@ class PlaylistList(APIView):
         name = request.POST['addPlaylistName']
         user = request.user
         type = request.POST['addPlaylistType']
-        description = ''
-
-        if request.FILES.get('addPlaylistPicture') != None:
-            description = request.POST['addPlaylistDescription']
+        description = request.POST['addPlaylistDescription']
 
         picturename = 'no-photo.jpg'
 
@@ -128,8 +125,7 @@ class PlaylistList(APIView):
             picturename = img_fs.save(picture.name, picture)
 
         playlist = Playlist.objects.create(name=name, user=user, type=type, description=description, picture=picturename)
-        id = playlist.id
-        return redirect('playlist/' + id)
+        return redirect('playlist/' + str(playlist.id))
 
 @method_decorator(login_required, name='dispatch')
 class PlaylistDetail(APIView):

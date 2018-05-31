@@ -42,14 +42,17 @@
         <div class="col-md-6 ">
             <div class="card mb-2 flex-md-row mb-4 shadow-lg">
                 <div class="card-body d-flex flex-column align-items-start">
-                    <h4 class="mb-0">{{ playlist.name }}</h4>
-                    <div class="mb-1 text-muted">{{ playlist.date }}</div>
+                    <small class="text-muted">{{ playlist.creation_date }}</small>
+                    <h4>{{ playlist.name }}</h4>
                     <p class="text-muted card-text mb-auto" >{{ playlist.description }}</p>
                     {% if request.user == playlist.user %}
                     <form method="post"> {% csrf_token %}
-                        <div class="btn-group">
+                        <div class="mt-2 btn-group">
                             <button type="button" class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editPlaylist" aria-expanded="false" aria-controls="editPlaylist">
                                 <i class="material-icons">edit</i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#addUser" aria-expanded="false" aria-controls="addUser">
+                                <i class="material-icons">people</i>
                             </button>
                             <button type="submit" class="btn btn-sm btn-outline-secondary" type="submit" name="delete_playlist" onclick="return confirm('Видалити плейліст?')">
                                 <i class="material-icons">delete</i>
@@ -60,7 +63,7 @@
                 </div>
 
                 <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
-                    <div class="side-crop">
+                    <div class="side-crop rounded">
                         <img class="img side-crop" src="{% static 'playlist/images'%}/{{ playlist.picture }} ">
                     </div>
                 </div>
@@ -72,13 +75,77 @@
             </h5>
 
             {% if request.user == playlist.user %}
+
+            <div class="col-md-12  mb-5 collapse multi-collapse" id="addUser">
+                <form class="dropdown-item disabled" method="post">{% csrf_token %}
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="addUserNameAdduon">Логін</span>
+                        </div>
+                        <input class="form-control" type="text" name="addUserName" id="addUserName" required="" placeholder="Логін користувача" maxlength="40">
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" name="readAccess">
+                                </div>
+                            </div>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <i class="material-icons">search</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" name="commentAccess">
+                                </div>
+                            </div>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <i class="material-icons">comment</i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" name="editAccess">
+                                </div>
+                            </div>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <i class="material-icons">edit</i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">++
+                                <div class="input-group-text">
+                                    <input type="checkbox" name="addUserAccess">
+                                </div>
+                            </div>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <i class="material-icons">person_add</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" name="edit_playlist" class="btn btn-outline-secondary">Зберегти</button>
+                </form>
+            </div>
+
             <div class="col-md-12  mb-5 collapse multi-collapse" id="editPlaylist">
                 <form class="dropdown-item disabled" method="post" enctype="multipart/form-data">{% csrf_token %}
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="editPlaylistNameAddon">Назва</span>
                         </div>
-                        <input class="form-control" type="text" name="editPlaylistName" id="editPlaylistName" value="{{ playlist.name }}"  required="" placeholder="Назва плейліста">
+                        <input class="form-control" type="text" name="editPlaylistName" id="editPlaylistName"  value="{{ playlist.name }}"  required="" placeholder="Назва плейліста" maxlength="40">
                     </div>
 
                     <div class="form-group input-group">
@@ -110,7 +177,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="editPlaylistDescriptionAddon">Опис</span>
                         </div>
-                        <textarea class="form-control" name="editPlaylistDescription" id="editPlaylistDescription" placeholder="Опис плейліста">{{ playlist.description }}</textarea>
+                        <textarea class="form-control" name="editPlaylistDescription" id="editPlaylistDescription" placeholder="Опис плейліста" maxlength="250">{{ playlist.description }}</textarea>
                     </div>
 
                     <button type="submit" name="edit_playlist" class="btn btn-outline-secondary">Зберегти</button>
@@ -125,7 +192,7 @@
 
                 <form class="mb-4" method="post"> {% csrf_token %}
                     <div class="form-group input-group">
-                        <textarea class="form-control" id="addComment" placeholder="Написати коментар..." name="addCommentContent"></textarea>
+                        <textarea class="form-control" id="addComment" placeholder="Написати коментар..." name="addCommentContent" maxlength="500"></textarea>
                     </div>
                     <button type="submit" class="btn btn-outline-secondary" name="add_comment">Відправити</button>
                 </form>
@@ -185,13 +252,13 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="addPartNameAddon">Назва</span>
                             </div>
-                            <input type="text" class="form-control" id="addPartName" name="addPartName" placeholder="Назва" required="">
+                            <input type="text" class="form-control" id="addPartName" name="addPartName" placeholder="Назва" required="" maxlength="40">
                         </div>
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="addPartDescriptionAddon">Опис</span>
                             </div>
-                            <textarea class="form-control" id="addPartDescription" name="addPartDescription" placeholder="Опис"></textarea>
+                            <textarea class="form-control" id="addPartDescription" name="addPartDescription" placeholder="Опис" maxlength="250"></textarea>
                         </div>
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
@@ -215,6 +282,7 @@
                             <a class="col-md-9" href="#partCollapse{{ part.id }}, #partButtons{{ part.id }}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="partCollapse{{ part.id }}">
                                 {{ part.number }}.
                                 {{ part.name }}
+                                <small class="mx-2 text-muted">{{ part.creation_date }}</small>
                             </a>
                             {% if request.user == playlist.user %}
                             <div class="col-md-3 collapse multi-collapse" id="partButtons{{ part.id }}">
@@ -235,7 +303,7 @@
                             {% endif %}
                         </div>
                         <div class="collapse multi-collapse" id="partCollapse{{ part.id }}">
-                            <small class="text-muted">{{ part.description }}</small>
+                            <p class="text-muted">{{ part.description }}</p>
 
                             {% if request.user == playlist.user %}
                             <div class="col-md-12 collapse multi-collapse" id="editPart{{ part.id }}">
@@ -244,13 +312,13 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="editPartNameAddon">Назва</span>
                                         </div>
-                                        <input type="text" class="form-control" id="editPartName" name="editPartName" value="{{ part.name }}" required="">
+                                        <input type="text" class="form-control" id="editPartName" name="editPartName" value="{{ part.name }}" required="" maxlength="40">
                                     </div>
                                     <div class="form-group input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="editPartDescriptionAddon">Опис</span>
                                         </div>
-                                        <textarea class="form-control" id="editPartDescription" name="editPartDescription">{{ part.description }}</textarea>
+                                        <textarea class="form-control" id="editPartDescription" name="editPartDescription" maxlength="250">{{ part.description }}</textarea>
                                     </div>
                                     <div class="form-group input-group">
                                         <div class="input-group-prepend">
@@ -287,7 +355,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="addDataNameAddon">Назва</span>
                                             </div>
-                                            <input type="text" class="form-control" id="addDataName" name="addDataName" placeholder="Назва" required="">
+                                            <input type="text" class="form-control" id="addDataName" name="addDataName" placeholder="Назва" required="" maxlength="40">
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
@@ -299,7 +367,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="addDataDescriptionAddon">Опис</span>
                                             </div>
-                                            <textarea class="form-control" id="addDataDescription" name="addDataDescription" placeholder="Опис"></textarea>
+                                            <textarea class="form-control" id="addDataDescription" name="addDataDescription" placeholder="Опис" maxlength="250"></textarea>
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
@@ -324,8 +392,9 @@
                             {% for data_part in data %}
                             {% if data_part.part_id == part.id %}
                             <div class="row mb-2">
-                                <a class="dropdown-item col-md-9" target="_blank" href="{{ data_part.link }}" style="white-space: initial;">{{ data_part.number }}. {{ data_part.name }}<br>
-                                    <small class="text-muted" style="word-wrap: break-word;">{{ data_part.description }}</small>
+                                <a class="dropdown-item col-md-9" target="_blank" href="{{ data_part.link }}" style="white-space: initial;">{{ data_part.number }}. {{ data_part.name }}
+                                    <small class="text-muted">{{ data_part.creation_date }}</small><br>
+                                    <p class="text-muted" style="word-wrap: break-word;">{{ data_part.description }}</p>
                                 </a>
                                 {% if request.user == playlist.user %}
                                 <div class="col-md-3">
@@ -349,7 +418,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="editDataNameAddon">Назва</span>
                                             </div>
-                                            <input type="text" class="form-control" id="editDataName" name="editDataName" value="{{ data_part.name }}"  required="">
+                                            <input type="text" class="form-control" id="editDataName" name="editDataName" value="{{ data_part.name }}"  required="" maxlength="40">
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
@@ -361,7 +430,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text" id="editDataDescriptionAddon">Опис</span>
                                             </div>
-                                            <textarea class="form-control" id="editDataDescription" name="editDataDescription">{{ data_part.description }}</textarea>
+                                            <textarea class="form-control" id="editDataDescription" name="editDataDescription" maxlength="250">{{ data_part.description }}</textarea>
                                         </div>
                                         <div class="form-group input-group">
                                             <div class="input-group-prepend">
