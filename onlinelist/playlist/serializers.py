@@ -57,9 +57,9 @@ class PlaylistSerializer(serializers.ModelSerializer):
         )
 
 
-class PrivilegeSerializer(serializers.ModelSerializer):
+class AccessSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Privilege
+        model = Access
         fields = (
             'id',
             'user',

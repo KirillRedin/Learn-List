@@ -79,44 +79,15 @@
             <div class="col-md-12 mb-5 collapse multi-collapse" id="addUser">
                 <form class="form-inline">
                     <div class="d-flex flex-wrap">
+                        {% for user_access in
                         <div class="input-group m-1">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Ім'я </span>
                             </div>
                             <div class="input-group-append">
-                                <div class="input-group-text btn btn-outline-secondary">
+                                <button class="input-group-text btn btn-outline-secondary" type="submit" name="deleteAccess">
                                     <i class="material-icons">clear</i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group m-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Ім'я </span>
-                            </div>
-                            <div class="input-group-append">
-                                <div class="input-group-text btn btn-outline-secondary">
-                                    <i class="material-icons">clear</i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group m-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Ім'я користувача</span>
-                            </div>
-                            <div class="input-group-append">
-                                <div class="input-group-text btn btn-outline-secondary">
-                                    <i class="material-icons">clear</i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group m-1">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Ім'я користувача</span>
-                            </div>
-                            <div class="input-group-append">
-                                <div class="input-group-text btn btn-outline-secondary">
-                                    <i class="material-icons">clear</i>
-                                </div>
+                                </button>
                             </div>
                         </div>
                     </div>

@@ -91,16 +91,16 @@ class Part(models.Model):
         db_table = 'part'
 
 
-class Privilege(models.Model):
+class Access(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
-    read = models.NullBooleanField()
-    comment = models.NullBooleanField()
-    edit = models.NullBooleanField()
-    give_access = models.NullBooleanField()
+    read = models.BooleanField()
+    comment = models.BooleanField()
+    edit = models.BooleanField()
+    give_access = models.BooleanField()
 
     class Meta:
-        db_table = 'privilege'
+        db_table = 'access'
         unique_together = (('id', 'user', 'playlist'),)
 

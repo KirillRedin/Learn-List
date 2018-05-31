@@ -131,7 +131,7 @@ class CommentTest(TestCase):
         self.assertEqual(new_comment.content, 'comment content')
 
 
-class PrivilegeTest(TestCase):
+class AccessTest(TestCase):
 
     """ Test module for Privilege model """
 
@@ -150,7 +150,7 @@ class PrivilegeTest(TestCase):
             picture='picture link'
         )
 
-        self.privilege = Privilege.objects.create(
+        self.privilege = Access.objects.create(
             user=user,
             playlist=playlist,
             read = 1,
@@ -159,12 +159,12 @@ class PrivilegeTest(TestCase):
             give_access = 1
         )
 
-    def test_privilege(self):
-        privilege = Privilege.objects.get(id=self.privilege.id)
-        self.assertEqual(privilege.read, 1)
-        self.assertEqual(privilege.comment, 1)
-        self.assertEqual(privilege.edit, 1)
-        self.assertEqual(privilege.give_access, 1)
+    def test_access(self):
+        access = Access.objects.get(id=self.privilege.id)
+        self.assertEqual(access.read, 1)
+        self.assertEqual(access.comment, 1)
+        self.assertEqual(access.edit, 1)
+        self.assertEqual(access.give_access, 1)
 
 
 class UserPictureTest(TestCase):
