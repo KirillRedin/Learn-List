@@ -76,7 +76,7 @@
 
             {% if request.user == playlist.user %}
 
-            <div class="col-md-12  mb-5 collapse multi-collapse" id="addUser">
+            <div class="col-md-12 mb-5 collapse multi-collapse" id="addUser">
                 <form class="form-inline">
                     <div class="d-flex flex-wrap">
                         <div class="input-group m-1">
@@ -125,11 +125,11 @@
                     <p>Надати доступ користувачу</p>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="addUserNameAdduon">Логін</span>
+                            <span class="input-group-text" id="addUserNameAddon">Логін</span>
                         </div>
                         <input class="form-control" type="text" name="addUserName" id="addUserName" required="" placeholder="Логін користувача" maxlength="40">
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-center">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -184,8 +184,9 @@
                 </form>
             </div>
 
-            <div class="col-md-12  mb-5 collapse multi-collapse" id="editPlaylist">
-                <form class="dropdown-item disabled" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <div class="col-md-12 mb-5 collapse multi-collapse" id="editPlaylist">
+                <form class="px-0 dropdown-item disabled" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <p>Редагувати плейліст</p>
                     <div class="form-group input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="editPlaylistNameAddon">Назва</span>

@@ -64,7 +64,10 @@ class PrivilegeSerializer(serializers.ModelSerializer):
             'id',
             'user',
             'playlist',
-            'access_num'
+            'read',
+            'comment',
+            'edit',
+            'add_user',
         )
 
 

@@ -95,7 +95,10 @@ class Privilege(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
-    access_num = models.IntegerField()
+    read = models.IntegerField()
+    comment = models.IntegerField()
+    edit = models.IntegerField()
+    add_user = models.IntegerField()
 
     class Meta:
         db_table = 'privilege'
