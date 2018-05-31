@@ -67,7 +67,7 @@ class PrivilegeSerializer(serializers.ModelSerializer):
             'read',
             'comment',
             'edit',
-            'add_user',
+            'give_access',
         )
 
 

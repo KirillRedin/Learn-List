@@ -18,7 +18,7 @@ class PlaylistTest(TestCase):
         self.playlist = Playlist.objects.create(
             user=user,
             name='New Playlist',
-            type='1',
+            type=10,
             description='playlist description',
             picture='picture link'
         )
@@ -42,7 +42,7 @@ class PartTest(TestCase):
         playlist = Playlist.objects.create(
             user=user,
             name='New Playlist',
-            type='1',
+            type=1,
             description='playlist description',
             picture='picture link'
         )
@@ -73,7 +73,7 @@ class DataTest(TestCase):
         playlist = Playlist.objects.create(
             user=user,
             name='New Playlist',
-            type='1',
+            type=1,
             description='playlist description',
             picture='picture link'
         )
@@ -115,7 +115,7 @@ class CommentTest(TestCase):
         playlist = Playlist.objects.create(
             user=user,
             name='New Playlist',
-            type='1',
+            type=1,
             description='playlist description',
             picture='picture link'
         )
@@ -145,7 +145,7 @@ class PrivilegeTest(TestCase):
         playlist = Playlist.objects.create(
             user=user,
             name='New Playlist',
-            type='1',
+            type=1,
             description='playlist description',
             picture='picture link'
         )
@@ -153,12 +153,18 @@ class PrivilegeTest(TestCase):
         self.privilege = Privilege.objects.create(
             user=user,
             playlist=playlist,
-            access_num=1
+            read = 1,
+            comment = 1,
+            edit = 1,
+            give_access = 1
         )
 
     def test_privilege(self):
         privilege = Privilege.objects.get(id=self.privilege.id)
-        self.assertEqual(privilege.access_num, 1)
+        self.assertEqual(privilege.read, 1)
+        self.assertEqual(privilege.comment, 1)
+        self.assertEqual(privilege.edit, 1)
+        self.assertEqual(privilege.give_access, 1)
 
 
 class UserPictureTest(TestCase):
