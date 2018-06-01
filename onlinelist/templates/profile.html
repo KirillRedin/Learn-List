@@ -74,12 +74,13 @@
                         <span>{{ user.date_joined }}</span>
                     </div>
                 </div>
-
+                {% if user == request.user %}
                 <div class="card-body d-flex justify-content-end align-items-end">
                     <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="collapse" data-target="#editUser" aria-controls="editUser" aria-expanded="false">
                         <i class="material-icons">edit</i>
                     </button>
                 </div>
+                {% endif %}
             </div>
         </div>
         {% if user == request.user %}
@@ -236,54 +237,59 @@
 
         <div class="tab-content col-md-12 px-0">
             <div class="tab-pane fade show active" id="public" role="tabpanel" aria-labelledby="public-tab">
-                {% if playlists %}
-                {% for playlist in playlists %}
-                <div class="col-md-6">
-                    <div class="card flex-md-row mb-4 shadow-lg">
-                        <div class="card-body d-flex flex-column align-items-start">
-                            <small class="text-muted">{{ playlist.creation_date }}</small>
-                            <h4>{{ playlist.name }}</h4>
-                            <div class="mb-1 text-muted">{{ playlist.date }}</div>
-                            <p class="text-muted card-text mb-auto">{{ playlist.description }}</p>
-                            <div class="btn-group mt-2">
-                                <a class="btn btn-sm btn-outline-secondary" href="/LearnList/playlist/{{ playlist.id }}">Переглянути</a>
+                <div class="col-md-12 d-flex justify-content-start px-0">
+                    {% if playlists %}
+                    {% for playlist in playlists %}
+                    <div class="col-md-6 m-0">
+                        <div class="card flex-md-row mb-4 shadow-lg">
+                            <div class="card-body d-flex flex-column align-items-start">
+                                <small class="text-muted">{{ playlist.creation_date }}</small>
+                                <h4>{{ playlist.name }}</h4>
+                                <div class="mb-1 text-muted">{{ playlist.date }}</div>
+                                <p class="text-muted card-text mb-auto">{{ playlist.description }}</p>
+                                <div class="btn-group mt-2">
+                                    <a class="btn btn-sm btn-outline-secondary" href="/LearnList/playlist/{{ playlist.id }}">Переглянути</a>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
-                            <div class="side-crop rounded">
-                                <img class="img side-crop" src="{% static 'playlist/images'%}/{{ playlist.picture }}">
+                            <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
+                                <div class="side-crop rounded">
+                                    <img class="img side-crop" src="{% static 'playlist/images'%}/{{ playlist.picture }}">
+                                </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
-                {% endfor %}
-                {% endif %}
             </div>
-            <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab">
-                {% if access_list %}
-                {% for access in access_list %}
-                <div class="col-md-6">
-                    <div class="card flex-md-row mb-4 shadow-lg">
-                        <div class="card-body d-flex flex-column align-items-start">
-                            <small class="text-muted">{{ access.playlist.creation_date }}</small>
-                            <h4>{{ access.playlist.name }}</h4>
-                            <div class="mb-1 text-muted">{{ access.playlist.date }}</div>
-                            <p class="text-muted card-text mb-auto">{{ access.playlist.description }}</p>
-                            <div class="btn-group mt-2">
-                                <a class="btn btn-sm btn-outline-secondary" href="/LearnList/playlist/{{ access.playlist.id }}">Переглянути</a>
-                            </div>
-                        </div>
 
-                        <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
-                            <div class="side-crop rounded">
-                                <img class="img side-crop" src="{% static 'playlist/images'%}/{{ access.playlist.picture }}">
+            <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab">
+                <div class="col-md-12 d-flex justify-content-start px-0">
+                    {% if access_list %}
+                    {% for access in access_list %}
+                    <div class="col-md-6 m-0">
+                        <div class="card flex-md-row mb-4 shadow-lg">
+                            <div class="card-body d-flex flex-column align-items-start">
+                                <small class="text-muted">{{ access.playlist.creation_date }}</small>
+                                <h4>{{ access.playlist.name }}</h4>
+                                <div class="mb-1 text-muted">{{ access.playlist.date }}</div>
+                                <p class="text-muted card-text mb-auto">{{ access.playlist.description }}</p>
+                                <div class="btn-group mt-2">
+                                    <a class="btn btn-sm btn-outline-secondary" href="/LearnList/playlist/{{ access.playlist.id }}">Переглянути</a>
+                                </div>
+                            </div>
+
+                            <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
+                                <div class="side-crop rounded">
+                                    <img class="img side-crop" src="{% static 'playlist/images'%}/{{ access.playlist.picture }}">
+                                </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
-                {% endfor %}
-                {% endif %}
             </div>
         </div>
     </div>

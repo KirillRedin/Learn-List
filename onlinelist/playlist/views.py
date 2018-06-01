@@ -53,7 +53,7 @@ class LogIn(APIView):
                 first_name=request.POST['first_name'],
                 last_name=request.POST['last_name']
             )
-            picturename = ""
+            picturename = "no-photo.jpg"
             if request.FILES.get('userPicture') != None:
                 print('Uploading picture')
                 picture = request.FILES['userPicture']
@@ -236,7 +236,12 @@ class PlaylistDetail(APIView):
         parts = Part.objects.filter(playlist=playlist).order_by('number')
         data = Data.objects.filter(playlist=playlist).order_by('number')
         comments = Comment.objects.filter(playlist=playlist)
-        user_access = Access.objects.get(playlist=playlist, user=request.user)
+        user_access = None
+        try:
+            user_access = Access.objects.get(playlist=playlist, user=request.user)
+        except Access.DoesNotExist:
+            if request.user != playlist.user and playlist.type != 1:
+                return redirect('../../')
         access_list = Access.objects.filter(playlist=playlist)
 
         if request.POST.get('edit_playlist') != None:

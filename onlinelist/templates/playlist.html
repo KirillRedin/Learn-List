@@ -54,7 +54,7 @@
                     <small class="text-muted">{{ playlist.creation_date }}</small>
                     <h4>{{ playlist.name }}</h4>
                     <p class="text-muted card-text mb-auto" >{{ playlist.description }}</p>
-                    {% if user_access %}
+                    {% if user_access or playlist.type == 1%}
                     <form method="post"> {% csrf_token %}
                         <div class="mt-2 btn-group">
                             {% if user_access.edit == 1 %}
@@ -95,7 +95,7 @@
                         <div class="form-group btn-group mr-2">
                             <a class="input-group-text btn" href="/LearnList/user/{{ user_access.user.id }}">{{ user_access.user.username }}</a>
                             {% if user_access.user != playlist.user and user_access.user != request.user %}
-                            <button class="input-group-text btn btn-outline-secondary" type="submit" name="delete_access" onclick="return confirm('Видалити користувача?')>
+                            <button class="input-group-text btn btn-outline-secondary" type="submit" name="delete_access" onclick="return confirm('Видалити користувача?')">
                                 <i class="material-icons">clear</i>
                             </button>
                             {% endif %}
@@ -181,8 +181,10 @@
                         </div>
                         <input class="form-control" type="text" name="editPlaylistName" value="{{ playlist.name }}"  required="" placeholder="Назва плейліста" maxlength="40">
                     </div>
-
-                    <div class="form-group input-group">
+                    <div class="form-group input-group"
+                         {% if user_access.give_access != 1 %}
+                         hidden
+                         {% endif %}>
                         <div class="input-group-prepend">
                             <span class="input-group-text">Тип</span>
                         </div>
@@ -223,7 +225,7 @@
                 {% if comments %}
                 <h5 class="mb-3">Коментарі</h5>
                 {% endif %}
-                {% if user_access.comment == 1 %}
+                {% if user_access.comment == 1 or playlist.type == 1 %}
                 <form class="mb-4" method="post"> {% csrf_token %}
                     <div class="form-group input-group">
                         <textarea class="form-control" placeholder="Написати коментар..." name="addCommentContent" maxlength="500"></textarea>
