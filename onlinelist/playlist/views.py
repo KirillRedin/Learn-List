@@ -136,6 +136,13 @@ class UserDetail(APIView):
                 access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0)
                 return Response({'playlists': playlists, 'user': user, 'user_picture': user_picture,
                                  'access_list': access_list, 'error_message': error_message}, template_name='profile.html')
+
+        elif request.POST.get('profile_search') != None:
+            name = request.POST['searchName']
+            playlists = Playlist.objects.filter(user=user, type=1, name__icontains=name)
+            access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0, playlist__name__icontains=name)
+            return Response({'playlists': playlists, 'user': user, 'user_picture': user_picture, 'access_list': access_list}, template_name='profile.html')
+
         return HttpResponseRedirect(self.request.path_info)
 
 
@@ -151,22 +158,28 @@ class PlaylistList(APIView):
         return Response({'playlists': playlists}, template_name='mainpage.html')
 
     def post(self, request, format=None):
-        name = request.POST['addPlaylistName']
-        user = request.user
-        type = request.POST['addPlaylistType']
-        description = request.POST['addPlaylistDescription']
+        if request.POST.get('add_playlist') != None:
+            name = request.POST['addPlaylistName']
+            user = request.user
+            type = request.POST['addPlaylistType']
+            description = request.POST['addPlaylistDescription']
 
-        picturename = 'no-photo.jpg'
+            picturename = 'no-photo.jpg'
 
-        if request.FILES.get('addPlaylistPicture') != None:
-            print("Adding picture")
-            picture = request.FILES['addPlaylistPicture']
-            img_fs = FileSystemStorage(base_url='/playlist/static/playlist/images', location="playlist/static/playlist/images")
-            picturename = img_fs.save(picture.name, picture)
+            if request.FILES.get('addPlaylistPicture') != None:
+                print("Adding picture")
+                picture = request.FILES['addPlaylistPicture']
+                img_fs = FileSystemStorage(base_url='/playlist/static/playlist/images', location="playlist/static/playlist/images")
+                picturename = img_fs.save(picture.name, picture)
 
-        playlist = Playlist.objects.create(name=name, user=user, type=type, description=description, picture=picturename)
-        Access.objects.create(user=user, playlist=playlist, read=1, comment=1, edit=1, give_access=1)
-        return redirect('playlist/' + str(playlist.id))
+            playlist = Playlist.objects.create(name=name, user=user, type=type, description=description, picture=picturename)
+            Access.objects.create(user=user, playlist=playlist, read=1, comment=1, edit=1, give_access=1)
+            return redirect('playlist/' + str(playlist.id))
+
+        elif request.POST.get('global_search') != None:
+            name = request.POST['searchName']
+            playlists = Playlist.objects.filter(type=1, name__icontains=name)
+        return Response({'playlists': playlists}, template_name='mainpage.html')
 
 
 @method_decorator(login_required, name='dispatch')

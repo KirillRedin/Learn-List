@@ -23,9 +23,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="form-inline my-2 my-lg-0">{% csrf_token %}
-                    <input class="form-control mr-sm-2" type="search" placeholder="Пошук" aria-label="Search">
-                    <button class="btn my-2 my-sm-0" type="submit">Пошук</button>
+                <form class="form-inline my-2 my-lg-0" method="post">{% csrf_token %}
+                    <input class="form-control mr-sm-2" type="search" placeholder="Пошук" aria-label="Search" name="searchName">
+                    <button class="btn my-2 my-sm-0" type="submit" name="global_search">Пошук</button>
                 </form>
             </div>
             <ul class="navbar-nav">
