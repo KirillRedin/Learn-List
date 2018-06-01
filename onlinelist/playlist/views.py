@@ -179,7 +179,7 @@ class PlaylistList(APIView):
         elif request.POST.get('global_search') != None:
             name = request.POST['searchName']
             playlists = Playlist.objects.filter(type=1, name__icontains=name)
-        return Response({'playlists': playlists}, template_name='mainpage.html')
+            return Response({'playlists': playlists}, template_name='mainpage.html')
 
 
 @method_decorator(login_required, name='dispatch')
@@ -191,6 +191,11 @@ class AccessiblePlaylists(APIView):
 
     def get(self, request, format=None):
         access_list = Access.objects.filter(~Q(playlist__user=request.user), user=request.user)
+        return Response({'access_list': access_list}, template_name='accessible_playlists.html')
+
+    def post(self, request, format=None):
+        name = request.POST['searchName']
+        access_list = Access.objects.filter(~Q(playlist__user=request.user), user=request.user, playlist__name__icontains=name)
         return Response({'access_list': access_list}, template_name='accessible_playlists.html')
 
 
