@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/onlinelist/templates/profile.html" line="47" />
+    <bookmark url="file://$PROJECT_DIR$/onlinelist/templates/profile.html" line="52" />
     <bookmark url="file://$PROJECT_DIR$/onlinelist/playlist/static/playlist/style.css" line="49" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6fd4458-78d9-43a3-8fa2-7ed3b09bf2aa" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/onlinelist/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/templates/login.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/onlinelist/templates/accessible_playlists.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/playlist/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/playlist/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlinelist/templates/mainpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/templates/mainpage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlinelist/templates/playlist.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/templates/playlist.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlinelist/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/templates/profile.html" afterDir="false" />
     </list>
@@ -20,13 +24,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/onlinelist/playlist/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
-              <caret line="202" column="50" lean-forward="true" selection-start-line="202" selection-start-column="50" selection-end-line="202" selection-end-column="50" />
+            <state relative-caret-position="408">
+              <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="178" selection-end-column="40" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/onlinelist/playlist/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="31" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="31" />
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -44,18 +60,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="serializers.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/onlinelist/playlist/serializers.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="61" column="22" selection-start-line="61" selection-start-column="22" selection-end-line="61" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/onlinelist/onlinelist/settings.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -68,8 +72,8 @@
       <file leaf-file-name="playlist.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/onlinelist/templates/playlist.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="97" column="167" selection-start-line="97" selection-start-column="167" selection-end-line="97" selection-end-column="167" />
+            <state relative-caret-position="1615">
+              <caret line="95" column="76" selection-start-line="95" selection-start-column="76" selection-end-line="95" selection-end-column="76" />
               <folding>
                 <element signature="e#2410#2417#1" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#1;n#div#1;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -79,26 +83,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/onlinelist/templates/login.html">
+      <file leaf-file-name="accessible_playlists.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/onlinelist/templates/accessible_playlists.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="41" column="12" lean-forward="true" selection-start-line="41" selection-start-column="12" selection-end-line="50" selection-end-column="21" />
-              <folding>
-                <element signature="n#style#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#form#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="322">
+              <caret line="61" column="22" lean-forward="true" selection-start-line="61" selection-start-column="22" selection-end-line="61" selection-end-column="22" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="profile.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="profile.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/onlinelist/templates/profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="99" column="74" selection-start-line="99" selection-start-column="74" selection-end-line="99" selection-end-column="74" />
+            <state relative-caret-position="186">
+              <caret line="273" column="87" selection-start-line="273" selection-start-column="87" selection-end-line="273" selection-end-column="87" />
               <folding>
+                <element signature="e#2614#2621#1" expanded="true" />
                 <element signature="n#style#0;n#button#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
@@ -108,8 +108,8 @@
       <file leaf-file-name="mainpage.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/onlinelist/templates/mainpage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="94" column="100" selection-start-line="94" selection-start-column="100" selection-end-line="94" selection-end-column="100" />
+            <state relative-caret-position="376">
+              <caret line="134" column="31" selection-start-line="134" selection-start-column="31" selection-end-line="134" selection-end-column="31" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -139,13 +139,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>user</find>
-      <find>picturename</find>
-      <find>prive</find>
-      <find>search</find>
-      <find>hid</find>
-      <find>desc</find>
-      <find>check</find>
       <find>addpart</find>
       <find>проф</find>
       <find>лог</find>
@@ -166,9 +159,16 @@
       <find>aria-ex</find>
       <find>aria-contr</find>
       <find>return</find>
-      <find>acces</find>
       <find>ariaex</find>
+      <find>addPla</find>
+      <find>acces</find>
+      <find>picturename</find>
       <find>фамі</find>
+      <find>lear</find>
+      <find>learL</find>
+      <find>..</find>
+      <find>LearL</find>
+      <find>Q</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -188,17 +188,18 @@
         <option value="$PROJECT_DIR$/onlinelist/templates/singin.html" />
         <option value="$PROJECT_DIR$/onlinelist/onlinelist/urls.py" />
         <option value="$PROJECT_DIR$/onlinelist/templates/signin.html" />
-        <option value="$PROJECT_DIR$/onlinelist/playlist/urls.py" />
         <option value="$PROJECT_DIR$/onlinelist/onlinelist/settings.py" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/serializers.py" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/models.py" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/static/playlist/style.css" />
-        <option value="$PROJECT_DIR$/onlinelist/playlist/views.py" />
+        <option value="$PROJECT_DIR$/onlinelist/templates/login.html" />
+        <option value="$PROJECT_DIR$/onlinelist/playlist/urls.py" />
         <option value="$PROJECT_DIR$/onlinelist/templates/mainpage.html" />
         <option value="$PROJECT_DIR$/onlinelist/templates/playlist.html" />
-        <option value="$PROJECT_DIR$/onlinelist/templates/login.html" />
+        <option value="$PROJECT_DIR$/onlinelist/templates/accessible_playlists.html" />
         <option value="$PROJECT_DIR$/onlinelist/templates/profile.html" />
+        <option value="$PROJECT_DIR$/onlinelist/playlist/views.py" />
       </list>
     </option>
   </component>
@@ -635,16 +636,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/onlinelist/playlist/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="34" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/phrase.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
@@ -703,39 +694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/onlinelist/playlist/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="202" column="50" lean-forward="true" selection-start-line="202" selection-start-column="50" selection-end-line="202" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/onlinelist/templates/mainpage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="94" column="100" selection-start-line="94" selection-start-column="100" selection-end-line="94" selection-end-column="100" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/onlinelist/templates/playlist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="97" column="167" selection-start-line="97" selection-start-column="167" selection-end-line="97" selection-end-column="167" />
-          <folding>
-            <element signature="e#2410#2417#1" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#div#1;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#small#0;n#a#0;n#div#1;n#div#1;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/aria.rnc">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
@@ -745,7 +703,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/onlinelist/templates/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
+        <state relative-caret-position="697">
           <caret line="41" column="12" lean-forward="true" selection-start-line="41" selection-start-column="12" selection-end-line="50" selection-end-column="21" />
           <folding>
             <element signature="n#style#0;n#html#0;n#!!top" expanded="true" />
@@ -755,12 +713,63 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/onlinelist/playlist/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="31" selection-start-line="7" selection-start-column="21" selection-end-line="7" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onlinelist/templates/playlist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1615">
+          <caret line="95" column="76" selection-start-line="95" selection-start-column="76" selection-end-line="95" selection-end-column="76" />
+          <folding>
+            <element signature="e#2410#2417#1" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#1;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#small#0;n#a#0;n#div#1;n#div#1;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onlinelist/templates/mainpage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="134" column="31" selection-start-line="134" selection-start-column="31" selection-end-line="134" selection-end-column="31" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onlinelist/templates/accessible_playlists.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="61" column="22" lean-forward="true" selection-start-line="61" selection-start-column="22" selection-end-line="61" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/onlinelist/templates/profile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="327">
-          <caret line="99" column="74" selection-start-line="99" selection-start-column="74" selection-end-line="99" selection-end-column="74" />
+        <state relative-caret-position="186">
+          <caret line="273" column="87" selection-start-line="273" selection-start-column="87" selection-end-line="273" selection-end-column="87" />
           <folding>
+            <element signature="e#2614#2621#1" expanded="true" />
             <element signature="n#style#0;n#button#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onlinelist/playlist/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="178" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>

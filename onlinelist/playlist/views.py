@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 # Create your views here.
@@ -77,6 +78,7 @@ class LogOut(APIView):
         return redirect('/login/')
 
 
+@method_decorator(login_required, name='dispatch')
 class UserDetail(APIView):
     """ User Detailpage"""
 
@@ -89,16 +91,51 @@ class UserDetail(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, id, format=None):
-        access_list = Access.objects.filter(user=request.user)
         user = self.get_object(id)
         user_picture = UserPicture.objects.get(user=user)
         playlists = Playlist.objects.filter(user=user, type=1)
         access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0)
-        print(access_list)
         return Response({'playlists': playlists, 'user': user, 'user_picture': user_picture, 'access_list': access_list}, template_name='profile.html')
 
-    def post(self, id, request, format=None):
+    def post(self, request, id, format=None):
         user = self.get_object(id)
+        user_picture = UserPicture.objects.get(user=user)
+        error_message = ''
+        if request.POST.get('edit_user') != None:
+            username = request.POST['editLogin']
+            first_name = request.POST['editFirstName']
+            last_name = request.POST['editLastName']
+            email = request.POST['editEmail']
+            picturename = user_picture.picture
+
+            if request.FILES.get('editPicture') != None:
+                picture = request.FILES['editPicture']
+                img_fs = FileSystemStorage(base_url='/playlist/static/playlist/images', location="playlist/static/playlist/images")
+                picturename = img_fs.save(picture.name, picture)
+            user.username = username
+            user.first_name = first_name
+            user.last_name = last_name
+            user.email = email
+            user.save()
+            user_picture.picture = picturename
+            user_picture.save()
+            return HttpResponseRedirect(self.request.path_info)
+
+        elif request.POST.get('edit_password') != None:
+            old_password = request.POST['oldPassword']
+            new_password = request.POST['newPassword']
+            if user.check_password(old_password):
+                user.set_password(new_password)
+                user.save()
+                return HttpResponseRedirect(self.request.path_info)
+            else:
+                error_message = 'Невірний пароль'
+                user = self.get_object(id)
+                user_picture = UserPicture.objects.get(user=user)
+                playlists = Playlist.objects.filter(user=user, type=1)
+                access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0)
+                return Response({'playlists': playlists, 'user': user, 'user_picture': user_picture,
+                                 'access_list': access_list, 'error_message': error_message}, template_name='profile.html')
         return HttpResponseRedirect(self.request.path_info)
 
 
@@ -130,6 +167,19 @@ class PlaylistList(APIView):
         playlist = Playlist.objects.create(name=name, user=user, type=type, description=description, picture=picturename)
         Access.objects.create(user=user, playlist=playlist, read=1, comment=1, edit=1, give_access=1)
         return redirect('playlist/' + str(playlist.id))
+
+
+@method_decorator(login_required, name='dispatch')
+class AccessiblePlaylists(APIView):
+
+    """ List of accessible Playlists """
+
+    renderer_classes = (TemplateHTMLRenderer,)
+
+    def get(self, request, format=None):
+        access_list = Access.objects.filter(~Q(playlist__user=request.user), user=request.user)
+        return Response({'access_list': access_list}, template_name='accessible_playlists.html')
+
 
 @method_decorator(login_required, name='dispatch')
 class PlaylistDetail(APIView):

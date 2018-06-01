@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'playlist/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+    <title>Profile</title>
+</head>
+<body>
+<div class="container">
+    <header class="mb-3">
+        <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm rounded">
+            <a class="navbar-brand" href="/LearnList/">Learn List</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <form class="form-inline my-2 my-lg-0">{% csrf_token %}
+                    <input class="form-control mr-sm-2" type="search" placeholder="Пошук" aria-label="Search">
+                    <button class="btn my-2 my-sm-0" type="submit">Пошук</button>
+                </form>
+            </div>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/LearnList/accessible/">Доступні плейлісти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/LearnList/user/{{ request.user.id }}">Профіль</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout/">Вихід</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="row mb-2">
+    {% for access in access_list %}
+        <div class="col-md-6">
+            <div class="card flex-md-row mb-4 shadow-lg">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <small class="text-muted">{{ access.playlist.creation_date }}</small>
+                    <h4>{{ access.playlist.name }}</h4>
+                    <div class="mb-1 text-muted">{{ access.playlist.date }}</div>
+                    <p class="text-muted card-text mb-auto">{{ access.playlist.description }}</p>
+                    <div class="btn-group mt-2">
+                        <a class="btn btn-sm btn-outline-secondary" href="/LearnList/playlist/{{ access.playlist.id }}">Переглянути</a>
+                    </div>
+                </div>
+
+                <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
+                    <div class="side-crop rounded">
+                        <img class="img side-crop" src="{% static 'playlist/images'%}/{{ access.playlist.picture }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+</body>
+</html>
