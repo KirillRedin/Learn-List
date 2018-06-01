@@ -95,7 +95,7 @@
                         <div class="form-group btn-group mr-2">
                             <a class="input-group-text btn" href="../../user/{{ user_access.user.id }}">{{ user_access.user.username }}</a>
                             {% if user_access.user != playlist.user and user_access.user != request.user %}
-                            <button class="input-group-text btn btn-outline-secondary" type="submit" name="delete_access">
+                            <button class="input-group-text btn btn-outline-secondary" type="submit" name="delete_access" onclick="return confirm('Видалити користувача?')>
                                 <i class="material-icons">clear</i>
                             </button>
                             {% endif %}
@@ -313,7 +313,7 @@
                     {% for part in parts %}
                     <div class="list-group-item mb-2">
                         <div class="row">
-                            <a class="col-md-9" href="#partCollapse{{ part.id }}, #partButtons{{ part.id }}" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="partCollapse{{ part.id }}">
+                            <a class="col-md-9" href="#partCollapse{{ part.id }}, #partButtons{{ part.id }}" role="button" data-toggle="collapse" aria-expanded="false"">
                                 {{ part.number }}.
                                 {{ part.name }}
                                 <small class="mx-2 text-muted">{{ part.creation_date }}</small>

@@ -6,10 +6,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6fd4458-78d9-43a3-8fa2-7ed3b09bf2aa" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/static/playlist/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/playlist/static/playlist/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/playlist/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/templates/mainpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/templates/mainpage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlinelist/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlinelist/templates/playlist.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/templates/playlist.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/onlinelist/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/templates/profile.html" afterDir="false" />
     </list>
@@ -68,20 +65,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="161" column="19" selection-start-line="161" selection-start-column="19" selection-end-line="161" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="playlist.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/onlinelist/templates/playlist.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-100">
-              <caret line="472" column="74" selection-start-line="472" selection-start-column="74" selection-end-line="472" selection-end-column="74" />
+            <state relative-caret-position="220">
+              <caret line="97" column="167" selection-start-line="97" selection-start-column="167" selection-end-line="97" selection-end-column="167" />
               <folding>
                 <element signature="e#2410#2417#1" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#1;n#div#1;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -94,8 +82,8 @@
       <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/onlinelist/templates/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="41" column="12" selection-start-line="41" selection-start-column="12" selection-end-line="50" selection-end-column="21" />
+            <state relative-caret-position="340">
+              <caret line="41" column="12" lean-forward="true" selection-start-line="41" selection-start-column="12" selection-end-line="50" selection-end-column="21" />
               <folding>
                 <element signature="n#style#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -105,11 +93,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="profile.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="profile.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/onlinelist/templates/profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="373">
-              <caret line="166" column="93" selection-start-line="166" selection-start-column="93" selection-end-line="166" selection-end-column="93" />
+            <state relative-caret-position="327">
+              <caret line="99" column="74" selection-start-line="99" selection-start-column="74" selection-end-line="99" selection-end-column="74" />
               <folding>
                 <element signature="n#style#0;n#button#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -117,11 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mainpage.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mainpage.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/onlinelist/templates/mainpage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="33">
-              <caret line="102" column="89" selection-start-line="102" selection-start-column="89" selection-end-line="102" selection-end-column="89" />
+            <state relative-caret-position="186">
+              <caret line="94" column="100" selection-start-line="94" selection-start-column="100" selection-end-line="94" selection-end-column="100" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -151,13 +139,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>date</find>
-      <find>пере</find>
-      <find>rounde</find>
-      <find>перегля</find>
-      <find>playlist.pic</find>
-      <find>addComment</find>
-      <find>descr</find>
       <find>user</find>
       <find>picturename</find>
       <find>prive</find>
@@ -180,7 +161,14 @@
       <find>give_acc</find>
       <find>person</find>
       <find>peop</find>
+      <find>addo</find>
       <find>Addon</find>
+      <find>aria-ex</find>
+      <find>aria-contr</find>
+      <find>return</find>
+      <find>acces</find>
+      <find>ariaex</find>
+      <find>фамі</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -200,7 +188,6 @@
         <option value="$PROJECT_DIR$/onlinelist/templates/singin.html" />
         <option value="$PROJECT_DIR$/onlinelist/onlinelist/urls.py" />
         <option value="$PROJECT_DIR$/onlinelist/templates/signin.html" />
-        <option value="$PROJECT_DIR$/onlinelist/templates/login.html" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/urls.py" />
         <option value="$PROJECT_DIR$/onlinelist/onlinelist/settings.py" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/serializers.py" />
@@ -208,9 +195,10 @@
         <option value="$PROJECT_DIR$/onlinelist/playlist/models.py" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/static/playlist/style.css" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/views.py" />
-        <option value="$PROJECT_DIR$/onlinelist/templates/profile.html" />
-        <option value="$PROJECT_DIR$/onlinelist/templates/playlist.html" />
         <option value="$PROJECT_DIR$/onlinelist/templates/mainpage.html" />
+        <option value="$PROJECT_DIR$/onlinelist/templates/playlist.html" />
+        <option value="$PROJECT_DIR$/onlinelist/templates/login.html" />
+        <option value="$PROJECT_DIR$/onlinelist/templates/profile.html" />
       </list>
     </option>
   </component>
@@ -402,10 +390,10 @@
       <window_info anchor="right" id="Maven Projects" order="7" weight="0.32995737" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.30827886" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.30827886" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="3" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17110874" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17110874" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32897604" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -715,18 +703,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/onlinelist/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="41" column="12" selection-start-line="41" selection-start-column="12" selection-end-line="50" selection-end-column="21" />
-          <folding>
-            <element signature="n#style#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#form#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/onlinelist/playlist/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
@@ -737,20 +713,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/onlinelist/templates/profile.html">
+    <entry file="file://$PROJECT_DIR$/onlinelist/templates/mainpage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="166" column="93" selection-start-line="166" selection-start-column="93" selection-end-line="166" selection-end-column="93" />
+        <state relative-caret-position="186">
+          <caret line="94" column="100" selection-start-line="94" selection-start-column="100" selection-end-line="94" selection-end-column="100" />
           <folding>
-            <element signature="n#style#0;n#button#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/onlinelist/templates/playlist.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-100">
-          <caret line="472" column="74" selection-start-line="472" selection-start-column="74" selection-end-line="472" selection-end-column="74" />
+        <state relative-caret-position="220">
+          <caret line="97" column="167" selection-start-line="97" selection-start-column="167" selection-end-line="97" selection-end-column="167" />
           <folding>
             <element signature="e#2410#2417#1" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#1;n#div#1;n#div#0;n#div#2;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -759,13 +736,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/onlinelist/templates/mainpage.html">
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/aria.rnc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="102" column="89" selection-start-line="102" selection-start-column="89" selection-end-line="102" selection-end-column="89" />
+        <state relative-caret-position="203">
+          <caret line="1444" column="22" selection-start-line="1444" selection-start-column="22" selection-end-line="1444" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onlinelist/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="41" column="12" lean-forward="true" selection-start-line="41" selection-start-column="12" selection-end-line="50" selection-end-column="21" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#form#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onlinelist/templates/profile.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="99" column="74" selection-start-line="99" selection-start-column="74" selection-end-line="99" selection-end-column="74" />
+          <folding>
+            <element signature="n#style#0;n#button#0;n#div#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

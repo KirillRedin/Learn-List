@@ -30,13 +30,13 @@
         <form class=" px-0 collapse multi-collapse dropdown-item disabled" id="register" method="post" enctype="multipart/form-data"> {% csrf_token %}
             <input class="mb-2 form-control" name="login" placeholder="Логін" required="">
             <input class="mb-2 form-control" name="first_name" placeholder="Ім'я">
-            <input class="mb-2 form-control" name="last_name" placeholder="Фамілія">
+            <input class="mb-2 form-control" name="last_name" placeholder="Прізвище">
             <input class="mb-2 form-control" name="email" type="email" placeholder="Email" required="">
             <div class="mb-2 custom-file">
                 <label class="d-flex align-self-left text-muted form-control custom-file-label" for="userPicture">Зображення профілю</label>
                 <input class="form-control custom-file-input" id="userPicture" name="userPicture" type="file" placeholder="Зображення">
             </div>
-            <input class="mb-2 form-control" type="password" placeholder="Пароль" name="password" id="password"required="" autofocus="">
+            <input class="mb-2 form-control" type="password" placeholder="Пароль" name="password" id="password" required="" autofocus="">
             <input class="mb-2 form-control" type="password" placeholder="Повторіть пароль" required="" autofocus="" oninput="check(this)">
 
             <script language='javascript' type='text/javascript'>
