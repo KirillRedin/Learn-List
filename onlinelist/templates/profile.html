@@ -30,7 +30,10 @@
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/LearnList/user/{{ request.current_user.id }}">Профіль</a>
+                    <a class="nav-link" href="/LearnList/user/{{ request.user.id }}">Доступні плейлісти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/LearnList/user/{{ request.user.id }}">Профіль</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout/">Вихід</a>
@@ -40,7 +43,7 @@
     </header>
 
     <div class="row mb-2">
-        <div class="col-md-12">
+        <div class="col-md-7">
             <div class="card flex-md-row mb-4">
                 <div class="card-image-left flex-auto d-none d-lg-block img-fluid" >
                     <div class="side crop">
@@ -48,24 +51,25 @@
                     </div>
                 </div>
                 <div class="card-body d-flex flex-column align-items-start">
-                    <h3 class="mb-2">Логін</h3>
+                    <h3 class="mb-2">{{ user.username }}</h3>
                     <div class="mb-2">
                         <span class="text-muted">Ім`я: </span>
-                        <span>{{ current_user.first_name }}</span>
+                        <span>{{ user.first_name }}</span>
                     </div>
                     <div class="mb-2">
                         <span class="text-muted">Фамілія: </span>
-                        <span>{{ current_user.last_name }}</span>
+                        <span>{{ user.last_name }}</span>
                     </div>
                     <div class="mb-2">
                         <span class="text-muted">Email: </span>
-                        <span>{{ current_user.email }}</span>
+                        <span>{{ user.email }}</span>
                     </div>
                     <div class="mb-auto">
                         <span class="text-muted">Дата реєстрації: </span>
-                        <span>{{ current_user.date_joined }}</span>
+                        <span>{{ user.date_joined }}</span>
                     </div>
                 </div>
+
                 <div class="card-body d-flex justify-content-end align-items-end">
                     <button type="button" class="btn btn-sm btn-outline-secondary">
                         <i class="material-icons">edit</i>
@@ -73,7 +77,44 @@
                 </div>
             </div>
         </div>
-        {% if request.user == current_user %}
+        <div class="col-md-5">
+            <div class="d-flex flex-row justify-content-end align-items-start">
+                <form class="dropdown-item disabled" method="post" action="/LearnList/" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Назва</span>
+                        </div>
+                        <input class="form-control" type="text" name="addPlaylistName" placeholder="Назва плейліста" required="" maxlength="40">
+                    </div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Тип</span>
+                        </div>
+                        <select class="custom-select" name="addPlaylistType" required="">
+                            <option value="0" selected>Приватний</option>
+                            <option value="1">Публічний</option>
+                        </select>
+                    </div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Зображення</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="form-control custom-file-input" name="addPlaylistPicture">
+                            <label class="custom-file-label" for="addPlaylistPicture">Оберіть файл</label>
+                        </div>
+                    </div>
+                    <div class="form-group input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Опис</span>
+                        </div>
+                        <textarea class="form-control" name="addPlaylistDescription" placeholder="Опис плейліста" maxlength="250"></textarea>
+                    </div>
+                    <button type="submit" name="add_playlist" class="btn btn-outline-secondary">Створити плейліст</button>
+                </form>
+            </div>
+        </div>
+        {% if request.user == user %}
         <div class="col-md-12 mb-4 d-flex justify-content-center align-self-center">
             <button class="align-self-center align-self-center btn btn-outline-secondary btn-circle btn-lg" data-toggle="collapse" style="box-shadow: none" data-target="#addPlaylist" aria-controls="addPlaylist" aria-expanded="false">
                 <i class="material-icons md-48">playlist_add</i>
@@ -94,70 +135,110 @@
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex flex-row justify-content-end align-items-start">
-                        <form class="dropdown-item disabled" method="post" enctype="multipart/form-data">{% csrf_token %}
+                        <form class="dropdown-item disabled" method="post" action="/LearnList/" enctype="multipart/form-data">{% csrf_token %}
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="addPlaylistNameAddon">Назва</span>
+                                    <span class="input-group-text">Назва</span>
                                 </div>
-                                <input class="form-control" type="text" name="addPlaylistName" id="addPlaylistName" placeholder="Назва плейліста" required="" maxlength="40">
+                                <input class="form-control" type="text" name="addPlaylistName" placeholder="Назва плейліста" required="" maxlength="40">
                             </div>
-                                <div class="form-group input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="addPlaylistTypeAddon">Тип</span>
-                                    </div>
-                                    <select class="custom-select" id="addPlaylistType" name="addPlaylistType" required="">
-                                        <option value="0" selected>Приватний</option>
-                                        <option value="1">Публічний</option>
-                                    </select>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Тип</span>
                                 </div>
-
-                                <div class="form-group input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="addPlaylistPictureAddon">Зображення</span>
-                                    </div>
-
-                                    <div class="custom-file">
-                                        <input type="file" class="form-control custom-file-input" id="addPlaylistPicture" name="addPlaylistPicture">
-                                        <label class="custom-file-label" for="addPlaylistPicture">Оберіть файл</label>
-                                    </div>
+                                <select class="custom-select" name="addPlaylistType" required="">
+                                    <option value="0" selected>Приватний</option>
+                                    <option value="1">Публічний</option>
+                                </select>
+                            </div>
+                             <div class="form-group input-group">
+                                 <div class="input-group-prepend">
+                                     <span class="input-group-text">Зображення</span>
+                                 </div>
+                                 <div class="custom-file">
+                                     <input type="file" class="form-control custom-file-input" id="addPlaylistPicture" name="addPlaylistPicture">
+                                     <label class="custom-file-label" for="addPlaylistPicture">Оберіть файл</label>
+                                 </div>
+                             </div>
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Опис</span>
                                 </div>
+                                <textarea class="form-control" name="addPlaylistDescription" placeholder="Опис плейліста" maxlength="250"></textarea>
+                            </div>
 
-                                <div class="form-group input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="addPlaylistDescriptionAddon">Опис</span>
-                                    </div>
-                                    <textarea class="form-control" name="addPlaylistDescription" id="addPlaylistDescription" placeholder="" maxlength="250">Опис плейліста</textarea>
-                                </div>
-
-                                <button type="submit" name="add_playlist" class="btn btn-outline-secondary">Створити плейліст</button>
-                            </form>
-                        </div>
+                            <button type="submit" name="add_playlist" class="btn btn-outline-secondary">Створити плейліст</button>
+                        </form>
                     </div>
                 </div>
             </div>
-            {% for playlist in playlists %}
-            <div class="col-md-6">
-                <div class="card flex-md-row mb-4 shadow-lg">
-                    <div class="card-body d-flex flex-column align-items-start">
-                        <small class="text-muted">{{ playlist.creation_date }}</small>
-                        <h4>{{ playlist.name }}</h4>
-                        <div class="mb-1 text-muted">{{ playlist.date }}</div>
-                        <p class="text-muted card-text mb-auto">{{ playlist.description }}</p>
-                        <div class="btn-group mt-2">
-                            <a class="btn btn-sm btn-outline-secondary" href="../../playlist/{{ playlist.id }}">Переглянути</a>
-                        </div>
-                    </div>
+        </div>
+        <div class="col-md-12 mb-2">
+            <ul class="nav nav-tabs "role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="public-tab" data-toggle="tab" href="#public" role="tab" aria-controls="public" aria-selected="true">Публічні</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="private-tab" data-toggle="tab" href="#private" role="tab" aria-controls="private" aria-selected="false">Приватні</a>
+                </li>
+            </ul>
+        </div>
 
-                    <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
-                        <div class="side-crop rounded">
-                            <img class="img side-crop" src="{% static 'playlist/images'%}/{{ playlist.picture }}">
+        <div class="tab-content col-md-12 px-0">
+            <div class="tab-pane fade show active" id="public" role="tabpanel" aria-labelledby="public-tab">
+                {% if playlists %}
+                {% for playlist in playlists %}
+                <div class="col-md-6">
+                    <div class="card flex-md-row mb-4 shadow-lg">
+                        <div class="card-body d-flex flex-column align-items-start">
+                            <small class="text-muted">{{ playlist.creation_date }}</small>
+                            <h4>{{ playlist.name }}</h4>
+                            <div class="mb-1 text-muted">{{ playlist.date }}</div>
+                            <p class="text-muted card-text mb-auto">{{ playlist.description }}</p>
+                            <div class="btn-group mt-2">
+                                <a class="btn btn-sm btn-outline-secondary" href="../../playlist/{{ playlist.id }}">Переглянути</a>
+                            </div>
+                        </div>
+
+                        <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
+                            <div class="side-crop rounded">
+                                <img class="img side-crop" src="{% static 'playlist/images'%}/{{ playlist.picture }}">
+                            </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
+                {% endif %}
             </div>
-        {% endfor %}
+            <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab">
+                {% if access_list %}
+                {% for access in access_list %}
+                <div class="col-md-6">
+                    <div class="card flex-md-row mb-4 shadow-lg">
+                        <div class="card-body d-flex flex-column align-items-start">
+                            <small class="text-muted">{{ access.playlist.creation_date }}</small>
+                            <h4>{{ access.playlist.name }}</h4>
+                            <div class="mb-1 text-muted">{{ access.playlist.date }}</div>
+                            <p class="text-muted card-text mb-auto">{{ access.playlist.description }}</p>
+                            <div class="btn-group mt-2">
+                                <a class="btn btn-sm btn-outline-secondary" href="../../playlist/{{ access.playlist.id }}">Переглянути</a>
+                            </div>
+                        </div>
+
+                        <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
+                            <div class="side-crop rounded">
+                                <img class="img side-crop" src="{% static 'playlist/images'%}/{{ access.playlist.picture }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
     </div>
 </div>
+
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

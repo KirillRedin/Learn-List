@@ -30,6 +30,9 @@
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item">
+                    <a class="nav-link" href="/LearnList/user/{{ request.user.id }}">Доступні плейлісти</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/LearnList/user/{{ request.user.id }}">Профіль</a>
                 </li>
                 <li class="nav-item">
@@ -67,16 +70,16 @@
                     <form class="dropdown-item disabled" method="post" enctype="multipart/form-data">{% csrf_token %}
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="addPlaylistNameAddon">Назва</span>
+                                <span class="input-group-text">Назва</span>
                             </div>
-                            <input class="form-control" type="text" name="addPlaylistName" id="addPlaylistName" required="" placeholder="Назва плейліста" maxlength="40">
+                            <input class="form-control" type="text" name="addPlaylistName" required="" placeholder="Назва плейліста" maxlength="40">
                         </div>
 
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="addPlaylistTypeAddon">Тип</span>
+                                <span class="input-group-text">Тип</span>
                             </div>
-                            <select class="custom-select" id="addPlaylistType" name="addPlaylistType" required="">
+                            <select class="custom-select" name="addPlaylistType" required="">
                                 <option value="0" selected>Приватний</option>
                                 <option value="1">Публічний</option>
                             </select>
@@ -84,7 +87,7 @@
 
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="addPlaylistPictureAddon">Зображення</span>
+                                <span class="input-group-text">Зображення</span>
                             </div>
 
                             <div class="custom-file">
@@ -95,9 +98,9 @@
 
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text" id="addPlaylistDescriptionAddon">Опис</span>
+                                <span class="input-group-text">Опис</span>
                             </div>
-                            <textarea class="form-control" name="addPlaylistDescription" id="addPlaylistDescription" placeholder="Опис плейліста" maxlength="250"></textarea>
+                            <textarea class="form-control" name="addPlaylistDescription" placeholder="Опис плейліста" maxlength="250"></textarea>
                         </div>
 
                         <button type="submit" name="add_playlist" class="btn btn-outline-secondary">Створити плейліст</button>

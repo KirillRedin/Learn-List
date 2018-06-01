@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
+from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
@@ -88,15 +89,17 @@ class UserDetail(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, id, format=None):
-        current_user = self.get_object(id)
-        user_picture = UserPicture.objects.get(user=current_user)
-        playlists = Playlist.objects.filter(user=current_user)
-        return Response({'playlists': playlists, 'current_user': current_user, 'user_picture': user_picture}, template_name='profile.html')
+        access_list = Access.objects.filter(user=request.user)
+        user = self.get_object(id)
+        user_picture = UserPicture.objects.get(user=user)
+        playlists = Playlist.objects.filter(user=user, type=1)
+        access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0)
+        print(access_list)
+        return Response({'playlists': playlists, 'user': user, 'user_picture': user_picture, 'access_list': access_list}, template_name='profile.html')
 
     def post(self, id, request, format=None):
-        current_user = self.get_object(id)
-        playlists = Playlist.objects.filter(user=user)
-        return Response({'playlists': playlists, 'current_user': current_user}, template_name='profile.html')
+        user = self.get_object(id)
+        return HttpResponseRedirect(self.request.path_info)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -107,7 +110,7 @@ class PlaylistList(APIView):
     renderer_classes = (TemplateHTMLRenderer,)
 
     def get(self, request, format=None):
-        playlists = Playlist.objects.all()
+        playlists = Playlist.objects.filter(type=1)
         return Response({'playlists': playlists}, template_name='mainpage.html')
 
     def post(self, request, format=None):
@@ -125,6 +128,7 @@ class PlaylistList(APIView):
             picturename = img_fs.save(picture.name, picture)
 
         playlist = Playlist.objects.create(name=name, user=user, type=type, description=description, picture=picturename)
+        Access.objects.create(user=user, playlist=playlist, read=1, comment=1, edit=1, give_access=1)
         return redirect('playlist/' + str(playlist.id))
 
 @method_decorator(login_required, name='dispatch')
@@ -147,7 +151,15 @@ class PlaylistDetail(APIView):
         data = Data.objects.filter(playlist=playlist).order_by('number')
         comments = Comment.objects.filter(playlist=playlist)
         access_list = Access.objects.filter(playlist=playlist)
-        return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
+        user_access = None
+        try:
+            user_access = Access.objects.get(playlist=playlist, user=request.user)
+        except Access.DoesNotExist:
+            if request.user != playlist.user and playlist.type != 1:
+                return redirect('../../')
+        return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments,
+                         'user_pictures': user_pictures, 'access_list': access_list, 'user_access': user_access},
+                        template_name='playlist.html',)
 
 
     def post(self, request, id, format=None):
@@ -156,6 +168,7 @@ class PlaylistDetail(APIView):
         parts = Part.objects.filter(playlist=playlist).order_by('number')
         data = Data.objects.filter(playlist=playlist).order_by('number')
         comments = Comment.objects.filter(playlist=playlist)
+        user_access = Access.objects.get(playlist=playlist, user=request.user)
         access_list = Access.objects.filter(playlist=playlist)
 
         if request.POST.get('edit_playlist') != None:
@@ -176,8 +189,7 @@ class PlaylistDetail(APIView):
             playlist.description = description
             playlist.picture = picturename
             playlist.save()
-            playlist = self.get_object(id)
-            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
+            return HttpResponseRedirect(self.request.path_info)
 
         elif request.POST.get('add_part') != None:
             print("Add part")
@@ -191,8 +203,7 @@ class PlaylistDetail(APIView):
                 print('Greater parts does not exitst')
 
             Part.objects.create(user=request.user, playlist=playlist, name=name, description=description, number=number)
-            parts = Part.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
+            return HttpResponseRedirect(self.request.path_info)
 
         elif request.POST.get('add_data') != None:
             print("Add data")
@@ -208,8 +219,7 @@ class PlaylistDetail(APIView):
                 print('Greater data does not exitst')
 
             Data.objects.create(user=request.user, playlist=playlist, part=part, name=name, link=link, description=description, number=number)
-            data = Data.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
+            return HttpResponseRedirect(self.request.path_info)
 
         elif request.POST.get('delete_part') != None:
             print("Delete part")
@@ -220,9 +230,7 @@ class PlaylistDetail(APIView):
             except Part.DoesNotExist:
                 print('Greater parts does not exitst')
             part.delete()
-            parts = Part.objects.filter(playlist=playlist).order_by('number')
-            data = Data.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
+            return HttpResponseRedirect(self.request.path_info)
 
         elif request.POST.get('delete_data') != None:
             print("Delete data")
@@ -233,8 +241,7 @@ class PlaylistDetail(APIView):
             except Data.DoesNotExist:
                 print('Greater data does not exitst')
             data.delete()
-            data = Data.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
+            return HttpResponseRedirect(self.request.path_info)
 
         elif request.POST.get('delete_playlist') != None:
             print("Delete playlist")
@@ -263,8 +270,7 @@ class PlaylistDetail(APIView):
             part.description = description
             part.number = number
             part.save()
-            parts = Part.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
+            return HttpResponseRedirect(self.request.path_info)
 
 
         elif request.POST.get('edit_data') != None:
@@ -292,29 +298,36 @@ class PlaylistDetail(APIView):
             data.number = number
             data.link = link
             data.save()
-            data = Data.objects.filter(playlist=playlist).order_by('number')
-            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
+            return HttpResponseRedirect(self.request.path_info)
 
         elif request.POST.get('add_comment') != None:
             print('Add comment')
             content = request.POST['addCommentContent']
             Comment.objects.create(content=content, playlist=playlist, user=request.user)
-            parts = Part.objects.filter(playlist=playlist).order_by('number')
-            data = Data.objects.filter(playlist=playlist).order_by('number')
-            comments = Comment.objects.filter(playlist=playlist)
-            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
+            return HttpResponseRedirect(self.request.path_info)
 
         elif request.POST.get('delete_comment') != None:
             print('Delete comment')
             comment = Comment.objects.get(id=request.POST['deleteCommentId'])
             comment.delete()
-            comments = Comment.objects.filter(playlist=playlist)
-            return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
+            return HttpResponseRedirect(self.request.path_info)
 
         elif request.POST.get('give_access') != None:
             print('Give access')
             try:
                 user = User.objects.get(username = request.POST['addUserName'])
+            except User.DoesNotExist:
+                print('User does not exist')
+                error_message = "Користувача з таким Ім'ям не існує"
+                access_list = Access.objects.filter(playlist=playlist)
+                return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments,
+                                 'user_pictures': user_pictures, 'access_list': access_list, 'error_message': error_message, 'user_access': user_access}, template_name='playlist.html')
+            else:
+                if user == request.user or user == playlist.user:
+                    error_message = 'Ви не можете редагувати свої права' if user == request.user else 'Ви не можете редагувати права власника'
+                    access_list = Access.objects.filter(playlist=playlist)
+                    return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments,
+                                 'user_pictures': user_pictures, 'access_list': access_list, 'error_message': error_message, 'user_access': user_access}, template_name='playlist.html')
                 read_access = False
                 comment_access = False
                 edit_access = False
@@ -327,25 +340,25 @@ class PlaylistDetail(APIView):
                     edit_access = True
                 if request.POST.get('giveAccess') != None:
                     give_access = True
-
-                print(read_access, comment_access, edit_access, give_access)
                 try:
-                    privilege = Access.objects.get(user=user, playlist=playlist)
-                    privilege.read = read_access
-                    privilege.comment = comment_access
-                    privilege.edit = edit_access
-                    privilege.give_access = give_access
-                    privilege.save()
+                    access = Access.objects.get(user=user, playlist=playlist)
                 except Access.DoesNotExist:
-                    print('Privilege does not exist')
+                    print('Access does not exist')
                     Access.objects.create(user=user, playlist=playlist, read=read_access, comment=comment_access, edit=edit_access, give_access=give_access)
-                privileges = Access.objects.filter(playlist=playlist)
-                return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
-            except User.DoesNotExist:
-                print('User does not exist')
-                return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments, 'user_pictures': user_pictures, 'access_list': access_list}, template_name='playlist.html')
+                else:
+                    access.read = read_access
+                    access.comment = comment_access
+                    access.edit = edit_access
+                    access.give_access = give_access
+                    access.save()
+                finally:
+                    return HttpResponseRedirect(self.request.path_info)
 
-
+        elif request.POST.get('delete_access') != None:
+            print('Delete access')
+            access = Access.objects.get(id=request.POST['accessId'])
+            access.delete()
+            return HttpResponseRedirect(self.request.path_info)
 
         print("Operation selection error")
-        return Response(template_name='playlist.html')
+        return HttpResponseRedirect(self.request.path_info)
