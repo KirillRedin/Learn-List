@@ -12,7 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
-    <title>Playlist</title>
+    <title>Users</title>
 </head>
 <body>
 <div class="container">
@@ -23,12 +23,17 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="form-inline my-2 my-lg-0" method="post" action="/">{% csrf_token %}
+                <form class="form-inline my-2 my-lg-0" method="post">{% csrf_token %}
                     <input class="form-control mr-sm-2" type="search" placeholder="Пошук" aria-label="Search" name="searchName">
-                    <button class="btn my-2 my-sm-0" type="submit" name="global_search">Пошук</button>
+                    <button class="btn my-2 my-sm-0" type="submit" name="user_search">Пошук</button>
                 </form>
             </div>
             <ul class="navbar-nav">
+                {% if request.user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/users/">Користувачі</a>
+                </li>
+                {% endif %}
                 {% if request.user.is_superuser %}
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/">Адміністрування</a>
@@ -48,8 +53,38 @@
             </ul>
         </nav>
     </header>
-    <div class="row">
-    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Логін</th>
+                <th>Ім'я</th>
+                <th>Прізвище</th>
+                <th>Email</th>
+                <th>Дата створення</th>
+                <th>Дата останної активності</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td scope="row">{{ user.id }}</td>
+                <th><a href="/user/{{ user.id }}">{{ user.username }}</a></th>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.date_joined }}</td>
+                <td>{{ user.last_login }}</td>
+                <td>
+                    <a class="input-group-text btn btn-outline-secondary" href="/admin/auth/user/{{ user.id }}/change/">
+                        <i class="material-icons">edit</i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

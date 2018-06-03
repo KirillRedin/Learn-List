@@ -80,7 +80,8 @@ class LogOut(APIView):
 
 @method_decorator(login_required, name='dispatch')
 class UserDetail(APIView):
-    """ User Detailpage"""
+
+    """ User Detail page"""
 
     renderer_classes = (TemplateHTMLRenderer,)
 
@@ -156,6 +157,26 @@ class UserDetail(APIView):
             return Response({'playlists': playlists, 'user': user, 'user_picture': user_picture, 'access_list': access_list}, template_name='profile.html')
 
         return HttpResponseRedirect(self.request.path_info)
+
+@method_decorator(login_required, name='dispatch')
+class UserList(APIView):
+
+    """User List page"""
+
+    renderer_classes = (TemplateHTMLRenderer,)
+
+    def get(self, request, format=None):
+        if request.user.is_superuser != 1:
+            return redirect('/')
+        users = User.objects.all()
+        return Response({'users': users}, template_name='users.html')
+
+    def post(self, request, format=None):
+        if request.user.is_superuser != 1:
+            return redirect('/')
+        name = request.POST['searchName']
+        users = User.objects.filter(Q(username__icontains=name) | Q(first_name__icontains=name) | Q(last_name__icontains=name))
+        return Response({'users': users}, template_name='users.html')
 
 
 @method_decorator(login_required, name='dispatch')

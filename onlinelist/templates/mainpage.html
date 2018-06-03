@@ -17,7 +17,7 @@
 <body>
 <div class="container">
     <header class="mb-3">
-        <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm rounded">
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm rounded" style="background-color: #763300;">
             <a class="navbar-brand" href="/">Learn List</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -29,6 +29,11 @@
                 </form>
             </div>
             <ul class="navbar-nav">
+                {% if request.user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/">Користувачі</a>
+                </li>
+                {% endif %}
                 {% if request.user.is_superuser %}
                 <li class="nav-item">
                     <a class="nav-link" href="/admin/">Адміністрування</a>
@@ -48,7 +53,7 @@
             </ul>
         </nav>
     </header>
-    <section class="mb-0 jumbotron text-center">
+    <section class="mb-0 jumbotron text-center" style="background-color: #d7b787;">
         <div class="container">
             <h1 class="jumbotron-heading">Learn List</h1>
             <p class="text-muted">Опис сайту</p>
