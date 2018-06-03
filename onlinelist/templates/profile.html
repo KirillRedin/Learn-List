@@ -18,7 +18,7 @@
 <div class="container">
     <header class="mb-3">
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm rounded">
-            <a class="navbar-brand" href="/LearnList/">Learn List</a>
+            <a class="navbar-brand" href="/">Learn List</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,11 +29,18 @@
                 </form>
             </div>
             <ul class="navbar-nav">
+                {% if request.user.is_superuser %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/LearnList/accessible/">Доступні плейлісти</a>
+                    <a class="nav-link" href="/admin/">Адміністрування</a>
                 </li>
+                {% endif %}
+                {% if request.user.is_superuser != 1 %}
                 <li class="nav-item">
-                    <a class="nav-link active" href="/LearnList/user/{{ request.user.id }}">Профіль</a>
+                    <a class="nav-link" href="/accessible/">Доступні плейлісти</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/user/{{ request.user.id }}">Профіль</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout/">Вихід</a>
@@ -74,7 +81,7 @@
                         <span>{{ user.date_joined }}</span>
                     </div>
                 </div>
-                {% if user == request.user %}
+                {% if user == request.user or request.user.is_superuser %}
                 <div class="card-body d-flex justify-content-end align-items-end">
                     <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="collapse" data-target="#editUser" aria-controls="editUser" aria-expanded="false">
                         <i class="material-icons">edit</i>
@@ -83,7 +90,7 @@
                 {% endif %}
             </div>
         </div>
-        {% if user == request.user %}
+        {% if user == request.user or request.user.is_superuser %}
         <div class="col-md-5 collapse multi-collapse" id="editUser">
             <div class="col-md-12 mb-2">
                 <ul class="nav nav-tabs "role="tablist">
@@ -164,7 +171,7 @@
             </div>
         </div>
         {% endif %}
-        {% if user == request.user%}
+        {% if user == request.user %}
         <div class="col-md-12 mb-4 d-flex justify-content-center align-self-center">
             <button class="align-self-center align-self-center btn btn-outline-secondary btn-circle btn-lg" data-toggle="collapse" style="box-shadow: none" data-target="#addPlaylist" aria-controls="addPlaylist" aria-expanded="false">
                 <i class="material-icons md-48">playlist_add</i>
@@ -185,7 +192,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex flex-row justify-content-end align-items-start">
-                        <form class="dropdown-item disabled" method="post" action="/LearnList/" enctype="multipart/form-data">{% csrf_token %}
+                        <form class="dropdown-item disabled" method="post" action="/" enctype="multipart/form-data">{% csrf_token %}
                             <div class="form-group input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Назва</span>
@@ -248,7 +255,7 @@
                                 <div class="mb-1 text-muted">{{ playlist.date }}</div>
                                 <p class="text-muted card-text mb-auto">{{ playlist.description }}</p>
                                 <div class="btn-group mt-2">
-                                    <a class="btn btn-sm btn-outline-secondary" href="/LearnList/playlist/{{ playlist.id }}">Переглянути</a>
+                                    <a class="btn btn-sm btn-outline-secondary" href="/playlist/{{ playlist.id }}">Переглянути</a>
                                 </div>
                             </div>
 
@@ -276,7 +283,7 @@
                                 <div class="mb-1 text-muted">{{ access.playlist.date }}</div>
                                 <p class="text-muted card-text mb-auto">{{ access.playlist.description }}</p>
                                 <div class="btn-group mt-2">
-                                    <a class="btn btn-sm btn-outline-secondary" href="/LearnList/playlist/{{ access.playlist.id }}">Переглянути</a>
+                                    <a class="btn btn-sm btn-outline-secondary" href="/playlist/{{ access.playlist.id }}">Переглянути</a>
                                 </div>
                             </div>
 

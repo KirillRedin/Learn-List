@@ -18,7 +18,7 @@
 <div class="container">
     <header class="mb-3">
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm rounded">
-            <a class="navbar-brand" href="/LearnList/">Learn List</a>
+            <a class="navbar-brand" href="/">Learn List</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,11 +29,18 @@
                 </form>
             </div>
             <ul class="navbar-nav">
+                {% if request.user.is_superuser %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/LearnList/accessible/">Доступні плейлісти</a>
+                    <a class="nav-link" href="/admin/">Адміністрування</a>
                 </li>
+                {% endif %}
+                {% if request.user.is_superuser != 1 %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/LearnList/user/{{ request.user.id }}">Профіль</a>
+                    <a class="nav-link" href="/accessible/">Доступні плейлісти</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/{{ request.user.id }}">Профіль</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout/">Вихід</a>

@@ -24,7 +24,7 @@ class LogIn(APIView):
 
     def get(self, request, format=None):
         if request.user.is_authenticated:
-            return redirect('/LearnList/')
+            return redirect('/')
         return Response(template_name='login.html')
 
     def post(self, request, format=None):
@@ -37,7 +37,7 @@ class LogIn(APIView):
             user = authenticate(request, username=request.POST['login'], password=request.POST['password'])
             if user is not None:
                 login(request, user)
-                return redirect('/LearnList/')
+                return redirect('/')
             else:
                 messaage = {
                     'text': 'Невірний Логін або Пароль',
@@ -92,14 +92,23 @@ class UserDetail(APIView):
 
     def get(self, request, id, format=None):
         user = self.get_object(id)
-        user_picture = UserPicture.objects.get(user=user)
+        try:
+            user_picture = UserPicture.objects.get(user=user)
+        except UserPicture.DoesNotExist:
+            user_picture = UserPicture.objects.create(user=user, picture='no-photo.jpg')
         playlists = Playlist.objects.filter(user=user, type=1)
-        access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0)
+        if request.user.is_superuser:
+            access_list = Access.objects.filter(playlist__user=user, playlist__type=0)
+        else:
+            access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0)
         return Response({'playlists': playlists, 'user': user, 'user_picture': user_picture, 'access_list': access_list}, template_name='profile.html')
 
     def post(self, request, id, format=None):
         user = self.get_object(id)
-        user_picture = UserPicture.objects.get(user=user)
+        try:
+            user_picture = UserPicture.objects.get(user=user)
+        except UserPicture.DoesNotExist:
+            user_picture = UserPicture.objects.create(user=user, picture='no-photo.jpg')
         error_message = ''
         if request.POST.get('edit_user') != None:
             username = request.POST['editLogin']
@@ -133,7 +142,10 @@ class UserDetail(APIView):
                 user = self.get_object(id)
                 user_picture = UserPicture.objects.get(user=user)
                 playlists = Playlist.objects.filter(user=user, type=1)
-                access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0)
+                if request.user.is_superuser:
+                    access_list = Access.objects.filter(playlist__user=user, playlist__type=0)
+                else:
+                    access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0)
                 return Response({'playlists': playlists, 'user': user, 'user_picture': user_picture,
                                  'access_list': access_list, 'error_message': error_message}, template_name='profile.html')
 
@@ -154,7 +166,10 @@ class PlaylistList(APIView):
     renderer_classes = (TemplateHTMLRenderer,)
 
     def get(self, request, format=None):
-        playlists = Playlist.objects.filter(type=1)
+        if request.user.is_superuser:
+            playlists = Playlist.objects.all()
+        else:
+            playlists = Playlist.objects.filter(type=1)
         return Response({'playlists': playlists}, template_name='mainpage.html')
 
     def post(self, request, format=None):
@@ -178,7 +193,10 @@ class PlaylistList(APIView):
 
         elif request.POST.get('global_search') != None:
             name = request.POST['searchName']
-            playlists = Playlist.objects.filter(type=1, name__icontains=name)
+            if request.user.is_superuser:
+                playlists = Playlist.objects.filter(name__icontains=name)
+            else:
+                playlists = Playlist.objects.filter(type=1, name__icontains=name)
             return Response({'playlists': playlists}, template_name='mainpage.html')
 
 
@@ -190,10 +208,14 @@ class AccessiblePlaylists(APIView):
     renderer_classes = (TemplateHTMLRenderer,)
 
     def get(self, request, format=None):
+        if request.user.is_superuser:
+            return redirect('/')
         access_list = Access.objects.filter(~Q(playlist__user=request.user), user=request.user)
         return Response({'access_list': access_list}, template_name='accessible_playlists.html')
 
     def post(self, request, format=None):
+        if request.user.is_superuser:
+            return redirect('/')
         name = request.POST['searchName']
         access_list = Access.objects.filter(~Q(playlist__user=request.user), user=request.user, playlist__name__icontains=name)
         return Response({'access_list': access_list}, template_name='accessible_playlists.html')
@@ -214,6 +236,7 @@ class PlaylistDetail(APIView):
 
     def get(self, request, id, format=None):
         playlist = self.get_object(id)
+
         user_pictures = UserPicture.objects.all()
         parts = Part.objects.filter(playlist=playlist).order_by('number')
         data = Data.objects.filter(playlist=playlist).order_by('number')

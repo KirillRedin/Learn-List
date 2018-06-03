@@ -18,22 +18,29 @@
 <div class="container">
     <header class="mb-3">
         <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm rounded">
-            <a class="navbar-brand" href="/LearnList/">Learn List</a>
+            <a class="navbar-brand" href="/">Learn List</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="form-inline my-2 my-lg-0" method="post" action="/LearnList/">{% csrf_token %}
+                <form class="form-inline my-2 my-lg-0" method="post" action="/">{% csrf_token %}
                     <input class="form-control mr-sm-2" type="search" placeholder="Пошук" aria-label="Search" name="searchName">
                     <button class="btn my-2 my-sm-0" type="submit" name="global_search">Пошук</button>
                 </form>
             </div>
             <ul class="navbar-nav">
+                {% if request.user.is_superuser %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/LearnList/accessible/">Доступні плейлісти</a>
+                    <a class="nav-link" href="/admin/">Адміністрування</a>
                 </li>
+                {% endif %}
+                {% if request.user.is_superuser != 1 %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/LearnList/user/{{ request.user.id }}">Профіль</a>
+                    <a class="nav-link" href="/accessible/">Доступні плейлісти</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/{{ request.user.id }}">Профіль</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout/">Вихід</a>
@@ -54,10 +61,10 @@
                     <small class="text-muted">{{ playlist.creation_date }}</small>
                     <h4>{{ playlist.name }}</h4>
                     <p class="text-muted card-text mb-auto" >{{ playlist.description }}</p>
-                    {% if user_access or playlist.type == 1%}
+                    {% if user_access or playlist.type == 1 or request.user.is_superuser %}
                     <form method="post"> {% csrf_token %}
                         <div class="mt-2 btn-group">
-                            {% if user_access.edit == 1 %}
+                            {% if user_access.edit == 1 or request.user.is_superuser %}
                             <button 23type="button" class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#editPlaylist" aria-expanded="false" aria-controls="editPlaylist">
                                 <i class="material-icons">edit</i>
                             </button>
@@ -65,7 +72,7 @@
                             <button type="button" class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#addUser" aria-expanded="false" aria-controls="addUser">
                                 <i class="material-icons">people</i>
                             </button>
-                            {% if request.user == playlist.user %}
+                            {% if request.user == playlist.user or request.user.is_superuser %}
                             <button type="submit" class="btn btn-sm btn-outline-secondary" type="submit" name="delete_playlist" onclick="return confirm('Видалити плейліст?')">
                                 <i class="material-icons">delete</i>
                             </button>
@@ -84,17 +91,17 @@
 
 
             <h5 class="mb-4">Власник:
-                <a href="/LearnList/user/{{ playlist.user.id }}">{{ playlist.user.username }}</a>
+                <a href="/user/{{ playlist.user.id }}">{{ playlist.user.username }}</a>
             </h5>
 
             <div class="col-md-12 mb-5 px-0 collapse multi-collapse" id="addUser">
                 <p class="text-muted">Користувачі з доступом</p c>
                 <div class="form-inline">
-                    {% for user_access in access_list %}
+                    {% for access in access_list %}
                     <form method="post"> {% csrf_token %}
                         <div class="form-group btn-group mr-2">
-                            <a class="input-group-text btn" href="/LearnList/user/{{ user_access.user.id }}">{{ user_access.user.username }}</a>
-                            {% if user_access.user != playlist.user and user_access.user != request.user %}
+                            <a class="input-group-text btn" href="/user/{{ access.user.id }}">{{ access.user.username }}</a>
+                            {% if access.user != playlist.user and access.user != request.user and user_access.give_access == 1 or request.user.is_superuser %}
                             <button class="input-group-text btn btn-outline-secondary" type="submit" name="delete_access" onclick="return confirm('Видалити користувача?')">
                                 <i class="material-icons">clear</i>
                             </button>
@@ -104,7 +111,7 @@
                     </form>
                     {% endfor %}
                 </div>
-                {% if user_access.give_access == 1 %}
+                {% if user_access.give_access == 1 or request.user.is_superuser %}
                 <form class="px-0 dropdown-item disabled" method="post">{% csrf_token %}
                     <p>Надати доступ користувачу</p>
                     <div class="form-group input-group">
@@ -152,7 +159,7 @@
                                 </div>
                             </div>
                         </div>
-                        {% if user_access.user == playlist.user %}
+                        {% if user_access.user == playlist.user or request.user.is_superuser %}
                         <div class="input-group mb-3 mx-2">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
@@ -171,7 +178,7 @@
                 </form>
                 {% endif %}
             </div>
-            {% if user_access.edit == 1 %}
+            {% if user_access.edit == 1 or request.user.is_superuser %}
             <div class="col-md-12 mb-5 collapse multi-collapse" id="editPlaylist">
                 <form class="px-0 dropdown-item disabled" method="post" enctype="multipart/form-data">{% csrf_token %}
                     <p>Редагувати плейліст</p>
@@ -182,7 +189,7 @@
                         <input class="form-control" type="text" name="editPlaylistName" value="{{ playlist.name }}"  required="" placeholder="Назва плейліста" maxlength="40">
                     </div>
                     <div class="form-group input-group"
-                         {% if user_access.give_access != 1 %}
+                         {% if user_access.give_access != 1 and request.user.is_superuser != 1 %}
                          hidden
                          {% endif %}>
                         <div class="input-group-prepend">
@@ -225,7 +232,7 @@
                 {% if comments %}
                 <h5 class="mb-3">Коментарі</h5>
                 {% endif %}
-                {% if user_access.comment == 1 or playlist.type == 1 %}
+                {% if user_access.comment == 1 or playlist.type == 1 or request.user.is_superuser %}
                 <form class="mb-4" method="post"> {% csrf_token %}
                     <div class="form-group input-group">
                         <textarea class="form-control" placeholder="Написати коментар..." name="addCommentContent" maxlength="500"></textarea>
@@ -237,7 +244,7 @@
                 {% for comment in comments %}
                 <div class="row">
                     <div class="col-md-2">
-                        <a href="/LearnList/user/{{ comment.user_id }}">
+                        <a href="/user/{{ comment.user_id }}">
                             {% for user_picture in user_pictures %}
                             {% if user_picture.user_id == comment.user_id %}
                             <img class="comment" src="{% static 'playlist/images'%}/{{ user_picture.picture }}">
@@ -249,13 +256,13 @@
                         <div class="card-body flex-column align-items-start">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h5 class="mb-2">
-                                    <a class="text-dark" href="/LearnList/user/{{ comment.user_id }}">{{ comment.user.username }}</a>
+                                    <a class="text-dark" href="/user/{{ comment.user_id }}">{{ comment.user.username }}</a>
                                 </h5>
                                 <small class="text-muted">{{ comment.creation_date }}</small>
                             </div>
                             <p class="card-text">{{ comment.content }}</p>
                             <div class="d-flex justify-content-end">
-                                {% if request.user.id == comment.user_id %}
+                                {% if request.user.id == comment.user_id or request.user.is_superuser %}
                                 <form method="post"> {% csrf_token %}
                                     <button type="submit" class="btn btn-sm btn-outline-secondary" name="delete_comment" onclick="return confirm('Видалити коментар?')">
                                         <i class="material-icons">delete</i>
@@ -273,7 +280,7 @@
 
         <div class="col-md-6 ">
             <div>
-                {% if user_access.edit == 1 %}
+                {% if user_access.edit == 1 or request.user.is_superuser %}
                 <div class="col-md-12 dropdown-item disabled col">
                     <div class="d-flex flex-row justify-content-center">
                         <button class="btn btn-circle btn-md btn-outline-secondary" type="button" data-toggle="collapse" data-target="#addPart" aria-expanded="false" aria-controls="addData">
@@ -320,7 +327,7 @@
                                 {{ part.name }}
                                 <small class="mx-2 text-muted">{{ part.creation_date }}</small>
                             </a>
-                            {% if user_access.edit == 1 %}
+                            {% if user_access.edit == 1 or request.user.is_superuser %}
                             <div class="col-md-3 collapse multi-collapse" id="partButtons{{ part.id }}">
                                 <div class="d-flex flex-row justify-content-end align-items-end">
                                     <form method="post" id="{{ part.id }}" > {% csrf_token %}
@@ -341,7 +348,7 @@
                         <div class="collapse multi-collapse" id="partCollapse{{ part.id }}">
                             <p class="text-muted">{{ part.description }}</p>
 
-                            {% if user_access.edit == 1 %}
+                            {% if user_access.edit == 1 or request.user.is_superuser %}
                             <div class="col-md-12 collapse multi-collapse" id="editPart{{ part.id }}">
                                 <form class="dropdown-item disabled" method="post"> {% csrf_token %}
                                     <div class="form-group input-group">
@@ -376,7 +383,7 @@
                             </div>
                             {% endif %}
 
-                            {% if user_access.edit == 1 %}
+                            {% if user_access.edit == 1 or request.user.is_superuser %}
                             <div class="row">
                                 <div class="col-md-12 dropdown-item disabled col">
                                     <div class="d-flex flex-row justify-content-center">
@@ -432,7 +439,7 @@
                                     <small class="text-muted">{{ data_part.creation_date }}</small><br>
                                     <p class="text-muted" style="word-wrap: break-word;">{{ data_part.description }}</p>
                                 </a>
-                                {% if user_access.edit == 1 %}
+                                {% if user_access.edit == 1 or request.user.is_superuser %}
                                 <div class="col-md-3">
                                     <div class="d-flex flex-row justify-content-end align-items-start">
                                         <form method="post">{% csrf_token %}
