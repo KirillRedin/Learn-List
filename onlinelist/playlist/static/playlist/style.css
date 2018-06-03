@@ -3,29 +3,21 @@
     background-color: #f44336;
     color: white;
     }
+
 .alert.red {
     padding: 20px;
     background-color: #f44336;
     color: white;
     }
 
-
 body {
   min-height: 100%;
+  background-color: #ffffff;
   }
 
 .box_textshadow {
      text-shadow: 2px 2px 0px #FF0000; /* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
      }
-
-.btn-circle.btn-xl {
-    width: 140px;
-    height: 140px;
-    border-radius: 70px;
-    text-align: center;
-    font-size: 84px;
-    line-height: 1.33;
-    }
 
 .btn-circle.btn-lg {
     width: 70px;
@@ -34,6 +26,21 @@ body {
     text-align: center;
     font-size: 55px;
     line-height: 1;
+    color: #5b627e;
+    border: 1px solid #d2dae7;
+    background-color: #d2dae7;
+    }
+
+.btn-circle.btn-lg:hover {
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    text-align: center;
+    font-size: 55px;
+    line-height: 1;
+    color: #ffffff;
+    background-color: #d2dae7;
+    border: 1px solid #d2dae7;
     }
 
 .btn-circle.btn-md {
@@ -46,6 +53,12 @@ body {
     line-height: 1;
     }
 
+.btn-circle.transparent {
+    background-color: transparent;
+    color: #919db7;
+    border: 1px solid #919db7;
+}
+
 .btn-circle {
     width: 60px;
     height: 60px;
@@ -53,7 +66,25 @@ body {
     text-align: center;
     font-size: 24px;
     line-height: 1.42857;
+    color: #919db7;
+    border: 1px solid #919db7;
+    background-color: transparent;
     }
+
+.btn-circle:hover{
+    color: #ffffff;
+    background-color: #919db7;
+    border: 1px solid #919db7;
+    }
+
+.card {
+    color: #5b627e;
+    background-color: #edf2f880;
+}
+
+.colored-text {
+    color: #5b627e;
+}
 
 .closebtn {
     margin-left: 15px;
@@ -80,6 +111,14 @@ img.comment {
     border-radius: 50%;
     }
 
+.jumbotron {
+    color: #5b627e;
+    background-color: #d2dae7;
+}
+
+.list-group-item {
+    background-color: #edf2f880;
+}
 
 .material-icons.md-18 { font-size: 18px; }
 .material-icons.md-24 { font-size: 24px; }
@@ -88,17 +127,70 @@ img.comment {
 .material-icons.md-56 { font-size: 56px; }
 .material-icons.md-64 { font-size: 64px; }
 
+nav {
+    color: #ffffff;
+    background-color: #919db7;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #5b627e;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #5b627e;
+}
+
+.primary.active{
+    color: #5b627e;
+    background-color: #ffffff;
+}
+
+.primary {
+    color: #5b627e;
+    background-color: #edf2f880;
+}
+
+.primary:hover {
+    color: #5b627e;
+    background-color: #ffffff;
+}
+
+.primary-outline {
+    color: #919db7;
+    background-color: transparent;
+    border: 1px solid #919db7;
+}
+
+.primary-outline:hover {
+    color: #ffffff;
+    background-color: #919db7;
+    border: 1px solid #919db7;
+}
+
 .playlist-btn {
-    background-color: green;
-    color: green;
-    border: 2px solid green;
+    background-color: #d2dae7;
+    color: #5b627e;
+    border: 2px solid #d2dae7;
     }
 
 .playlist-btn:hover {
-    background-color:green;
-    color: green;
+    color: #ffffff;
     }
 
+
+.secondary {
+    color: #5b627e;
+    background-color: #d2dae7;
+}
+
+.secondary:hover {
+    color: #ffffff;
+    background-color: #d2dae7;
+}
 
 .small-btn {
         width: 25px;

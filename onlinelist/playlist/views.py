@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
-from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -98,10 +98,28 @@ class UserDetail(APIView):
         except UserPicture.DoesNotExist:
             user_picture = UserPicture.objects.create(user=user, picture='no-photo.jpg')
         playlists = Playlist.objects.filter(user=user, type=1)
+        playlist_paginator = Paginator(playlists, 2)
+        page = request.GET.get('page', 1)
+        try:
+            playlists = playlist_paginator.page(page)
+        except PageNotAnInteger:
+            playlists = playlist_paginator.page(1)
+        except EmptyPage:
+            playlists = playlist_paginator.page(playlist_paginator.num_pages)
+
         if request.user.is_superuser:
             access_list = Access.objects.filter(playlist__user=user, playlist__type=0)
         else:
             access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0)
+
+        access_paginator = Paginator(access_list, 2)
+        page = request.GET.get('page', 1)
+        try:
+            access_list = access_paginator.page(page)
+        except PageNotAnInteger:
+            access_list = access_paginator.page(1)
+        except EmptyPage:
+            access_list = access_paginator.page(access_paginator.num_pages)
         return Response({'playlists': playlists, 'user': user, 'user_picture': user_picture, 'access_list': access_list}, template_name='profile.html')
 
     def post(self, request, id, format=None):
@@ -169,6 +187,14 @@ class UserList(APIView):
         if request.user.is_superuser != 1:
             return redirect('/')
         users = User.objects.all()
+        paginator = Paginator(users, 2)
+        page = request.GET.get('page', 1)
+        try:
+            users = paginator.page(page)
+        except PageNotAnInteger:
+            users = paginator.page(1)
+        except EmptyPage:
+            users = paginator.page(paginator.num_pages)
         return Response({'users': users}, template_name='users.html')
 
     def post(self, request, format=None):
@@ -176,6 +202,14 @@ class UserList(APIView):
             return redirect('/')
         name = request.POST['searchName']
         users = User.objects.filter(Q(username__icontains=name) | Q(first_name__icontains=name) | Q(last_name__icontains=name))
+        paginator = Paginator(users, 2)
+        page = request.GET.get('page', 1)
+        try:
+            users = paginator.page(page)
+        except PageNotAnInteger:
+            users = paginator.page(1)
+        except EmptyPage:
+            users = paginator.page(paginator.num_pages)
         return Response({'users': users}, template_name='users.html')
 
 
@@ -191,6 +225,15 @@ class PlaylistList(APIView):
             playlists = Playlist.objects.all()
         else:
             playlists = Playlist.objects.filter(type=1)
+        paginator = Paginator(playlists, 2)
+        page = request.GET.get('page', 1)
+        try:
+            playlists = paginator.page(page)
+        except PageNotAnInteger:
+            playlists = paginator.page(1)
+        except EmptyPage:
+            playlists = paginator.page(paginator.num_pages)
+
         return Response({'playlists': playlists}, template_name='mainpage.html')
 
     def post(self, request, format=None):
@@ -218,6 +261,14 @@ class PlaylistList(APIView):
                 playlists = Playlist.objects.filter(name__icontains=name)
             else:
                 playlists = Playlist.objects.filter(type=1, name__icontains=name)
+            paginator = Paginator(playlists, 2)
+            page = request.GET.get('page', 1)
+            try:
+                playlists = paginator.page(page)
+            except PageNotAnInteger:
+                playlists = paginator.page(1)
+            except EmptyPage:
+                playlists = paginator.page(paginator.num_pages)
             return Response({'playlists': playlists}, template_name='mainpage.html')
 
 
@@ -232,6 +283,14 @@ class AccessiblePlaylists(APIView):
         if request.user.is_superuser:
             return redirect('/')
         access_list = Access.objects.filter(~Q(playlist__user=request.user), user=request.user)
+        paginator = Paginator(access_list, 2)
+        page = request.GET.get('page', 1)
+        try:
+            access_list = paginator.page(page)
+        except PageNotAnInteger:
+            access_list = paginator.page(1)
+        except EmptyPage:
+            access_list = paginator.page(paginator.num_pages)
         return Response({'access_list': access_list}, template_name='accessible_playlists.html')
 
     def post(self, request, format=None):
@@ -239,6 +298,14 @@ class AccessiblePlaylists(APIView):
             return redirect('/')
         name = request.POST['searchName']
         access_list = Access.objects.filter(~Q(playlist__user=request.user), user=request.user, playlist__name__icontains=name)
+        paginator = Paginator(access_list, 2)
+        page = request.GET.get('page', 1)
+        try:
+            access_list = paginator.page(page)
+        except PageNotAnInteger:
+            access_list = paginator.page(1)
+        except EmptyPage:
+            access_list = paginator.page(paginator.num_pages)
         return Response({'access_list': access_list}, template_name='accessible_playlists.html')
 
 
@@ -262,6 +329,14 @@ class PlaylistDetail(APIView):
         parts = Part.objects.filter(playlist=playlist).order_by('number')
         data = Data.objects.filter(playlist=playlist).order_by('number')
         comments = Comment.objects.filter(playlist=playlist)
+        paginator = Paginator(comments, 2)
+        page = request.GET.get('page', 1)
+        try:
+            comments = paginator.page(page)
+        except PageNotAnInteger:
+            comments = paginator.page(1)
+        except EmptyPage:
+            comments = paginator.page(paginator.num_pages)
         access_list = Access.objects.filter(playlist=playlist)
         user_access = None
         try:
@@ -280,6 +355,14 @@ class PlaylistDetail(APIView):
         parts = Part.objects.filter(playlist=playlist).order_by('number')
         data = Data.objects.filter(playlist=playlist).order_by('number')
         comments = Comment.objects.filter(playlist=playlist)
+        paginator = Paginator(comments, 2)
+        page = request.GET.get('page', 1)
+        try:
+            comments = paginator.page(page)
+        except PageNotAnInteger:
+            comments = paginator.page(1)
+        except EmptyPage:
+            comments = paginator.page(paginator.num_pages)
         user_access = None
         try:
             user_access = Access.objects.get(playlist=playlist, user=request.user)
@@ -440,7 +523,7 @@ class PlaylistDetail(APIView):
                 return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments,
                                  'user_pictures': user_pictures, 'access_list': access_list, 'error_message': error_message, 'user_access': user_access}, template_name='playlist.html')
             else:
-                if user == request.user or user == playlist.user:
+                if user == request.user or user == playlist.user and request.user.is_superuser != 1:
                     error_message = 'Ви не можете редагувати свої права' if user == request.user else 'Ви не можете редагувати права власника'
                     access_list = Access.objects.filter(playlist=playlist)
                     return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments,

@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'playlist/style.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'playlist/style.css' %}">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
@@ -17,7 +17,7 @@
 <body>
 <div class="container">
     <header class="mb-3">
-        <nav class="navbar navbar-expand-md navbar-light bg-light shadow-sm rounded">
+        <nav class="navbar navbar-expand-md navbar-dark shadow-sm rounded">
             <a class="navbar-brand" href="/">Learn List</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <form class="form-inline my-2 my-lg-0" method="post">{% csrf_token %}
                     <input class="form-control mr-sm-2" type="search" placeholder="Пошук" aria-label="Search" name="searchName">
-                    <button class="btn my-2 my-sm-0" type="submit" name="accessible_search">Пошук</button>
+                    <button class="btn secondary my-2 my-sm-0" type="submit" name="accessible_search">Пошук</button>
                 </form>
             </div>
             <ul class="navbar-nav">
@@ -74,6 +74,32 @@
         </div>
         {% endfor %}
     </div>
+    {% if access_list.has_other_pages %}
+    <div class="btn-group d-flex justify-content-center">
+        {% if access_list.has_previous %}
+        <a class="input-group-text btn primary" href="?page=1">
+            <i class="material-icons">first_page</i>
+        </a>
+        <a class="input-group-text btn primary" href="?page={{ access_list.previous_page_number }}">
+            <i class="material-icons">navigate_before</i>
+        </a>
+        {% endif %}
+        {% for i in access_list.paginator.page_range %}
+        {% if access_list.number == i %}
+        <a class="input-group-text btn primary active">{{ i }}</a>
+        {% else %}
+        <a class="input-group-text btn primary" href="?page={{ i }}">{{ i }}</a>
+        {% endif %}
+        {% endfor %}
+        {% if access_list.has_next %}
+        <a class="input-group-text btn primary" href="?page={{ access_list.next_page_number }}">
+            <i class="material-icons">navigate_next</i></a>
+        <a class="input-group-text btn primary" href="?page={{ access_list.paginator.num_pages }}">
+            <i class="material-icons">last_page</i>
+        </a>
+        {% endif %}
+    </div>
+    {% endif %}
 </div>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

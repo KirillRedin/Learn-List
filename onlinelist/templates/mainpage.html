@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'playlist/style.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'playlist/style.css' %}">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
@@ -17,7 +17,7 @@
 <body>
 <div class="container">
     <header class="mb-3">
-        <nav class="navbar navbar-expand-md navbar-light shadow-sm rounded" style="background-color: #763300;">
+        <nav class="navbar navbar-expand-md navbar-dark shadow-sm rounded">
             <a class="navbar-brand" href="/">Learn List</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <form class="form-inline my-2 my-lg-0" method="post">{% csrf_token %}
                     <input class="form-control mr-sm-2" type="search" placeholder="Пошук" aria-label="Search" name="searchName">
-                    <button class="btn my-2 my-sm-0" type="submit" name="global_search">Пошук</button>
+                    <button class="btn secondary my-2 my-sm-0" type="submit" name="global_search">Пошук</button>
                 </form>
             </div>
             <ul class="navbar-nav">
@@ -53,7 +53,7 @@
             </ul>
         </nav>
     </header>
-    <section class="mb-0 jumbotron text-center" style="background-color: #d7b787;">
+    <section class="mb-0 jumbotron text-center">
         <div class="container">
             <h1 class="jumbotron-heading">Learn List</h1>
             <p class="text-muted">Опис сайту</p>
@@ -61,13 +61,13 @@
     </section>
     <div class="row mb-2">
         <div class="col-md-12 mb-4 d-flex justify-content-center align-self-center" style="margin-top: -40px">
-            <button class="align-self-center btn playlist-btn btn-circle btn-lg" data-toggle="collapse" style="box-shadow: none" data-target="#addPlaylist" aria-controls="addPlaylist" aria-expanded="false">
+            <button class="align-self-center btn btn-circle btn-lg" data-toggle="collapse" style="box-shadow: none" data-target="#addPlaylist" aria-controls="addPlaylist" aria-expanded="false">
                 <i class="material-icons md-48">playlist_add</i>
             </button>
         </div>
         <div class="col-md-12 mb-4 collapse multi-collapse" id="addPlaylist">
             <div class="d-flex justify-content-start">
-            <div class="col-md-6">
+            <div class="col-md-6 colored-text">
                 <h3>Створення плейліста</h3>
                 <p class="text-muted">
                     - Для створення плейліста необхідно обрати для нього та обрати тип.<br>
@@ -82,14 +82,14 @@
                     <form class="dropdown-item disabled" method="post" enctype="multipart/form-data">{% csrf_token %}
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Назва</span>
+                                <span class="input-group-text primary">Назва</span>
                             </div>
                             <input class="form-control" type="text" name="addPlaylistName" required="" placeholder="Назва плейліста" maxlength="40">
                         </div>
 
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Тип</span>
+                                <span class="input-group-text primary">Тип</span>
                             </div>
                             <select class="custom-select" name="addPlaylistType" required="">
                                 <option value="0" selected>Приватний</option>
@@ -99,7 +99,7 @@
 
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Зображення</span>
+                                <span class="input-group-text primary">Зображення</span>
                             </div>
 
                             <div class="custom-file">
@@ -110,12 +110,12 @@
 
                         <div class="form-group input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text">Опис</span>
+                                <span class="input-group-text primary">Опис</span>
                             </div>
                             <textarea class="form-control" name="addPlaylistDescription" placeholder="Опис плейліста" maxlength="250"></textarea>
                         </div>
 
-                        <button type="submit" name="add_playlist" class="btn btn-outline-secondary">Створити плейліст</button>
+                        <button type="submit" name="add_playlist" class="input-group-text btn primary">Створити плейліст</button>
                     </form>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                     <div class="mb-1 text-muted">{{ playlist.date }}</div>
                     <p class="text-muted card-text mb-auto">{{ playlist.description }}</p>
                     <div class="btn-group mt-2">
-                        <a class="btn btn-sm btn-outline-secondary" href="playlist/{{ playlist.id }}">Переглянути</a>
+                        <a class="btn btn-sm primary-outline" href="playlist/{{ playlist.id }}">Переглянути</a>
                     </div>
                 </div>
 
@@ -143,6 +143,32 @@
         </div>
         {% endfor %}
     </div>
+    {% if playlists.has_other_pages %}
+    <div class="btn-group d-flex justify-content-center">
+        {% if playlists.has_previous %}
+        <a class="input-group-text btn primary" href="?page=1">
+            <i class="material-icons">first_page</i>
+        </a>
+        <a class="input-group-text btn primary" href="?page={{ playlists.previous_page_number }}">
+            <i class="material-icons">navigate_before</i>
+        </a>
+        {% endif %}
+        {% for i in playlists.paginator.page_range %}
+        {% if playlists.number == i %}
+        <a class="input-group-text btn primary active">{{ i }}</a>
+        {% else %}
+        <a class="input-group-text btn primary" href="?page={{ i }}">{{ i }}</a>
+        {% endif %}
+        {% endfor %}
+        {% if playlists.has_next %}
+        <a class="input-group-text btn primary" href="?page={{ playlists.next_page_number }}">
+            <i class="material-icons">navigate_next</i></a>
+        <a class="input-group-text btn primary" href="?page={{ playlists.paginator.num_pages }}">
+            <i class="material-icons">last_page</i>
+        </a>
+        {% endif %}
+    </div>
+    {% endif %}
 </div>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
