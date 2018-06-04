@@ -129,3 +129,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = 'D:\Git\Learn-List\onlinelist\playlist\static\playlist'
 LOGIN_URL = '/login/'
+
+# Emails settings
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'postmaster@sandbox0600a19269ed4b2a8ec4f6ddeb9935fe.mailgun.org'
+EMAIL_HOST_PASSWORD = '805645966c3b984d00e5d00a2a987215-b892f62e-ac65c5a7'
+EMAIL_USE_TLS = True

@@ -13,9 +13,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script type="text/javascript">
         function codeAddress() {
-            if (localStorage.state) {
+            if (sessionStorage.state) {
                 var active, private;
-                if (localStorage.getItem("state") == "private"){
+                if (sessionStorage.getItem("state") == "private"){
                     document.getElementById("private").classList.add("active", "show");
                     document.getElementById("public-tab").setAttribute("aria-selected", false);
                     document.getElementById("private-tab").classList.add("active");
@@ -27,7 +27,10 @@
                     document.getElementById("public-tab").setAttribute("aria-selected", true);
                 }
             } else {
-            alert('Storage empty');
+                document.getElementById("public").classList.add("active", "show");
+                document.getElementById("private-tab").setAttribute("aria-selected", false);
+                document.getElementById("public-tab").classList.add("active");
+                document.getElementById("public-tab").setAttribute("aria-selected", true);
             }
         }
         window.onload = codeAddress;
@@ -383,11 +386,11 @@
     setTimeout(save, 200);
     }
     function save(){
-        if (localStorage){
+        if (sessionStorage){
             if (document.getElementById("public").classList.contains("show")) {
-            localStorage.setItem("state", "public");
+            sessionStorage.setItem("state", "public");
             } else {
-            localStorage.setItem("state", "private");
+            sessionStorage.setItem("state", "private");
             }
         }
     }

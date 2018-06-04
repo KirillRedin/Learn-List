@@ -181,6 +181,9 @@ nav {
     color: #ffffff;
     }
 
+.rounded {
+    border-radius: 20px;
+}
 
 .secondary {
     color: #5b627e;

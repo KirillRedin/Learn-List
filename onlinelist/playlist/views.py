@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.db.models import Q
 
 
@@ -515,6 +516,7 @@ class PlaylistDetail(APIView):
 
         elif request.POST.get('give_access') != None:
             print('Give access')
+            access_message = ''
             try:
                 user = User.objects.get(username = request.POST['addUserName'])
             except User.DoesNotExist:
@@ -535,11 +537,15 @@ class PlaylistDetail(APIView):
                 give_access = False
                 if request.POST.get('readAccess') != None:
                     read_access = True
+                    access_message += 'читання '
                 if request.POST.get('commentAccess') != None:
+                    access_message += '/ коментування '
                     comment_access = True
                 if request.POST.get('editAccess') != None:
+                    access_message += '/ редагування '
                     edit_access = True
                 if request.POST.get('giveAccess') != None:
+                    access_message += '/ надання доступу до '
                     give_access = True
                 try:
                     access = Access.objects.get(user=user, playlist=playlist)
@@ -553,11 +559,23 @@ class PlaylistDetail(APIView):
                     access.give_access = give_access
                     access.save()
                 finally:
+                    send_mail(
+                        'Права доступу в системі LearnList',
+                        'Ви були наділені правами на ' + access_message + 'плейліста ' + playlist.name +
+                        ' користувача ' + playlist.user.username + '. Плейліст доступний за посиланням http://127.0.0.1:8000/playlist/' + str(playlist.id),
+                        'postmaster@sandbox0600a19269ed4b2a8ec4f6ddeb9935fe.mailgun.org', [user.email]
+                    )
                     return HttpResponseRedirect(self.request.path_info)
 
         elif request.POST.get('delete_access') != None:
             print('Delete access')
             access = Access.objects.get(id=request.POST['accessId'])
+            send_mail(
+                'Права доступу в системі LearnList',
+                'Ваш доступ до плейліста ' + access.playlist.name +
+                ' користувача ' + access.playlist.user.username + ' був обмежений.',
+                'postmaster@sandbox0600a19269ed4b2a8ec4f6ddeb9935fe.mailgun.org', [access.user.email]
+            )
             access.delete()
             return HttpResponseRedirect(self.request.path_info)
 
