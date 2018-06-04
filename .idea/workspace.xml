@@ -6,10 +6,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6fd4458-78d9-43a3-8fa2-7ed3b09bf2aa" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/onlinelist/onlinelist/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/onlinelist/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/static/playlist/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/playlist/static/playlist/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/playlist/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/onlinelist/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/templates/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py" beforeDir="false" afterPath="$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -60,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="profile.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="profile.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/onlinelist/templates/profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="32" column="40" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
+            <state relative-caret-position="493">
+              <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
               <folding>
                 <element signature="e#2644#2651#1" expanded="true" />
                 <element signature="n#style#0;n#button#0;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -73,16 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/onlinelist/templates/login.html">
+      <file leaf-file-name="test_models.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
-              <folding>
-                <element signature="n#style#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#p#0;n#form#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="425">
+              <caret line="162" column="50" selection-start-line="162" selection-start-column="50" selection-end-line="162" selection-end-column="50" />
             </state>
           </provider>
         </entry>
@@ -169,12 +162,12 @@
       <find>../</find>
       <find>Deta</find>
       <find>redire</find>
-      <find>pagi</find>
       <find>btn-gro</find>
       <find>edf2</find>
       <find>userde</find>
       <find>rounded</find>
       <find>round</find>
+      <find>pagi</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -195,7 +188,6 @@
         <option value="$PROJECT_DIR$/onlinelist/onlinelist/urls.py" />
         <option value="$PROJECT_DIR$/onlinelist/templates/signin.html" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/serializers.py" />
-        <option value="$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/models.py" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/urls.py" />
         <option value="$PROJECT_DIR$/onlinelist/templates/login.html" />
@@ -207,6 +199,7 @@
         <option value="$PROJECT_DIR$/onlinelist/playlist/views.py" />
         <option value="$PROJECT_DIR$/onlinelist/playlist/static/playlist/style.css" />
         <option value="$PROJECT_DIR$/onlinelist/templates/profile.html" />
+        <option value="$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py" />
       </list>
     </option>
   </component>
@@ -389,10 +382,10 @@
       <window_info anchor="right" id="Maven Projects" order="7" weight="0.32995737" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.30827886" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.30827886" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Designer" order="3" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17270789" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17270789" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="UI Designer" order="4" />
@@ -695,13 +688,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/onlinelist/playlist/tests/test_views.py" />
-    <entry file="file://$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="161" column="19" selection-start-line="161" selection-start-column="19" selection-end-line="161" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/onlinelist/playlist/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -809,12 +795,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/onlinelist/templates/profile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="32" column="40" selection-start-line="32" selection-start-column="40" selection-end-line="32" selection-end-column="40" />
+        <state relative-caret-position="493">
+          <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
           <folding>
             <element signature="e#2644#2651#1" expanded="true" />
             <element signature="n#style#0;n#button#0;n#div#2;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/onlinelist/playlist/tests/test_models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="162" column="50" selection-start-line="162" selection-start-column="50" selection-end-line="162" selection-end-column="50" />
         </state>
       </provider>
     </entry>

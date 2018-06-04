@@ -150,7 +150,7 @@ class AccessTest(TestCase):
             picture='picture link'
         )
 
-        self.privilege = Access.objects.create(
+        self.access = Access.objects.create(
             user=user,
             playlist=playlist,
             read = 1,
@@ -160,7 +160,7 @@ class AccessTest(TestCase):
         )
 
     def test_access(self):
-        access = Access.objects.get(id=self.privilege.id)
+        access = Access.objects.get(id=self.access.id)
         self.assertEqual(access.read, 1)
         self.assertEqual(access.comment, 1)
         self.assertEqual(access.edit, 1)
@@ -186,3 +186,19 @@ class UserPictureTest(TestCase):
     def test_user_picture(self):
         user_picture = UserPicture.objects.get(id=self.user_picture.id)
         self.assertEqual(user_picture.picture, 'picture link')
+
+
+class UserTest(TestCase):
+
+    """ Test module for UserPictureTest model """
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='Redin',
+            email='email',
+            password=123
+        )
+
+    def test_user(self):
+        user = User.objects.get(id=self.user.id)
+        self.assertEqual(user.username, 'Redin')
