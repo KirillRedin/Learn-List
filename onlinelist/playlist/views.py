@@ -47,25 +47,34 @@ class LogIn(APIView):
                 return Response({'message': messaage}, template_name='login.html')
         else:
             print('Registration')
-            user = User.objects.create_user(
-                username=request.POST['login'],
-                email=request.POST['email'],
-                password=request.POST['password'],
-                first_name=request.POST['first_name'],
-                last_name=request.POST['last_name']
-            )
-            picturename = "no-photo.jpg"
-            if request.FILES.get('userPicture') != None:
-                print('Uploading picture')
-                picture = request.FILES['userPicture']
-                img_fs = FileSystemStorage(base_url='/playlist/static/playlist/images', location="playlist/static/playlist/images")
-                picturename = img_fs.save(picture.name, picture)
-            UserPicture.objects.create(user=user, picture=picturename)
-            messaage = {
-                'text': 'Користувач успішно зареєстрований',
-                'color': 'Green'
-            }
-            return Response({'message': messaage}, template_name='login.html')
+            try:
+                user = User.objects.get(username=request.POST['login'])
+            except User.DoesNotExist:
+                user = User.objects.create_user(
+                    username=request.POST['login'],
+                    email=request.POST['email'],
+                    password=request.POST['password'],
+                    first_name=request.POST['first_name'],
+                    last_name=request.POST['last_name']
+                )
+                picturename = "no-photo.jpg"
+                if request.FILES.get('userPicture') != None:
+                    print('Uploading picture')
+                    picture = request.FILES['userPicture']
+                    img_fs = FileSystemStorage(base_url='/playlist/static/playlist/images', location="playlist/static/playlist/images")
+                    picturename = img_fs.save(picture.name, picture)
+                UserPicture.objects.create(user=user, picture=picturename)
+                messaage = {
+                    'text': 'Користувач успішно зареєстрований',
+                    'color': 'Green'
+                }
+                return Response({'message': messaage}, template_name='login.html')
+            else:
+                messaage = {
+                    'text': 'Користувач з таким логіном вже зареєстрований',
+                    'color': 'Red'
+                }
+                return Response({'message': messaage}, template_name='login.html')
 
 
 @method_decorator(login_required, name='dispatch')

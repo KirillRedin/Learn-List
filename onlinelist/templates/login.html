@@ -10,13 +10,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-
     <title>Login</title>
 </head>
 <body class="d-flex align-items-center" style="text-align: center; height: 80%; width: 100%;">
 <div class="col-md-12 d-flex justify-content-center">
     <div class="col-md-3">
-        <form class="mb-5" method="post"> {% csrf_token %}
+        <form class="mb-5" method="post" > {% csrf_token %}
             <h1 class="h3 mb-3 font-weight-normal">Ласкаво просимо</h1>
             <p style="color: {{ message.color }}">{{ message.text }}</p>
             <label for="inputLogin" class="sr-only">Логін</label>
@@ -28,16 +27,16 @@
         </form>
 
         <form class=" px-0 collapse multi-collapse dropdown-item disabled" id="register" method="post" enctype="multipart/form-data"> {% csrf_token %}
-            <input class="mb-2 form-control" name="login" placeholder="Логін" required="">
-            <input class="mb-2 form-control" name="first_name" placeholder="Ім'я">
-            <input class="mb-2 form-control" name="last_name" placeholder="Прізвище">
+            <input class="mb-2 form-control" type="text" name="login" placeholder="Логін" required="" oninput="checkUsername(this)">
+            <input class="mb-2 form-control" name="first_name" placeholder="Ім'я" oninput="checkName(this)">
+            <input class="mb-2 form-control" name="last_name" placeholder="Прізвище" oninput="checkName(this)">
             <input class="mb-2 form-control" name="email" type="email" placeholder="Email" required="">
             <div class="mb-2 custom-file">
                 <label class="d-flex align-self-left text-muted form-control custom-file-label" for="userPicture">Зображення профілю</label>
                 <input class="form-control custom-file-input" id="userPicture" name="userPicture" type="file" placeholder="Зображення">
             </div>
-            <input class="mb-2 form-control" type="password" placeholder="Пароль" name="password" id="password" required="" autofocus="">
-            <input class="mb-2 form-control" type="password" placeholder="Повторіть пароль" required="" autofocus="" oninput="check(this)">
+            <input class="mb-2 form-control" type="password" placeholder="Пароль" name="password" id="password" required="" autofocus="" oninput="checkPassword(this)">
+            <input class="mb-2 form-control" type="password" placeholder="Повторіть пароль" name="password2" required="" autofocus="" oninput="check(this)">
 
             <script language='javascript' type='text/javascript'>
                 function check(input) {
@@ -48,6 +47,41 @@
                         input.setCustomValidity('');
                     }
                 }
+
+                function checkPassword(input) {
+                    // at least one number, one lowercase and one uppercase letter
+                    // at least six characters
+                    var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/;
+                    if (!re.test(input.value)) {
+                        input.setCustomValidity('Пароль повинен містити мінімум 1 літеру нижнього регістру [a-z], 1 літеру верхнього регістру [A-Z] та 1 цифру [0-9]');
+                    } else if (input.value.length < 6) {
+                        input.setCustomValidity('Довжина паролю має бути не менше 6 символів');
+                    } else {
+                        input.setCustomValidity('');
+                    }
+                  }
+
+                  function checkUsername(input) {
+                    // at least one number, one lowercase and one uppercase letter
+                    // at least six characters
+                    var re = /^[a-zA-Z0-9]+$/;
+                    if (!re.test(input.value)) {
+                        input.setCustomValidity('Логін має містити лише літери латинського алфавіту та цифри');
+                    } else {
+                        input.setCustomValidity('');
+                    }
+                  }
+
+                  function checkName(input) {
+                    // at least one number, one lowercase and one uppercase letter
+                    // at least six characters
+                    var re = /^[a-zA-Zа-яА-ЯёЁ]+$/;
+                    if (!re.test(input.value)) {
+                        input.setCustomValidity(input.placeholder + ' має містити лише літери латинського алфавіту та кирилиці');
+                    } else {
+                        input.setCustomValidity('');
+                    }
+                  }
             </script>
             <button class="btn btn-sm btn-primary btn-block" name="register" type="submit">Зареєструватися</button>
         </form>
