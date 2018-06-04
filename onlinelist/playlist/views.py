@@ -108,7 +108,8 @@ class UserDetail(APIView):
             playlists = playlist_paginator.page(playlist_paginator.num_pages)
 
         if request.user.is_superuser:
-            access_list = Access.objects.filter(playlist__user=user, playlist__type=0)
+            access_list = Access.objects.filter(user=user, playlist__user=user, playlist__type=0)
+            print(access_list)
         else:
             access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0)
 
@@ -342,7 +343,7 @@ class PlaylistDetail(APIView):
         try:
             user_access = Access.objects.get(playlist=playlist, user=request.user)
         except Access.DoesNotExist:
-            if request.user != playlist.user and playlist.type != 1:
+            if request.user != playlist.user and playlist.type != 1 and request.user.is_superuser != 1:
                 return redirect('/')
         return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments,
                          'user_pictures': user_pictures, 'access_list': access_list, 'user_access': user_access},
@@ -367,7 +368,7 @@ class PlaylistDetail(APIView):
         try:
             user_access = Access.objects.get(playlist=playlist, user=request.user)
         except Access.DoesNotExist:
-            if request.user != playlist.user and playlist.type != 1:
+            if request.user != playlist.user and playlist.type != 1 and request.user.is_superuser != 1:
                 return redirect('/')
         access_list = Access.objects.filter(playlist=playlist)
 

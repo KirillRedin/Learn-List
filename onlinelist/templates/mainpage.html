@@ -67,58 +67,58 @@
         </div>
         <div class="col-md-12 mb-4 collapse multi-collapse" id="addPlaylist">
             <div class="d-flex justify-content-start">
-            <div class="col-md-6 colored-text">
-                <h3>Створення плейліста</h3>
-                <p class="text-muted">
-                    - Для створення плейліста необхідно обрати для нього та обрати тип.<br>
-                    - Зображення та опис є необов'язковими.<br>
-                    - Публічний плейліст доступний для будь-якого авторизованого користувача.<br>
-                    - Приватний плейліст доступний лише автору та користувачам з відповідними правами.<br>
-                    - Права доступу до плейліста можна встановити на сторінці плейліста.<br>
-                </p>
-            </div>
-            <div class="col-md-6">
-                <div class="d-flex flex-row justify-content-end align-items-start">
-                    <form class="dropdown-item disabled" method="post" enctype="multipart/form-data">{% csrf_token %}
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text primary">Назва</span>
-                            </div>
-                            <input class="form-control" type="text" name="addPlaylistName" required="" placeholder="Назва плейліста" maxlength="40">
-                        </div>
-
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text primary">Тип</span>
-                            </div>
-                            <select class="custom-select" name="addPlaylistType" required="">
-                                <option value="0" selected>Приватний</option>
-                                <option value="1">Публічний</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text primary">Зображення</span>
-                            </div>
-
-                            <div class="custom-file">
-                                <input type="file" class="form-control custom-file-input" id="addPlaylistPicture" name="addPlaylistPicture">
-                                <label class="custom-file-label" for="addPlaylistPicture">Оберіть файл</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text primary">Опис</span>
-                            </div>
-                            <textarea class="form-control" name="addPlaylistDescription" placeholder="Опис плейліста" maxlength="250"></textarea>
-                        </div>
-
-                        <button type="submit" name="add_playlist" class="input-group-text btn primary">Створити плейліст</button>
-                    </form>
+                <div class="col-md-6 colored-text">
+                    <h3>Створення плейліста</h3>
+                    <p class="text-muted">
+                        - Для створення плейліста необхідно обрати для нього та обрати тип.<br>
+                        - Зображення та опис є необов'язковими.<br>
+                        - Публічний плейліст доступний для будь-якого авторизованого користувача.<br>
+                        - Приватний плейліст доступний лише автору та користувачам з відповідними правами.<br>
+                        - Права доступу до плейліста можна встановити на сторінці плейліста.<br>
+                    </p>
                 </div>
-            </div>
+                <div class="col-md-6">
+                    <div class="d-flex flex-row justify-content-end align-items-start">
+                        <form class="dropdown-item disabled" method="post" enctype="multipart/form-data">{% csrf_token %}
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text primary">Назва</span>
+                                </div>
+                                <input class="form-control" type="text" name="addPlaylistName" required="" placeholder="Назва плейліста" maxlength="40">
+                            </div>
+
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text primary">Тип</span>
+                                </div>
+                                <select class="custom-select" name="addPlaylistType" required="">
+                                    <option value="0" selected>Приватний</option>
+                                    <option value="1">Публічний</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text primary">Зображення</span>
+                                </div>
+
+                                <div class="custom-file">
+                                    <input type="file" class="form-control custom-file-input" id="addPlaylistPicture" name="addPlaylistPicture">
+                                    <label class="custom-file-label" for="addPlaylistPicture">Оберіть файл</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text primary">Опис</span>
+                                </div>
+                                <textarea class="form-control" name="addPlaylistDescription" placeholder="Опис плейліста" maxlength="250"></textarea>
+                            </div>
+
+                            <button type="submit" name="add_playlist" class="input-group-text btn primary">Створити плейліст</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         {% for playlist in playlists %}
@@ -133,11 +133,8 @@
                         <a class="btn btn-sm primary-outline" href="playlist/{{ playlist.id }}">Переглянути</a>
                     </div>
                 </div>
-
-                <div class="card-image-right flex-auto d-none d-lg-block img-fluid" >
-                    <div class="side-crop rounded">
-                        <img class="img side-crop" src="{% static 'playlist/images'%}/{{ playlist.picture }}">
-                    </div>
+                <div class="card-image-right flex-autod-none d-lg-block img-fluid" >
+                    <img class="img side-crop" src="{% static 'playlist/images'%}/{{ playlist.picture }}">
                 </div>
             </div>
         </div>
