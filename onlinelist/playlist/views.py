@@ -98,8 +98,8 @@ class UserDetail(APIView):
         except UserPicture.DoesNotExist:
             user_picture = UserPicture.objects.create(user=user, picture='no-photo.jpg')
         playlists = Playlist.objects.filter(user=user, type=1)
-        playlist_paginator = Paginator(playlists, 2)
-        page = request.GET.get('page', 1)
+        playlist_paginator = Paginator(playlists, 6)
+        page = request.GET.get('public_page', 1)
         try:
             playlists = playlist_paginator.page(page)
         except PageNotAnInteger:
@@ -112,8 +112,8 @@ class UserDetail(APIView):
         else:
             access_list = Access.objects.filter(user=request.user, playlist__user=user, playlist__type=0)
 
-        access_paginator = Paginator(access_list, 2)
-        page = request.GET.get('page', 1)
+        access_paginator = Paginator(access_list, 6)
+        page = request.GET.get('private_page', 1)
         try:
             access_list = access_paginator.page(page)
         except PageNotAnInteger:
@@ -187,7 +187,7 @@ class UserList(APIView):
         if request.user.is_superuser != 1:
             return redirect('/')
         users = User.objects.all()
-        paginator = Paginator(users, 2)
+        paginator = Paginator(users, 6)
         page = request.GET.get('page', 1)
         try:
             users = paginator.page(page)
@@ -202,7 +202,7 @@ class UserList(APIView):
             return redirect('/')
         name = request.POST['searchName']
         users = User.objects.filter(Q(username__icontains=name) | Q(first_name__icontains=name) | Q(last_name__icontains=name))
-        paginator = Paginator(users, 2)
+        paginator = Paginator(users, 6)
         page = request.GET.get('page', 1)
         try:
             users = paginator.page(page)
@@ -225,7 +225,7 @@ class PlaylistList(APIView):
             playlists = Playlist.objects.all()
         else:
             playlists = Playlist.objects.filter(type=1)
-        paginator = Paginator(playlists, 2)
+        paginator = Paginator(playlists, 6)
         page = request.GET.get('page', 1)
         try:
             playlists = paginator.page(page)
@@ -261,7 +261,7 @@ class PlaylistList(APIView):
                 playlists = Playlist.objects.filter(name__icontains=name)
             else:
                 playlists = Playlist.objects.filter(type=1, name__icontains=name)
-            paginator = Paginator(playlists, 2)
+            paginator = Paginator(playlists, 6)
             page = request.GET.get('page', 1)
             try:
                 playlists = paginator.page(page)
@@ -283,7 +283,7 @@ class AccessiblePlaylists(APIView):
         if request.user.is_superuser:
             return redirect('/')
         access_list = Access.objects.filter(~Q(playlist__user=request.user), user=request.user)
-        paginator = Paginator(access_list, 2)
+        paginator = Paginator(access_list, 6)
         page = request.GET.get('page', 1)
         try:
             access_list = paginator.page(page)
@@ -298,7 +298,7 @@ class AccessiblePlaylists(APIView):
             return redirect('/')
         name = request.POST['searchName']
         access_list = Access.objects.filter(~Q(playlist__user=request.user), user=request.user, playlist__name__icontains=name)
-        paginator = Paginator(access_list, 2)
+        paginator = Paginator(access_list, 6)
         page = request.GET.get('page', 1)
         try:
             access_list = paginator.page(page)
@@ -329,7 +329,7 @@ class PlaylistDetail(APIView):
         parts = Part.objects.filter(playlist=playlist).order_by('number')
         data = Data.objects.filter(playlist=playlist).order_by('number')
         comments = Comment.objects.filter(playlist=playlist)
-        paginator = Paginator(comments, 2)
+        paginator = Paginator(comments, 6)
         page = request.GET.get('page', 1)
         try:
             comments = paginator.page(page)
@@ -343,7 +343,7 @@ class PlaylistDetail(APIView):
             user_access = Access.objects.get(playlist=playlist, user=request.user)
         except Access.DoesNotExist:
             if request.user != playlist.user and playlist.type != 1:
-                return redirect('../../')
+                return redirect('/')
         return Response({'playlist': playlist, 'parts': parts, 'data':data, 'comments': comments,
                          'user_pictures': user_pictures, 'access_list': access_list, 'user_access': user_access},
                         template_name='playlist.html',)
@@ -355,7 +355,7 @@ class PlaylistDetail(APIView):
         parts = Part.objects.filter(playlist=playlist).order_by('number')
         data = Data.objects.filter(playlist=playlist).order_by('number')
         comments = Comment.objects.filter(playlist=playlist)
-        paginator = Paginator(comments, 2)
+        paginator = Paginator(comments, 6)
         page = request.GET.get('page', 1)
         try:
             comments = paginator.page(page)
@@ -368,7 +368,7 @@ class PlaylistDetail(APIView):
             user_access = Access.objects.get(playlist=playlist, user=request.user)
         except Access.DoesNotExist:
             if request.user != playlist.user and playlist.type != 1:
-                return redirect('../../')
+                return redirect('/')
         access_list = Access.objects.filter(playlist=playlist)
 
         if request.POST.get('edit_playlist') != None:
@@ -446,7 +446,7 @@ class PlaylistDetail(APIView):
         elif request.POST.get('delete_playlist') != None:
             print("Delete playlist")
             playlist.delete()
-            return redirect('../../')
+            return redirect('/')
 
         elif request.POST.get('edit_part') != None:
             print('Edit part')

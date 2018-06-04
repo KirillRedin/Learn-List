@@ -11,7 +11,27 @@
     <link rel="stylesheet" type="text/css" href="{% static 'playlist/style.css' %}">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-
+    <script type="text/javascript">
+        function codeAddress() {
+            if (localStorage.state) {
+                var active, private;
+                if (localStorage.getItem("state") == "private"){
+                    document.getElementById("private").classList.add("active", "show");
+                    document.getElementById("public-tab").setAttribute("aria-selected", false);
+                    document.getElementById("private-tab").classList.add("active");
+                    document.getElementById("private-tab").setAttribute("aria-selected", true);
+                } else {
+                    document.getElementById("public").classList.add("active", "show");
+                    document.getElementById("private-tab").setAttribute("aria-selected", false);
+                    document.getElementById("public-tab").classList.add("active");
+                    document.getElementById("public-tab").setAttribute("aria-selected", true);
+                }
+            } else {
+            alert('Storage empty');
+            }
+        }
+        window.onload = codeAddress;
+        </script>
     <title>Profile</title>
 </head>
 <body>
@@ -239,17 +259,17 @@
         <div class="col-md-12 mb-2">
             <ul class="nav nav-tabs "role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="public-tab" data-toggle="tab" href="#public" role="tab" aria-controls="public" aria-selected="true">Публічні</a>
+                    <a class="nav-link" id="public-tab" data-toggle="tab" href="#public" role="tab" aria-controls="public" aria-selected="false" onclick="saveState()">Публічні</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="private-tab" data-toggle="tab" href="#private" role="tab" aria-controls="private" aria-selected="false">Приватні</a>
+                    <a class="nav-link" id="private-tab" data-toggle="tab" href="#private" role="tab" aria-controls="private" aria-selected="false" onclick="saveState()">Приватні</a>
                 </li>
             </ul>
         </div>
 
         <div class="tab-content col-md-12 px-0">
-            <div class="tab-pane fade show active" id="public" role="tabpanel" aria-labelledby="public-tab">
-                <div class="col-md-12 d-flex justify-content-start px-0">
+            <div class="tab-pane fade" id="public" role="tabpanel" aria-labelledby="public-tab">
+                <div class="row">
                     {% if playlists %}
                     {% for playlist in playlists %}
                     <div class="col-md-6 m-0">
@@ -277,10 +297,10 @@
                 {% if playlists.has_other_pages %}
                 <div class="btn-group d-flex justify-content-center">
                     {% if playlists.has_previous %}
-                    <a class="input-group-text btn primary" href="?page=1">
+                    <a class="input-group-text btn primary" href="?public_page=1">
                         <i class="material-icons">first_page</i>
                     </a>
-                    <a class="input-group-text btn primary" href="?page={{ playlists.previous_page_number }}">
+                    <a class="input-group-text btn primary" href="?public_page={{ playlists.previous_page_number }}">
                         <i class="material-icons">navigate_before</i>
                     </a>
                     {% endif %}
@@ -288,13 +308,13 @@
                     {% if playlists.number == i %}
                     <a class="input-group-text btn primary active">{{ i }}</a>
                     {% else %}
-                    <a class="input-group-text btn primary" href="?page={{ i }}">{{ i }}</a>
+                    <a class="input-group-text btn primary" href="?public_page={{ i }}">{{ i }}</a>
                     {% endif %}
                     {% endfor %}
                     {% if playlists.has_next %}
-                    <a class="input-group-text btn primary" href="?page={{ playlists.next_page_number }}">
+                    <a class="input-group-text btn primary" href="?public_page={{ playlists.next_page_number }}">
                         <i class="material-icons">navigate_next</i></a>
-                    <a class="input-group-text btn primary" href="?page={{ playlists.paginator.num_pages }}">
+                    <a class="input-group-text btn primary" href="?public_page={{ playlists.paginator.num_pages }}">
                         <i class="material-icons">last_page</i>
                     </a>
                     {% endif %}
@@ -303,7 +323,7 @@
             </div>
 
             <div class="tab-pane fade" id="private" role="tabpanel" aria-labelledby="private-tab">
-                <div class="col-md-12 d-flex justify-content-start px-0">
+                <div class="row">
                     {% if access_list %}
                     {% for access in access_list %}
                     <div class="col-md-6 m-0">
@@ -331,10 +351,10 @@
                 {% if access_list.has_other_pages %}
                 <div class="btn-group d-flex justify-content-center">
                     {% if access_list.has_previous %}
-                    <a class="input-group-text btn primary" href="?page=1">
+                    <a class="input-group-text btn primary" href="?private_page=1">
                         <i class="material-icons">first_page</i>
                     </a>
-                    <a class="input-group-text btn primary" href="?page={{ access_list.previous_page_number }}" data-toggle="tab" href="#private" role="tab" aria-controls="private" aria-selected="false">
+                    <a class="input-group-text btn primary" href="?private_page={{ access_list.previous_page_number }}" data-toggle="tab" href="#private" role="tab" aria-controls="private" aria-selected="false">
                         <i class="material-icons">navigate_before</i>
                     </a>
                     {% endif %}
@@ -342,13 +362,13 @@
                     {% if access_list.number == i %}
                     <a class="input-group-text btn primary active">{{ i }}</a>
                     {% else %}
-                    <a class="input-group-text btn primary" href="?page={{ i }}">{{ i }}</a>
+                    <a class="input-group-text btn primary" href="?private_page={{ i }}">{{ i }}</a>
                     {% endif %}
                     {% endfor %}
                     {% if access_list.has_next %}
-                    <a class="input-group-text btn primary" href="?page={{ access_list.next_page_number }}">
+                    <a class="input-group-text btn primary" href="?private_page={{ access_list.next_page_number }}">
                         <i class="material-icons">navigate_next</i></a>
-                    <a class="input-group-text btn primary" href="?page={{ access_list.paginator.num_pages }}">
+                    <a class="input-group-text btn primary" href="?private_page={{ access_list.paginator.num_pages }}">
                         <i class="material-icons">last_page</i>
                     </a>
                     {% endif %}
@@ -358,6 +378,22 @@
         </div>
     </div>
 </div>
+
+<script language='javascript' type='text/javascript'>
+    function saveState() {
+    setTimeout(save, 200);
+    }
+    function save(){
+        if (localStorage){
+            if (document.getElementById("public").classList.contains("show")) {
+            localStorage.setItem("state", "public");
+            } else {
+            localStorage.setItem("state", "private");
+            }
+        }
+    }
+</script>
+
 <script language='javascript' type='text/javascript'>
     function check(input) {
         if (input.value != document.getElementById('newPassword').value) {
