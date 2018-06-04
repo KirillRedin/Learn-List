@@ -240,7 +240,7 @@
                 {% if user_access.comment == 1 or playlist.type == 1 or request.user.is_superuser %}
                 <form class="mb-4" method="post"> {% csrf_token %}
                     <div class="form-group input-group">
-                        <textarea class="form-control" placeholder="Написати коментар..." name="addCommentContent" maxlength="500"></textarea>
+                        <textarea class="form-control" placeholder="Написати коментар..." name="addCommentContent" maxlength="500" required></textarea>
                     </div>
                     <button type="submit" class="input-group-text btn primary" name="add_comment">Відправити</button>
                 </form>

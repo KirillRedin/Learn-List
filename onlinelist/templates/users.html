@@ -68,6 +68,7 @@
         </thead>
         <tbody>
         {% for user in users %}
+        {% if user.is_superuser != 1 %}
             <tr>
                 <td scope="row">{{ user.id }}</td>
                 <th><a href="/user/{{ user.id }}">{{ user.username }}</a></th>
@@ -82,6 +83,7 @@
                     </a>
                 </td>
             </tr>
+        {% endif %}
         {% endfor %}
         </tbody>
     </table>
